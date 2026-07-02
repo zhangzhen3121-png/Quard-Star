@@ -36,15 +36,15 @@
 static const MemMapEntry quard_star_memmap[] = {
     [QUARD_STAR_MROM]        = {        0x0,        0x8000 },   
     [QUARD_STAR_SRAM]        = {     0x8000,        0x8000 },
-    // [QUARD_STAR_CLINT]       = { 0x02000000,       0x10000 },
-    // [QUARD_STAR_PLIC]        = { 0x0c000000,      0x210000 },
+    [QUARD_STAR_CLINT]       = { 0x02000000,       0x10000 },
+    [QUARD_STAR_PLIC]        = { 0x0c000000,      0x210000 },
     [QUARD_STAR_UART0]       = { 0x10000000,        0x1000 },
-    // [QUARD_STAR_UART1]       = { 0x10001000,        0x1000 },
-    // [QUARD_STAR_UART2]       = { 0x10002000,        0x1000 },
-    // [QUARD_STAR_RTC]         = { 0x10003000,        0x1000 },
+    [QUARD_STAR_UART1]       = { 0x10001000,        0x1000 },
+    [QUARD_STAR_UART2]       = { 0x10002000,        0x1000 },
+    [QUARD_STAR_RTC]         = { 0x10003000,        0x1000 },
 
-    // [QUARD_STAR_VIRTIO0]     = { 0x10100000,        0x1000 },
-    // [QUARD_STAR_FLASH]       = { 0x20000000,     0x2000000 },   
+    [QUARD_STAR_VIRTIO0]     = { 0x10100000,        0x1000 },
+    [QUARD_STAR_FLASH]       = { 0x20000000,     0x2000000 },   
     [QUARD_STAR_DRAM]        = { 0x80000000,    0x40000000 },   
 };
 
@@ -92,6 +92,43 @@ static void quard_star_cpu_create(MachineState *machine)
         sysbus_realize(SYS_BUS_DEVICE(&s->soc[i]), &error_abort);
     }
 }
+/* 创建flash并映射 */
+static void quard_star_flash_create(MachineState *machine)
+{
+    #define QUARD_STAR_FLASH_SECTOR_SIZE (256 * KiB)  //0x40000
+    QuardStarState *s = RISCV_VIRT_MACHINE(machine);
+    MemoryRegion *system_memory = get_system_memory();
+    DeviceState *dev = qdev_new(TYPE_PFLASH_CFI01);
+
+    qdev_prop_set_uint64(dev, "sector-length", QUARD_STAR_FLASH_SECTOR_SIZE);
+    qdev_prop_set_uint8(dev, "width", 4);
+    qdev_prop_set_uint8(dev, "device-width", 2);
+    qdev_prop_set_bit(dev, "big-endian", false);
+    qdev_prop_set_uint16(dev, "id0", 0x89);
+    qdev_prop_set_uint16(dev, "id1", 0x18);
+    qdev_prop_set_uint16(dev, "id2", 0x00);
+    qdev_prop_set_uint16(dev, "id3", 0x00);
+    qdev_prop_set_string(dev, "name","quard-star.flash0");
+
+    object_property_add_child(OBJECT(s), "quard-star.flash0", OBJECT(dev));
+    object_property_add_alias(OBJECT(s), "pflash0",
+                              OBJECT(dev), "drive");
+
+    s->flash = PFLASH_CFI01(dev);
+    pflash_cfi01_legacy_drive(s->flash,drive_get(IF_PFLASH, 0, 0));
+
+    hwaddr flashsize = quard_star_memmap[QUARD_STAR_FLASH].size;
+    hwaddr flashbase = quard_star_memmap[QUARD_STAR_FLASH].base;
+
+    assert(QEMU_IS_ALIGNED(flashsize, QUARD_STAR_FLASH_SECTOR_SIZE));
+    assert(flashsize / QUARD_STAR_FLASH_SECTOR_SIZE <= UINT32_MAX);
+    qdev_prop_set_uint32(dev, "num-blocks", flashsize / QUARD_STAR_FLASH_SECTOR_SIZE);
+    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+
+    memory_region_add_subregion(system_memory, flashbase,
+                                sysbus_mmio_get_region(SYS_BUS_DEVICE(dev),
+                                                       0));
+}
 
 /* 创建内存 */
 static void quard_star_memory_create(MachineState *machine)
@@ -120,12 +157,99 @@ static void quard_star_memory_create(MachineState *machine)
                                 quard_star_memmap[QUARD_STAR_MROM].base, mask_rom);
     /* 从0号cpu开始加载复位程序，随后跳转到 flash位置开始执行*/
     riscv_setup_rom_reset_vec(machine, &s->soc[0], 
-                              quard_star_memmap[QUARD_STAR_MROM].base,
+                              quard_star_memmap[QUARD_STAR_FLASH].base,
                               quard_star_memmap[QUARD_STAR_MROM].base,
                               quard_star_memmap[QUARD_STAR_MROM].size,
                               0x0, 0x0);
 }
 
+/* 创建plic */
+static void quard_star_plic_create(MachineState *machine)
+{
+    int socket_count = riscv_socket_count(machine);
+    QuardStarState *s = RISCV_VIRT_MACHINE(machine);
+    int i,hart_count,base_hartid;
+    for ( i = 0; i < socket_count; i++) {
+    
+        hart_count = riscv_socket_hart_count(machine, i);
+        base_hartid = riscv_socket_first_hartid(machine, i);
+        char *plic_hart_config;
+        /* Per-socket PLIC hart topology configuration string */
+        plic_hart_config = riscv_plic_hart_config_string(hart_count);
+        
+        s->plic[i] = sifive_plic_create(
+            quard_star_memmap[QUARD_STAR_PLIC].base + i *quard_star_memmap[QUARD_STAR_PLIC].size ,
+            plic_hart_config, hart_count , base_hartid,
+            QUARD_STAR_PLIC_NUM_SOURCES,
+            QUARD_STAR_PLIC_NUM_PRIORITIES,
+            QUARD_STAR_PLIC_PRIORITY_BASE,
+            QUARD_STAR_PLIC_PENDING_BASE,
+            QUARD_STAR_PLIC_ENABLE_BASE,
+            QUARD_STAR_PLIC_ENABLE_STRIDE,
+            QUARD_STAR_PLIC_CONTEXT_BASE,
+            QUARD_STAR_PLIC_CONTEXT_STRIDE,
+            quard_star_memmap[QUARD_STAR_PLIC].size);
+        g_free(plic_hart_config);
+    }
+}
+
+
+
+/*  创建 aclint */
+static void quard_star_aclint_create(MachineState *machine)
+{
+    int i , hart_count,base_hartid;
+    int socket_count = riscv_socket_count(machine);
+    //每个CPU都需要创建 aclint
+    for ( i = 0; i < socket_count; i++) {
+
+        base_hartid = riscv_socket_first_hartid(machine, i);
+        hart_count = riscv_socket_hart_count(machine, i);
+
+        riscv_aclint_swi_create(
+        quard_star_memmap[QUARD_STAR_CLINT].base + i *quard_star_memmap[QUARD_STAR_CLINT].size,
+        base_hartid, hart_count, false);
+        riscv_aclint_mtimer_create(quard_star_memmap[QUARD_STAR_CLINT].base +
+             + i *quard_star_memmap[QUARD_STAR_CLINT].size+ RISCV_ACLINT_SWI_SIZE,
+            RISCV_ACLINT_DEFAULT_MTIMER_SIZE, base_hartid, hart_count,
+            RISCV_ACLINT_DEFAULT_MTIMECMP, RISCV_ACLINT_DEFAULT_MTIME,
+            RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ, true);
+    }
+}
+ /* 创建3个 uart */
+static void quard_star_serial_create(MachineState *machine)
+{
+    MemoryRegion *system_memory = get_system_memory();
+    QuardStarState *s = RISCV_VIRT_MACHINE(machine);
+    
+    serial_mm_init(system_memory, quard_star_memmap[QUARD_STAR_UART0].base,
+        0, qdev_get_gpio_in(DEVICE(s->plic[0]), QUARD_STAR_UART0_IRQ), 399193,
+        serial_hd(0), DEVICE_LITTLE_ENDIAN);
+    serial_mm_init(system_memory, quard_star_memmap[QUARD_STAR_UART1].base,
+        0, qdev_get_gpio_in(DEVICE(s->plic[0]), QUARD_STAR_UART1_IRQ), 399193,
+        serial_hd(1), DEVICE_LITTLE_ENDIAN);
+    serial_mm_init(system_memory, quard_star_memmap[QUARD_STAR_UART2].base,
+        0, qdev_get_gpio_in(DEVICE(s->plic[0]), QUARD_STAR_UART2_IRQ), 399193,
+        serial_hd(2), DEVICE_LITTLE_ENDIAN);
+ } 
+
+
+
+/* 创建 RTC */
+static void quard_star_rtc_create(MachineState *machine)
+{    
+    QuardStarState *s = RISCV_VIRT_MACHINE(machine);
+    sysbus_create_simple("goldfish_rtc", quard_star_memmap[QUARD_STAR_RTC].base,
+        qdev_get_gpio_in(DEVICE(s->plic[0]), QUARD_STAR_RTC_IRQ));
+}
+
+/* 创建virtio */
+static void quard_star_virtio_mmio_create(MachineState *machine){
+    QuardStarState *s = RISCV_VIRT_MACHINE(machine);
+    sysbus_create_simple("virtio-mmio",
+        quard_star_memmap[QUARD_STAR_VIRTIO0].base,
+        qdev_get_gpio_in(DEVICE(s->plic[0]), QUARD_STAR_VIRTIO0_IRQ));
+}
 
 /* quard-star 初始化各种硬件 */
 static void quard_star_machine_init(MachineState *machine)
@@ -134,18 +258,18 @@ static void quard_star_machine_init(MachineState *machine)
     quard_star_cpu_create(machine);
    // 创建主存
     quard_star_memory_create(machine);
-    // //创建flash
-    // quard_star_flash_create(machine);
-    // //创建PLIC
-    // quard_star_plic_create(machine);
-    // //创建RISCV_ACLINT
-    // quard_star_aclint_create(machine);
-    // // 创建串口设备
-    // quard_star_serial_create(machine);
-    // // 创建 RTC
-    // quard_star_rtc_create(machine);
-    // // 创建 virtio 
-    // quard_star_virtio_mmio_create(machine);
+    //创建flash
+    quard_star_flash_create(machine);
+    //创建PLIC
+    quard_star_plic_create(machine);
+    //创建RISCV_ACLINT
+    quard_star_aclint_create(machine);
+    // 创建串口设备
+    quard_star_serial_create(machine);
+    // 创建 RTC
+    quard_star_rtc_create(machine);
+    // 创建 virtio 
+    quard_star_virtio_mmio_create(machine);
 }
 
 static void quard_star_machine_instance_init(Object *obj)
