@@ -1,8 +1,8 @@
 
 Discarded input sections
 
- .data          0x0000000000000000        0x0 /home/zz/quard-start/Quard_Star/output/lowlevelboot/start.o
- .bss           0x0000000000000000        0x0 /home/zz/quard-start/Quard_Star/output/lowlevelboot/start.o
+ .data          0x0000000000000000        0x0 /home/zz/quard-start/Quard-Star/output/lowlevelboot/start.o
+ .bss           0x0000000000000000        0x0 /home/zz/quard-start/Quard-Star/output/lowlevelboot/start.o
 
 Memory Configuration
 
@@ -12,15 +12,15 @@ flash            0x0000000020000000 0x0000000000080000 axrl !w
 
 Linker script and memory map
 
-LOAD /home/zz/quard-start/Quard_Star/output/lowlevelboot/start.o
+LOAD /home/zz/quard-start/Quard-Star/output/lowlevelboot/start.o
 
 .text           0x0000000020000000       0x3c
  *(.text)
- .text          0x0000000020000000       0x3c /home/zz/quard-start/Quard_Star/output/lowlevelboot/start.o
+ .text          0x0000000020000000       0x3c /home/zz/quard-start/Quard-Star/output/lowlevelboot/start.o
                 0x0000000020000000                _start
-OUTPUT(/home/zz/quard-start/Quard_Star/output/lowlevelboot/lowlevel_fw.elf elf64-littleriscv)
+OUTPUT(/home/zz/quard-start/Quard-Star/output/lowlevelboot/lowlevel_fw.elf elf64-littleriscv)
 
 .riscv.attributes
                 0x0000000000000000       0x37
  .riscv.attributes
-                0x0000000000000000       0x37 /home/zz/quard-start/Quard_Star/output/lowlevelboot/start.o
+                0x0000000000000000       0x37 /home/zz/quard-start/Quard-Star/output/lowlevelboot/start.o

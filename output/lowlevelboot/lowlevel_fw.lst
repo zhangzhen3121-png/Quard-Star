@@ -1,5 +1,5 @@
 
-/home/zz/quard-start/Quard_Star/output/lowlevelboot/lowlevel_fw.elf:     file format elf64-littleriscv
+/home/zz/quard-start/Quard-Star/output/lowlevelboot/lowlevel_fw.elf:     file format elf64-littleriscv
 
 
 Disassembly of section .text:
