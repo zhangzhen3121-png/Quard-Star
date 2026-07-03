@@ -2,7 +2,7 @@ OUTPUT_ARCH("riscv")
 ENTRY(_start)
 
 MEMORY{
-   ddr(rxai!w):ORIGIN = 0x80000000, LENGTH = 256M
+   ddr(rxai!w):ORIGIN = 0xb0000000, LENGTH = 256M
 }
 
 SECTIONS{
