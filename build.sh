@@ -77,7 +77,7 @@ fi
 cd $SHELL_FOLDER/os
 make -j8
 cp $SHELL_FOLDER/os/*.bin $SHELL_FOLDER/output/os/
-
+make clean
 
 
 # 合成firmware固件
