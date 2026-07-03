@@ -1,5 +1,5 @@
 CROSS_COMPILE ?= riscv64-unknown-elf-
-CFLAGS = -nostdlib -fno-builtin
+CFLAGS = -nostdlib -fno-builtin -mcmodel=medany
 
 CC = $(CROSS_COMPILE)gcc
 OBJCOPY = $(CROSS_COMPILE)objcopy
@@ -10,6 +10,7 @@ SCRS_S = \
 SCRS_C = \
 	main.c \
 	sbi.c \
+	printf.c
 
 OBJS = $(SCRS_S:.S=.o) $(SCRS_C:.c=.o)
 
