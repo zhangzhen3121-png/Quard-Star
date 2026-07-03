@@ -1,6 +1,5 @@
 SHELL_FOLDER=$(cd "$(dirname "$0")";pwd)
-DEFAULT_VC=120Cx100C
-#${DEFAULT_VC:-120Cx40C}
+DEFAULT_VC=${DEFAULT_VC:-120Cx40C}
 
 $SHELL_FOLDER/output/qemu/bin/qemu-system-riscv64 \
 -M quard-star \

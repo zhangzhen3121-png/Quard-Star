@@ -70,6 +70,15 @@ cd $SHELL_FOLDER/dts
 dtc -I dts -O dtb -o $SHELL_FOLDER/output/opensbi/quard_star_sbi.dtb quard_star_sbi.dts
 
 
+#编译os
+if [ ! -d "$SHELL_FOLDER/output/os" ]; then  
+mkdir $SHELL_FOLDER/output/os
+fi  
+cd $SHELL_FOLDER/os
+make -j8
+cp $SHELL_FOLDER/os/*.bin $SHELL_FOLDER/output/os/
+
+
 
 # 合成firmware固件
 if [ ! -d "$SHELL_FOLDER/output/fw" ]; then  
@@ -87,3 +96,5 @@ dd of=fw.bin bs=1k conv=notrunc seek=512 if=$SHELL_FOLDER/output/opensbi/quard_s
 dd of=fw.bin bs=1k conv=notrunc seek=2k if=$SHELL_FOLDER/output/opensbi/fw_jump.bin
 # 写入 startup.bin 地址偏移量为 4K*1K= 0x400000，因此 startup.bin的地址偏移量为  0x400000
 dd of=fw.bin bs=1k conv=notrunc seek=4k if=$SHELL_FOLDER/output/trusted_domain/startup.bin
+# 写入 os.bin 地址偏移量为 8K*1K= 0x800000，因此 os.bin的地址偏移量为  0x800000
+dd of=fw.bin bs=1k conv=notrunc seek=8k if=$SHELL_FOLDER/output/os/os.bin
