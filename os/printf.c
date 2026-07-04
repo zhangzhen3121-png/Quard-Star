@@ -37,7 +37,7 @@ static int _vsnprintf(char* out, int n, const char* format, va_list args) {
                     for(int i = hexdigit; i >= 0; i--){
                         int d = (num>>(4*i))&0xF;
                         if(pos<n && out){
-                            out[pos] = (char)(d>9?'a'+d-9:'0'+d);
+                            out[pos] = (char)(d>9?'a'+d-10:'0'+d);
                         }
                         pos++;
                     }

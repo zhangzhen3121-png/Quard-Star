@@ -1,8 +1,7 @@
 #include "os.h"
 
-void os_main() {
-    int a = 1234;
-    char* ss = "hello";
 
-    printf("%s %d %x %ld",ss,a,a,(long)a);
+void os_main() {
+    printf("hello zz os!\r\n");
+    app_init_context();
 }

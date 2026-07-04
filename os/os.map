@@ -1,0 +1,106 @@
+
+内存配置
+
+名称           来源             长度             属性
+ram              0x0000000080200000 0x0000000008000000 axrl!w
+*default*        0x0000000000000000 0xffffffffffffffff
+
+链结器命令稿和内存映射
+
+LOAD entry.o
+LOAD kernaltrap.o
+LOAD main.o
+LOAD sbi.o
+LOAD printf.o
+LOAD batch.o
+LOAD trap.o
+
+.text           0x0000000080200000      0x966
+ *(.text .text.*)
+ .text          0x0000000080200000        0x0 entry.o
+ .text.ENTRY    0x0000000080200000        0xe entry.o
+                0x0000000080200000                _start
+ *fill*         0x000000008020000e        0x2 
+ .text          0x0000000080200010       0xc6 kernaltrap.o
+                0x0000000080200010                _alltrap
+                0x0000000080200070                _restore
+ .text          0x00000000802000d6       0x22 main.o
+                0x00000000802000d6                os_main
+ .text          0x00000000802000f8       0xca sbi.o
+                0x00000000802000f8                sbi_call
+                0x0000000080200182                sbi_print_char
+ .text          0x00000000802001c2      0x530 printf.o
+                0x000000008020069e                printf
+ .text          0x00000000802006f2      0x142 batch.o
+                0x0000000080200726                syscall
+                0x000000008020076a                systest
+                0x0000000080200780                app_init_context
+ .text          0x0000000080200834      0x132 trap.o
+                0x0000000080200868                trap_hanlder
+                0x0000000080200946                trap_init
+
+.rodata         0x0000000080200968      0x109
+ *(.rodata .rodata.*)
+ .rodata        0x0000000080200968        0xf main.o
+ *fill*         0x0000000080200977        0x1 
+ .rodata        0x0000000080200978       0x6f printf.o
+ *fill*         0x00000000802009e7        0x1 
+ .rodata        0x00000000802009e8       0x89 trap.o
+
+.data           0x0000000080200a71      0x58f
+                0x0000000080201000                . = ALIGN (0x1000)
+ *fill*         0x0000000080200a71      0x58f 
+ *(.sdata .sdata.*)
+ *(.data .data.*)
+ .data          0x0000000080201000        0x0 entry.o
+ .data          0x0000000080201000        0x0 kernaltrap.o
+ .data          0x0000000080201000        0x0 main.o
+ .data          0x0000000080201000        0x0 sbi.o
+ .data          0x0000000080201000        0x0 printf.o
+ .data          0x0000000080201000        0x0 batch.o
+ .data          0x0000000080201000        0x0 trap.o
+                [!provide]                        PROVIDE (_data_end = .)
+
+.bss            0x0000000080201000    0x14510
+ *(.sbss .sbss.*)
+ *(.bss .bss.*)
+ .bss           0x0000000080201000        0x0 entry.o
+ .bss.stack     0x0000000080201000    0x10000 entry.o
+                0x0000000080201000                boot_stack_low_bound
+                0x0000000080211000                boot_stack_top
+ .bss           0x0000000080211000        0x0 kernaltrap.o
+ .bss           0x0000000080211000        0x0 main.o
+ .bss           0x0000000080211000        0x0 sbi.o
+ .bss           0x0000000080211000      0x400 printf.o
+ .bss           0x0000000080211400     0x4110 batch.o
+                0x0000000080211400                USER_STACK
+                0x0000000080213400                KERNAL_STACK
+                0x0000000080215400                tasks
+ .bss           0x0000000080215510        0x0 trap.o
+ *(COMMON)
+OUTPUT(os.elf elf64-littleriscv)
+
+.riscv.attributes
+                0x0000000000000000       0x57
+ .riscv.attributes
+                0x0000000000000000       0x51 entry.o
+ .riscv.attributes
+                0x0000000000000051       0x55 kernaltrap.o
+ .riscv.attributes
+                0x00000000000000a6       0x53 main.o
+ .riscv.attributes
+                0x00000000000000f9       0x53 sbi.o
+ .riscv.attributes
+                0x000000000000014c       0x53 printf.o
+ .riscv.attributes
+                0x000000000000019f       0x57 batch.o
+ .riscv.attributes
+                0x00000000000001f6       0x57 trap.o
+
+.comment        0x0000000000000000        0xf
+ .comment       0x0000000000000000        0xf main.o
+                                         0x10 (松开之前的大小)
+ .comment       0x000000000000000f       0x10 sbi.o
+ .comment       0x000000000000000f       0x10 printf.o
+ .comment       0x000000000000000f       0x10 batch.o
+ .comment       0x000000000000000f       0x10 trap.o

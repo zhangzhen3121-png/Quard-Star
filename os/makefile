@@ -6,16 +6,19 @@ OBJCOPY = $(CROSS_COMPILE)objcopy
 OBJDUMP = $(CROSS_COMPILE)objdump
 
 SCRS_S = \
-	entry.S
+	entry.S \
+	kernaltrap.S
 SCRS_C = \
 	main.c \
 	sbi.c \
-	printf.c
+	printf.c\
+	batch.c \
+	trap.c\
 
 OBJS = $(SCRS_S:.S=.o) $(SCRS_C:.c=.o)
 
 os.elf: ${OBJS}
-	$(CC) $(CFLAGS) -T os.ld -o os.elf $^
+	$(CC) $(CFLAGS) -T os.ld -Wl,-Map=os.map -o os.elf $^
 	$(OBJCOPY) -O binary os.elf os.bin
 
 %.o: %.S

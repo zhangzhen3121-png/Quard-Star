@@ -16,3 +16,5 @@ boot_stack_low_bound:
     .space 4096*16
     .global boot_stack_top
 boot_stack_top:
+
+    .end
