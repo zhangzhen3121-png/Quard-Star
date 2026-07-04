@@ -14,8 +14,9 @@ LOAD sbi.o
 LOAD printf.o
 LOAD batch.o
 LOAD trap.o
+LOAD string.o
 
-.text           0x0000000080200000      0x966
+.text           0x0000000080200000      0xa30
  *(.text .text.*)
  .text          0x0000000080200000        0x0 entry.o
  .text.ENTRY    0x0000000080200000        0xe entry.o
@@ -31,25 +32,32 @@ LOAD trap.o
                 0x0000000080200182                sbi_print_char
  .text          0x00000000802001c2      0x530 printf.o
                 0x000000008020069e                printf
- .text          0x00000000802006f2      0x142 batch.o
+ .text          0x00000000802006f2      0x160 batch.o
                 0x0000000080200726                syscall
                 0x000000008020076a                systest
-                0x0000000080200780                app_init_context
- .text          0x0000000080200834      0x132 trap.o
-                0x0000000080200868                trap_hanlder
-                0x0000000080200946                trap_init
+                0x000000008020079e                app_init_context
+ .text          0x0000000080200852      0x152 trap.o
+                0x0000000080200886                __sys_write
+                0x00000000802008c4                __SYSCALL
+                0x0000000080200914                trap_hanlder
+                0x0000000080200984                trap_init
+ .text          0x00000000802009a4       0x8c string.o
+                0x00000000802009a4                strlen
+                0x00000000802009da                memcpy
 
-.rodata         0x0000000080200968      0x109
+.rodata         0x0000000080200a30       0xdb
  *(.rodata .rodata.*)
- .rodata        0x0000000080200968        0xf main.o
- *fill*         0x0000000080200977        0x1 
- .rodata        0x0000000080200978       0x6f printf.o
- *fill*         0x00000000802009e7        0x1 
- .rodata        0x00000000802009e8       0x89 trap.o
+ .rodata        0x0000000080200a30        0xf main.o
+ *fill*         0x0000000080200a3f        0x1 
+ .rodata        0x0000000080200a40       0x6f printf.o
+ *fill*         0x0000000080200aaf        0x1 
+ .rodata        0x0000000080200ab0        0xf batch.o
+ *fill*         0x0000000080200abf        0x1 
+ .rodata        0x0000000080200ac0       0x4b trap.o
 
-.data           0x0000000080200a71      0x58f
+.data           0x0000000080200b0b      0x4f5
                 0x0000000080201000                . = ALIGN (0x1000)
- *fill*         0x0000000080200a71      0x58f 
+ *fill*         0x0000000080200b0b      0x4f5 
  *(.sdata .sdata.*)
  *(.data .data.*)
  .data          0x0000000080201000        0x0 entry.o
@@ -59,6 +67,7 @@ LOAD trap.o
  .data          0x0000000080201000        0x0 printf.o
  .data          0x0000000080201000        0x0 batch.o
  .data          0x0000000080201000        0x0 trap.o
+ .data          0x0000000080201000        0x0 string.o
                 [!provide]                        PROVIDE (_data_end = .)
 
 .bss            0x0000000080201000    0x14510
@@ -77,6 +86,7 @@ LOAD trap.o
                 0x0000000080213400                KERNAL_STACK
                 0x0000000080215400                tasks
  .bss           0x0000000080215510        0x0 trap.o
+ .bss           0x0000000080215510        0x0 string.o
  *(COMMON)
 OUTPUT(os.elf elf64-littleriscv)
 
@@ -96,6 +106,8 @@ OUTPUT(os.elf elf64-littleriscv)
                 0x000000000000019f       0x57 batch.o
  .riscv.attributes
                 0x00000000000001f6       0x57 trap.o
+ .riscv.attributes
+                0x000000000000024d       0x53 string.o
 
 .comment        0x0000000000000000        0xf
  .comment       0x0000000000000000        0xf main.o
@@ -104,3 +116,4 @@ OUTPUT(os.elf elf64-littleriscv)
  .comment       0x000000000000000f       0x10 printf.o
  .comment       0x000000000000000f       0x10 batch.o
  .comment       0x000000000000000f       0x10 trap.o
+ .comment       0x000000000000000f       0x10 string.o

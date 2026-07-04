@@ -33,7 +33,8 @@ size_t syscall(size_t id,reg_t arg1,reg_t arg2, reg_t arg3){
 }
 
 void systest(){
-    syscall(1,2,3,4);
+    char* test_str = "hello kernal\r\n";
+    syscall(__NR_write,1,test_str,strlen(test_str));
     while (1)
     {
         /* code */

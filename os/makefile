@@ -14,6 +14,7 @@ SCRS_C = \
 	printf.c\
 	batch.c \
 	trap.c\
+	string.c\
 
 OBJS = $(SCRS_S:.S=.o) $(SCRS_C:.c=.o)
 
