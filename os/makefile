@@ -5,16 +5,8 @@ CC = $(CROSS_COMPILE)gcc
 OBJCOPY = $(CROSS_COMPILE)objcopy
 OBJDUMP = $(CROSS_COMPILE)objdump
 
-SCRS_S = \
-	entry.S \
-	kernaltrap.S
-SCRS_C = \
-	main.c \
-	sbi.c \
-	printf.c\
-	batch.c \
-	trap.c\
-	string.c\
+SCRS_S = $(wildcard *.S) $(wildcard *.s)
+SCRS_C = $(wildcard *.c)
 
 OBJS = $(SCRS_S:.S=.o) $(SCRS_C:.c=.o)
 

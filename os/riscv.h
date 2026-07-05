@@ -1,7 +1,7 @@
 #ifndef __RISCV_H
 #define __RISCV_H
 
-#include"os.h"
+#include"types.h"
 
 static inline reg_t r_scause(){
     reg_t x;

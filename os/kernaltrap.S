@@ -53,7 +53,7 @@ _alltrap:
 .global _restore
 .align 4
 _restore:
-    mv sp, a0
+
     ld x1, 1*8(sp)
     #ld x2, 2*8(sp)
     ld x3, 3*8(sp)

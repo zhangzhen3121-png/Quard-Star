@@ -1,8 +1,7 @@
 #include"context.h"
 #include"riscv.h"
 #include"os.h"
-extern void _alltrap();
-extern void _restore(pt_regs* next);
+
 
 void __sys_write(size_t fd, const char* buf, size_t len){
     if(fd==1){
@@ -13,14 +12,20 @@ void __sys_write(size_t fd, const char* buf, size_t len){
     }
 }
 
+void __sys_yield(){
+    schedule();
+}
+
 
 void __SYSCALL(size_t id, reg_t arg1, reg_t arg2, reg_t arg3){
     switch (id)
     {
     case __NR_write:
-        __sys_write(arg1, arg2, arg3);
+        __sys_write(arg1, (const char*)arg2, arg3);
         break;
-        
+    case __NR_sched_yield:
+        __sys_yield();
+        break;
     default:
         printf("unsupport syscall id\r\n");
         break;
@@ -29,7 +34,7 @@ void __SYSCALL(size_t id, reg_t arg1, reg_t arg2, reg_t arg3){
 
 pt_regs* trap_hanlder(pt_regs* cx){
     reg_t cause = r_scause();
-
+    //printf("cause: %x: \r\n", cause);
     switch (cause)
     {
     case 8:
