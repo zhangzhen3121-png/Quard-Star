@@ -17,7 +17,7 @@ size_t syscall(size_t id,reg_t arg1,reg_t arg2, reg_t arg3){
     return ret;
 }
 
-size_t sys_write(size_t fd, const const char* buf, size_t size){
+size_t sys_write(size_t fd, const char* buf, size_t size){
     return syscall(__NR_write, fd, buf, size);
 }
 
@@ -32,12 +32,10 @@ void delay(volatile int count){
 }
 
 void task_1(){
-
-    const char* s = "this is task 1 \r\n";
-    size_t len = strlen(s);
+    
     while (1)
     {
-        sys_write(1,s,len);
+        printf("this is task 1 \r\n");
         delay(10000);
         // sys_yield();
     }
@@ -46,11 +44,9 @@ void task_1(){
 
 void task_2(){
 
-    const char* s = "this is task 2 \r\n";
-    size_t len = strlen(s);
     while (1)
     {
-        sys_write(1,s,len);
+        printf("this is task 2 \r\n");
         delay(10000);
         // sys_yield();
     }
@@ -58,11 +54,9 @@ void task_2(){
 
 void task_3(){
    
-    const char* s = "this is task 3 \r\n";
-    size_t len = strlen(s);
     while (1)
     {
-        sys_write(1,s,len);
+        printf("this is task 3 \r\n");
         delay(10000);
         // sys_yield();
     }

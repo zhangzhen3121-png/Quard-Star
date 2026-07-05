@@ -1,15 +1,14 @@
 #include"os.h"
 
+extern size_t sys_write(size_t fd, const char* buf, size_t size);
+
 static char out_buf[1024];
 
-
-static void _uart_prints(char *str){
-    while(*str){
-        sbi_print_char(*str++);
-    }
+static size_t sys_printf(const char* buf){
+    return sys_write(1, buf, strlen(buf));
 }
 
-static int _vsnprintk(char* out, int n, const char* format, va_list args) {
+static int _vsnprintf(char* out, int n, const char* format, va_list args) {
     size_t pos = 0;
     int format_flag = 0;
     int longarg_flag = 0;
@@ -123,26 +122,26 @@ static int _vsnprintk(char* out, int n, const char* format, va_list args) {
     return pos;
 }
 
-static int _vprintk(const char *format, va_list args) {
+static int _vprintf(const char *format, va_list args) {
     va_list copy_args;
     va_copy(copy_args,args);
-    int res = _vsnprintk(NULL, -1,format, copy_args);
+    int res = _vsnprintf(NULL, -1,format, copy_args);
     va_end(copy_args);
     
     if(res+1 >= sizeof(out_buf)){
-        _uart_prints("out_buf is overflowed\n");
+        sys_printf("out_buf is overflowed\n");
         return -1;
     }
-    _vsnprintk(out_buf, res+1, format, args);
-    _uart_prints(out_buf);
+    _vsnprintf(out_buf, res+1, format, args);
+    sys_printf(out_buf);
     return res;
 }
 
 
-int printk(const char *format, ...) {
+int printf(const char *format, ...) {
     va_list args;
     va_start(args, format);
-    int ret = _vprintk(format, args);
+    int ret = _vprintf(format, args);
     va_end(args);
     return ret;
 }

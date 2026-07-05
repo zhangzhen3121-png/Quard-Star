@@ -24,13 +24,20 @@ extern void __switch(TaskContext* curr_ctx_ptr,TaskContext* next_ctx_ptr);
 
 
 
+
+
 extern int printk(const char *format, ...);
 extern int sbi_print_char(char ch);
 extern void trap_init();
 
+
+extern int printf(const char *format, ...);
+
+
+
 /***string.c***/
-int strlen(const char* s);
-void* memcpy(void* dest, void* src, size_t count);
+extern int strlen(const char* s);
+extern void* memcpy(void* dest, void* src, size_t count);
 
 
 #endif
