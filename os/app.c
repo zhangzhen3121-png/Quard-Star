@@ -39,7 +39,7 @@ void task_1(){
     {
         sys_write(1,s,len);
         delay(10000);
-        sys_yield();
+        // sys_yield();
     }
     
 }
@@ -52,7 +52,7 @@ void task_2(){
     {
         sys_write(1,s,len);
         delay(10000);
-        sys_yield();
+        // sys_yield();
     }
 }
 
@@ -64,7 +64,7 @@ void task_3(){
     {
         sys_write(1,s,len);
         delay(10000);
-        sys_yield();
+        // sys_yield();
     }
 }
 

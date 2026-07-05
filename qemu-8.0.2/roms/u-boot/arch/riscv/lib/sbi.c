@@ -48,6 +48,7 @@ void sbi_set_timer(uint64_t stime_value)
 	sbi_ecall(SBI_EXT_SET_TIMER, SBI_FID_SET_TIMER, stime_value,
 		  stime_value >> 32, 0, 0, 0, 0);
 #else
+
 	sbi_ecall(SBI_EXT_SET_TIMER, SBI_FID_SET_TIMER, stime_value,
 		  0, 0, 0, 0, 0);
 #endif

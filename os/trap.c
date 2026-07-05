@@ -3,6 +3,8 @@
 #include"os.h"
 
 
+extern void set_next_trigger();
+
 void __sys_write(size_t fd, const char* buf, size_t len){
     if(fd==1){
         printf(buf);
@@ -34,18 +36,33 @@ void __SYSCALL(size_t id, reg_t arg1, reg_t arg2, reg_t arg3){
 
 pt_regs* trap_hanlder(pt_regs* cx){
     reg_t cause = r_scause();
-    //printf("cause: %x: \r\n", cause);
-    switch (cause)
-    {
-    case 8:
-        __SYSCALL(cx->a7,cx->a0,cx->a1,cx->a2);
-        break;
-    default:
-        printf("undefined scause\r\n");
-        break;
-    }
+    reg_t code = cause & 0xFFF;
 
-    cx->sepc+=4;
+    if(cause>>63){
+        switch (code)
+        {
+        case 5:
+            /* RTC IRQ */
+            set_next_trigger();
+            schedule();
+            break;
+        default:
+            printf("undefined interrput code\r\n");
+            break;
+        }
+    }
+    else{
+        switch (code)
+        {
+        case 8:
+            __SYSCALL(cx->a7,cx->a0,cx->a1,cx->a2);
+            cx->sepc+=4;
+            break;
+        default:
+            printf("undefined scause\r\n");
+            break;
+        }
+    }
     return cx;
 }
 

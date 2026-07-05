@@ -48,6 +48,24 @@ static inline reg_t r_sepc(){
     return x;
 }
 
+static inline reg_t r_sie(){
+    reg_t x;
+    asm volatile(
+        "csrr %0, sie"
+        :"=r"(x)
+    );
+    return x;
+}
+
+static inline reg_t r_mtime(){
+    reg_t x;
+    asm volatile(
+        "rdtime %0"
+        :"=r"(x)
+    );
+    return x;
+}
+
 static inline void w_sstatus(reg_t x){
     asm volatile(
         "csrw sstatus, %0"
@@ -61,4 +79,12 @@ static inline void w_stvec(reg_t x){
         : :"r"(x)
     );
 }
+
+static inline void w_sie(reg_t x){
+    asm volatile(
+        "csrw sie, %0"
+        : :"r"(x)
+    );
+}
+
 #endif
