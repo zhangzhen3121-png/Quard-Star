@@ -5,19 +5,23 @@ CC = $(CROSS_COMPILE)gcc
 OBJCOPY = $(CROSS_COMPILE)objcopy
 OBJDUMP = $(CROSS_COMPILE)objdump
 
-SCRS_S = $(wildcard *.S) $(wildcard *.s)
-SCRS_C = $(wildcard *.c)
+INCLUDE := -I ./include/timeros
 
-OBJS = $(SCRS_S:.S=.o) $(SCRS_C:.c=.o)
+SRCS_S = $(wildcard src/*.S) $(wildcard src/*.s)
+SRCS_C = $(wildcard src/*.c) $(wildcard lib/*.c) 
+
+OBJS = $(SRCS_S:.S=.o) $(SRCS_C:.c=.o)
 
 os.elf: ${OBJS}
-	$(CC) $(CFLAGS) -T os.ld -Wl,-Map=os.map -o os.elf $^
+	$(CC) $(CFLAGS) $(INCLUDE) -T os.ld -Wl,-Map=os.map -o os.elf $^
 	$(OBJCOPY) -O binary os.elf os.bin
 
 %.o: %.S
-	$(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $<
 %.o: %.c
-	$(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $<
 
 clean:
 	rm -f *.o *.elf *.bin
+	rm -f ./src/*.o ./src/*.elf ./src/*.bin
+	rm -f ./lib/*.o ./lib/*.elf ./lib/*.bin

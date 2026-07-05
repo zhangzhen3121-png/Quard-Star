@@ -139,7 +139,7 @@ static int _vprintf(const char *format, va_list args) {
 }
 
 
-int printf(const char *format, ...) {
+int printk(const char *format, ...) {
     va_list args;
     va_start(args, format);
     int ret = _vprintf(format, args);

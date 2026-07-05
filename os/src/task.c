@@ -74,7 +74,7 @@ void schedule(){
         __switch(cur_tcx_ptr,nex_tcx_ptr);
     }
     else{
-        printf("No ready task !");
+        printk("No ready task !");
     }
 }
 
@@ -84,7 +84,7 @@ void run_first_task(){
     _current  = 0;
     TaskContext* next_ctx_ptr = &tasks[_current].task_context;
     TaskContext curr_ctx_ptr;
-    printf("switch \n\n");
+    printk("switch \n\n");
     __switch(&curr_ctx_ptr,next_ctx_ptr);
-    printf("switch feild \n\n");
+    printk("switch feild \n\n");
 }

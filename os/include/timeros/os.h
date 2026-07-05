@@ -24,7 +24,7 @@ extern void __switch(TaskContext* curr_ctx_ptr,TaskContext* next_ctx_ptr);
 
 
 
-extern int printf(const char *format, ...);
+extern int printk(const char *format, ...);
 extern int sbi_print_char(char ch);
 extern void trap_init();
 

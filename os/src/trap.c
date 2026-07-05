@@ -7,10 +7,10 @@ extern void set_next_trigger();
 
 void __sys_write(size_t fd, const char* buf, size_t len){
     if(fd==1){
-        printf(buf);
+        printk(buf);
     }
     else{
-        printf("unsupport fd id sys_wirte \r\n");
+        printk("unsupport fd id sys_wirte \r\n");
     }
 }
 
@@ -29,7 +29,7 @@ void __SYSCALL(size_t id, reg_t arg1, reg_t arg2, reg_t arg3){
         __sys_yield();
         break;
     default:
-        printf("unsupport syscall id\r\n");
+        printk("unsupport syscall id\r\n");
         break;
     }
 }
@@ -47,7 +47,7 @@ pt_regs* trap_hanlder(pt_regs* cx){
             schedule();
             break;
         default:
-            printf("undefined interrput code\r\n");
+            printk("undefined interrput code\r\n");
             break;
         }
     }
@@ -59,7 +59,7 @@ pt_regs* trap_hanlder(pt_regs* cx){
             cx->sepc+=4;
             break;
         default:
-            printf("undefined scause\r\n");
+            printk("undefined scause\r\n");
             break;
         }
     }

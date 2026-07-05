@@ -7,30 +7,30 @@ ram              0x0000000080200000 0x0000000008000000 axrl!w
 
 链结器命令稿和内存映射
 
-LOAD entry.o
-LOAD kernaltrap.o
-LOAD switch.o
-LOAD app.o
-LOAD main.o
-LOAD printf.o
-LOAD sbi.o
-LOAD string.o
-LOAD task.o
-LOAD timer.o
-LOAD trap.o
+LOAD src/entry.o
+LOAD src/kernaltrap.o
+LOAD src/switch.o
+LOAD src/app.o
+LOAD src/main.o
+LOAD src/task.o
+LOAD src/timer.o
+LOAD src/trap.o
+LOAD lib/printk.o
+LOAD lib/sbi.o
+LOAD lib/string.o
 
 .text           0x0000000080200000     0x117c
  *(.text .text.*)
- .text          0x0000000080200000        0x0 entry.o
- .text.ENTRY    0x0000000080200000        0xe entry.o
+ .text          0x0000000080200000        0x0 src/entry.o
+ .text.ENTRY    0x0000000080200000        0xe src/entry.o
                 0x0000000080200000                _start
  *fill*         0x000000008020000e        0x2 
- .text          0x0000000080200010       0xc6 kernaltrap.o
+ .text          0x0000000080200010       0xc6 src/kernaltrap.o
                 0x0000000080200010                _alltrap
                 0x0000000080200070                _restore
- .text          0x00000000802000d6       0x6a switch.o
+ .text          0x00000000802000d6       0x6a src/switch.o
                 0x00000000802000d6                __switch
- .text          0x0000000080200140      0x1c8 app.o
+ .text          0x0000000080200140      0x1c8 src/app.o
                 0x0000000080200140                syscall
                 0x0000000080200184                sys_write
                 0x00000000802001ba                sys_yield
@@ -39,118 +39,118 @@ LOAD trap.o
                 0x000000008020025a                task_2
                 0x0000000080200296                task_3
                 0x00000000802002d2                task_init
- .text          0x0000000080200308       0x3e main.o
+ .text          0x0000000080200308       0x3e src/main.o
                 0x0000000080200308                os_main
- .text          0x0000000080200346      0x530 printf.o
-                0x0000000080200822                printf
- .text          0x0000000080200876       0xfc sbi.o
-                0x0000000080200876                sbi_call
-                0x0000000080200900                sbi_print_char
-                0x0000000080200940                sbi_set_time
- .text          0x0000000080200972       0x8c string.o
-                0x0000000080200972                strlen
-                0x00000000802009a8                memcpy
- .text          0x00000000802009fe      0x41a task.o
-                0x0000000080200a32                task_creat
-                0x0000000080200b72                tcx_init
-                0x0000000080200bea                schedule
-                0x0000000080200da0                run_first_task
- .text          0x0000000080200e18      0x1b0 timer.o
-                0x0000000080200e9a                time_irq_enable
-                0x0000000080200ec8                time_irq_disable
-                0x0000000080200ef6                timer_init
-                0x0000000080200f78                set_next_trigger
- .text          0x0000000080200fc8      0x1b4 trap.o
-                0x0000000080200ffc                __sys_write
-                0x000000008020103a                __sys_yield
-                0x0000000080201050                __SYSCALL
-                0x00000000802010b4                trap_hanlder
-                0x000000008020115c                trap_init
+ .text          0x0000000080200346      0x41a src/task.o
+                0x000000008020037a                task_creat
+                0x00000000802004ba                tcx_init
+                0x0000000080200532                schedule
+                0x00000000802006e8                run_first_task
+ .text          0x0000000080200760      0x1b0 src/timer.o
+                0x00000000802007e2                time_irq_enable
+                0x0000000080200810                time_irq_disable
+                0x000000008020083e                timer_init
+                0x00000000802008c0                set_next_trigger
+ .text          0x0000000080200910      0x1b4 src/trap.o
+                0x0000000080200944                __sys_write
+                0x0000000080200982                __sys_yield
+                0x0000000080200998                __SYSCALL
+                0x00000000802009fc                trap_hanlder
+                0x0000000080200aa4                trap_init
+ .text          0x0000000080200ac4      0x530 lib/printk.o
+                0x0000000080200fa0                printk
+ .text          0x0000000080200ff4       0xfc lib/sbi.o
+                0x0000000080200ff4                sbi_call
+                0x000000008020107e                sbi_print_char
+                0x00000000802010be                sbi_set_time
+ .text          0x00000000802010f0       0x8c lib/string.o
+                0x00000000802010f0                strlen
+                0x0000000080201126                memcpy
 
-.rodata         0x0000000080201180      0x173
+.rodata         0x0000000080201180      0x177
  *(.rodata .rodata.*)
- .rodata        0x0000000080201180       0x42 app.o
+ .rodata        0x0000000080201180       0x42 src/app.o
  *fill*         0x00000000802011c2        0x6 
- .rodata        0x00000000802011c8       0x1d main.o
+ .rodata        0x00000000802011c8       0x1d src/main.o
  *fill*         0x00000000802011e5        0x3 
- .rodata        0x00000000802011e8       0x6f printf.o
- *fill*         0x0000000080201257        0x1 
- .rodata        0x0000000080201258       0x30 task.o
- .rodata        0x0000000080201288       0x6b trap.o
+ .rodata        0x00000000802011e8       0x30 src/task.o
+ .rodata        0x0000000080201218       0x6b src/trap.o
+ *fill*         0x0000000080201283        0x5 
+ .rodata        0x0000000080201288       0x6f lib/printk.o
 
-.data           0x00000000802012f3      0xd0d
+.data           0x00000000802012f7      0xd09
                 0x0000000080202000                . = ALIGN (0x1000)
- *fill*         0x00000000802012f3      0xd0d 
+ *fill*         0x00000000802012f7      0xd09 
  *(.sdata .sdata.*)
  *(.data .data.*)
- .data          0x0000000080202000        0x0 entry.o
- .data          0x0000000080202000        0x0 kernaltrap.o
- .data          0x0000000080202000        0x0 switch.o
- .data          0x0000000080202000        0x0 app.o
- .data          0x0000000080202000        0x0 main.o
- .data          0x0000000080202000        0x0 printf.o
- .data          0x0000000080202000        0x0 sbi.o
- .data          0x0000000080202000        0x0 string.o
- .data          0x0000000080202000        0x0 task.o
- .data          0x0000000080202000        0x0 timer.o
- .data          0x0000000080202000        0x0 trap.o
+ .data          0x0000000080202000        0x0 src/entry.o
+ .data          0x0000000080202000        0x0 src/kernaltrap.o
+ .data          0x0000000080202000        0x0 src/switch.o
+ .data          0x0000000080202000        0x0 src/app.o
+ .data          0x0000000080202000        0x0 src/main.o
+ .data          0x0000000080202000        0x0 src/task.o
+ .data          0x0000000080202000        0x0 src/timer.o
+ .data          0x0000000080202000        0x0 src/trap.o
+ .data          0x0000000080202000        0x0 lib/printk.o
+ .data          0x0000000080202000        0x0 lib/sbi.o
+ .data          0x0000000080202000        0x0 lib/string.o
                 [!provide]                        PROVIDE (_data_end = .)
 
 .bss            0x0000000080202000    0x388c0
  *(.sbss .sbss.*)
  *(.bss .bss.*)
- .bss           0x0000000080202000        0x0 entry.o
- .bss.stack     0x0000000080202000    0x10000 entry.o
+ .bss           0x0000000080202000        0x0 src/entry.o
+ .bss.stack     0x0000000080202000    0x10000 src/entry.o
                 0x0000000080202000                boot_stack_low_bound
                 0x0000000080212000                boot_stack_top
- .bss           0x0000000080212000        0x0 kernaltrap.o
- .bss           0x0000000080212000        0x0 switch.o
- .bss           0x0000000080212000        0x0 app.o
- .bss           0x0000000080212000        0x0 main.o
- .bss           0x0000000080212000      0x400 printf.o
- .bss           0x0000000080212400        0x0 sbi.o
- .bss           0x0000000080212400        0x0 string.o
- .bss           0x0000000080212400    0x284b8 task.o
-                0x0000000080212400                tasks
-                0x00000000802128b0                UserStacks
-                0x00000000802268b0                KernalStacks
- .bss           0x000000008023a8b8        0x8 timer.o
- .bss           0x000000008023a8c0        0x0 trap.o
+ .bss           0x0000000080212000        0x0 src/kernaltrap.o
+ .bss           0x0000000080212000        0x0 src/switch.o
+ .bss           0x0000000080212000        0x0 src/app.o
+ .bss           0x0000000080212000        0x0 src/main.o
+ .bss           0x0000000080212000    0x284b8 src/task.o
+                0x0000000080212000                tasks
+                0x00000000802124b0                UserStacks
+                0x00000000802264b0                KernalStacks
+ .bss           0x000000008023a4b8        0x8 src/timer.o
+ .bss           0x000000008023a4c0        0x0 src/trap.o
+ .bss           0x000000008023a4c0      0x400 lib/printk.o
+ .bss           0x000000008023a8c0        0x0 lib/sbi.o
+ .bss           0x000000008023a8c0        0x0 lib/string.o
  *(COMMON)
 OUTPUT(os.elf elf64-littleriscv)
 
 .riscv.attributes
                 0x0000000000000000       0x57
  .riscv.attributes
-                0x0000000000000000       0x51 entry.o
+                0x0000000000000000       0x51 src/entry.o
  .riscv.attributes
-                0x0000000000000051       0x55 kernaltrap.o
+                0x0000000000000051       0x55 src/kernaltrap.o
  .riscv.attributes
-                0x00000000000000a6       0x51 switch.o
+                0x00000000000000a6       0x51 src/switch.o
  .riscv.attributes
-                0x00000000000000f7       0x53 app.o
+                0x00000000000000f7       0x53 src/app.o
  .riscv.attributes
-                0x000000000000014a       0x53 main.o
+                0x000000000000014a       0x53 src/main.o
  .riscv.attributes
-                0x000000000000019d       0x53 printf.o
+                0x000000000000019d       0x57 src/task.o
  .riscv.attributes
-                0x00000000000001f0       0x53 sbi.o
+                0x00000000000001f4       0x57 src/timer.o
  .riscv.attributes
-                0x0000000000000243       0x53 string.o
+                0x000000000000024b       0x57 src/trap.o
  .riscv.attributes
-                0x0000000000000296       0x57 task.o
+                0x00000000000002a2       0x53 lib/printk.o
  .riscv.attributes
-                0x00000000000002ed       0x57 timer.o
+                0x00000000000002f5       0x53 lib/sbi.o
  .riscv.attributes
-                0x0000000000000344       0x57 trap.o
+                0x0000000000000348       0x53 lib/string.o
 
 .comment        0x0000000000000000        0xf
- .comment       0x0000000000000000        0xf app.o
+ .comment       0x0000000000000000        0xf src/app.o
                                          0x10 (松开之前的大小)
- .comment       0x000000000000000f       0x10 main.o
- .comment       0x000000000000000f       0x10 printf.o
- .comment       0x000000000000000f       0x10 sbi.o
- .comment       0x000000000000000f       0x10 string.o
- .comment       0x000000000000000f       0x10 task.o
- .comment       0x000000000000000f       0x10 timer.o
- .comment       0x000000000000000f       0x10 trap.o
+ .comment       0x000000000000000f       0x10 src/main.o
+ .comment       0x000000000000000f       0x10 src/task.o
+ .comment       0x000000000000000f       0x10 src/timer.o
+ .comment       0x000000000000000f       0x10 src/trap.o
+ .comment       0x000000000000000f       0x10 lib/printk.o
+ .comment       0x000000000000000f       0x10 lib/sbi.o
+ .comment       0x000000000000000f       0x10 lib/string.o
