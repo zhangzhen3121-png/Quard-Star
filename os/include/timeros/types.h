@@ -8,4 +8,6 @@ typedef unsigned  long long      uint64_t;
 //risv64寄存器为64位
 typedef uint64_t reg_t;
 
+typedef enum { false, true } bool;
+
 #endif

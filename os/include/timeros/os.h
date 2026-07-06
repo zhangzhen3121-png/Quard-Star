@@ -38,6 +38,7 @@ extern int printf(const char *format, ...);
 /***string.c***/
 extern int strlen(const char* s);
 extern void* memcpy(void* dest, void* src, size_t count);
+extern void memset(void* addr, char ch, size_t count);
 
 
 #endif

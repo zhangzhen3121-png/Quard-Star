@@ -16,3 +16,11 @@ void* memcpy(void* dest, void* src, size_t count){
     }
     return dest;
 }
+
+void memset(void* addr, char ch, size_t count){
+    char *ptr = (char*)addr;
+    while(count--){
+        *ptr++ = ch;
+    }
+}
+
