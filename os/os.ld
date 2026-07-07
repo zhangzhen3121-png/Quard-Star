@@ -10,6 +10,8 @@ SECTIONS
 {
     .text : {
         *(.text .text.*)
+    . = ALIGN(0x1000);
+    PROVIDE(text_end = .);
     } > ram
 
     .rodata : {
@@ -28,4 +30,6 @@ SECTIONS
         *(.bss .bss.*)
         *(COMMON)
     } > ram
+    . = ALIGN(0x1000);
+    PROVIDE(kernal_end = .);
 }

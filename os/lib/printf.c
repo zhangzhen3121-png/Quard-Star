@@ -105,7 +105,7 @@ static int _vsnprintf(char* out, int n, const char* format, va_list args) {
             format_flag = 1;
         }
         else{
-            if(pos < n){
+            if(pos < n && out){
                 out[pos] = *format;
             }
             pos++;

@@ -1,2 +1,4 @@
 qemu.log
 /output/
+/.agents
+/.codex

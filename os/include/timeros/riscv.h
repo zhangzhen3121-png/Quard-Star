@@ -57,6 +57,16 @@ static inline reg_t r_sie(){
     return x;
 }
 
+
+static inline reg_t r_satp(){
+    reg_t x;
+    asm volatile(
+        "csrr %0, satp"
+        :"=r"(x)
+    );
+    return x;
+}
+
 static inline reg_t r_mtime(){
     reg_t x;
     asm volatile(
@@ -85,6 +95,17 @@ static inline void w_sie(reg_t x){
         "csrw sie, %0"
         : :"r"(x)
     );
+}
+
+static inline void w_satp(reg_t x){
+    asm volatile(
+        "csrw satp, %0"
+        : :"r"(x)
+    );
+}
+
+static inline void sfence_vma(){
+    asm volatile("sfence.vma zero, zero");
 }
 
 #endif
