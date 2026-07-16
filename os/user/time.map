@@ -1,0 +1,120 @@
+
+内存配置
+
+名称           来源             长度             属性
+*default*        0x0000000000000000 0xffffffffffffffff
+
+链结器命令稿和内存映射
+
+LOAD /tmp/ccim0dK3.o
+LOAD /tmp/ccQaZGaR.o
+LOAD /tmp/ccV794OJ.o
+LOAD /tmp/ccTgTTLO.o
+LOAD /tmp/ccEJ0SLO.o
+LOAD /tmp/ccH9xE6c.o
+LOAD /tmp/ccyt8kPu.o
+LOAD /tmp/cc6dcKPu.o
+                0x0000000000010000                BASE_ADDRESS = 0x10000
+                0x0000000000010000                . = BASE_ADDRESS
+
+.text           0x0000000000010000      0xeb6
+ *(.text.entry)
+ *(.text .text.*)
+ .text          0x0000000000010000       0x10 /tmp/ccim0dK3.o
+                0x0000000000010000                main
+ .text          0x0000000000010010       0x84 /tmp/ccQaZGaR.o
+                0x000000000001002c                assert_failure
+ .text          0x0000000000010094      0x514 /tmp/ccV794OJ.o
+                0x0000000000010554                printf
+ .text          0x00000000000105a8      0x520 /tmp/ccTgTTLO.o
+                0x0000000000010a74                printk
+ .text          0x0000000000010ac8       0xfc /tmp/ccEJ0SLO.o
+                0x0000000000010ac8                sbi_call
+                0x0000000000010b52                sbi_print_char
+                0x0000000000010b92                sbi_set_time
+ .text          0x0000000000010bc4      0x180 /tmp/ccH9xE6c.o
+                0x0000000000010bc4                Stack_init
+                0x0000000000010be4                is_empty
+                0x0000000000010c0c                is_full
+                0x0000000000010c3a                push
+                0x0000000000010c9e                pop
+                0x0000000000010d00                top
+ .text          0x0000000000010d44       0xd6 /tmp/ccyt8kPu.o
+                0x0000000000010d44                strlen
+                0x0000000000010d7a                memcpy
+                0x0000000000010dd0                memset
+ .text          0x0000000000010e1a       0x9c /tmp/cc6dcKPu.o
+                0x0000000000010e1a                syscall
+                0x0000000000010e5e                sys_write
+                0x0000000000010e94                sys_yield
+                0x0000000000011000                . = ALIGN (0x1000)
+
+.rodata         0x0000000000011000      0x157
+ *(.rodata .rodata.*)
+ .rodata        0x0000000000011000       0x74 /tmp/ccQaZGaR.o
+ *fill*         0x0000000000011074        0x4 
+ .rodata        0x0000000000011078       0x6f /tmp/ccV794OJ.o
+ *fill*         0x00000000000110e7        0x1 
+ .rodata        0x00000000000110e8       0x6f /tmp/ccTgTTLO.o
+ *(.srodata .srodata.*)
+                0x0000000000012000                . = ALIGN (0x1000)
+
+.data           0x0000000000012000        0x0
+ *(.data .data.*)
+ .data          0x0000000000012000        0x0 /tmp/ccim0dK3.o
+ .data          0x0000000000012000        0x0 /tmp/ccQaZGaR.o
+ .data          0x0000000000012000        0x0 /tmp/ccV794OJ.o
+ .data          0x0000000000012000        0x0 /tmp/ccTgTTLO.o
+ .data          0x0000000000012000        0x0 /tmp/ccEJ0SLO.o
+ .data          0x0000000000012000        0x0 /tmp/ccH9xE6c.o
+ .data          0x0000000000012000        0x0 /tmp/ccyt8kPu.o
+ .data          0x0000000000012000        0x0 /tmp/cc6dcKPu.o
+ *(.sdata .sdata.*)
+                0x0000000000012000                . = ALIGN (0x1000)
+
+.bss            0x0000000000012000      0x800
+ *(.bss .bss.*)
+ .bss           0x0000000000012000        0x0 /tmp/ccim0dK3.o
+ .bss           0x0000000000012000        0x0 /tmp/ccQaZGaR.o
+ .bss           0x0000000000012000      0x400 /tmp/ccV794OJ.o
+ .bss           0x0000000000012400      0x400 /tmp/ccTgTTLO.o
+ .bss           0x0000000000012800        0x0 /tmp/ccEJ0SLO.o
+ .bss           0x0000000000012800        0x0 /tmp/ccH9xE6c.o
+ .bss           0x0000000000012800        0x0 /tmp/ccyt8kPu.o
+ .bss           0x0000000000012800        0x0 /tmp/cc6dcKPu.o
+ *(.sbss .sbss.*)
+
+/DISCARD/
+ *(.eh_frame)
+ *(.debug*)
+OUTPUT(./bin/time elf64-littleriscv)
+
+.comment        0x0000000000000000        0xf
+ .comment       0x0000000000000000        0xf /tmp/ccim0dK3.o
+                                         0x10 (松开之前的大小)
+ .comment       0x000000000000000f       0x10 /tmp/ccQaZGaR.o
+ .comment       0x000000000000000f       0x10 /tmp/ccV794OJ.o
+ .comment       0x000000000000000f       0x10 /tmp/ccTgTTLO.o
+ .comment       0x000000000000000f       0x10 /tmp/ccEJ0SLO.o
+ .comment       0x000000000000000f       0x10 /tmp/ccH9xE6c.o
+ .comment       0x000000000000000f       0x10 /tmp/ccyt8kPu.o
+ .comment       0x000000000000000f       0x10 /tmp/cc6dcKPu.o
+
+.riscv.attributes
+                0x0000000000000000       0x53
+ .riscv.attributes
+                0x0000000000000000       0x53 /tmp/ccim0dK3.o
+ .riscv.attributes
+                0x0000000000000053       0x53 /tmp/ccQaZGaR.o
+ .riscv.attributes
+                0x00000000000000a6       0x53 /tmp/ccV794OJ.o
+ .riscv.attributes
+                0x00000000000000f9       0x53 /tmp/ccTgTTLO.o
+ .riscv.attributes
+                0x000000000000014c       0x53 /tmp/ccEJ0SLO.o
+ .riscv.attributes
+                0x000000000000019f       0x53 /tmp/ccH9xE6c.o
+ .riscv.attributes
+                0x00000000000001f2       0x53 /tmp/ccyt8kPu.o
+ .riscv.attributes
+                0x0000000000000245       0x53 /tmp/cc6dcKPu.o

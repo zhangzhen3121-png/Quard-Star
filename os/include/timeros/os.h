@@ -32,6 +32,9 @@ extern void trap_init();
 
 
 extern int printf(const char *format, ...);
+extern size_t syscall(size_t id, reg_t arg1, reg_t arg2, reg_t arg3);
+extern size_t sys_write(size_t fd, const char* buf, size_t size);
+extern size_t sys_yield(void);
 
 
 

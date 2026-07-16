@@ -279,16 +279,8 @@ void kvminithart(){
     printk("satp val: %lx\n", SET_SATP(KernalPAgeTable.root_ppn.value));    
     w_satp(SET_SATP(KernalPAgeTable.root_ppn.value));
     sfence_vma();
-    
-    sbi_print_char('O');
-    sbi_print_char('K');
-    sbi_print_char('\n');
-    
     uint64_t satp = r_satp();
     printk("Satp: %lx \n",satp);
-
-
-    while (1);
 }
 
 

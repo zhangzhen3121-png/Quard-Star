@@ -1,7 +1,5 @@
 #include"os.h"
 
-extern size_t sys_write(size_t fd, const char* buf, size_t size);
-
 static char out_buf[1024];
 
 static size_t sys_printf(const char* buf){
