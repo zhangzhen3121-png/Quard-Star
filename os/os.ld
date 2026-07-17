@@ -8,10 +8,17 @@ MEMORY
 
 SECTIONS
 {
+    skernal = .;
     .text : {
+        *(.text.ENTRY)
+        . = ALIGN(4k);
+        trampoline = .;
+        *(.text.trampoline)
+        . = ALIGN(4k);
+        strampoline = .;
         *(.text .text.*)
-    . = ALIGN(0x1000);
-    PROVIDE(text_end = .);
+        . = ALIGN(0x1000);
+        PROVIDE(text_end = .);
     } > ram
 
     .rodata : {

@@ -1,3 +1,4 @@
+.section .text.trampline
 .global _alltrap
 .align 4
 _alltrap:
@@ -42,20 +43,39 @@ _alltrap:
     sd t0, 32*8(sp)
     sd t1, 33*8(sp)
 
+    ld t0, 34*8(sp) //skernal_satp
+    ld t1, 36*8(sp) //trap_handler
+
     csrr t2, sscratch
     sd t2, 2*8(sp)
+    
+    ld sp, 35*8(sp) //skernal_sp
 
-    mv a0, sp
+    csrw satp, t0
+    sfence.vma
 
-    call trap_hanlder
+    jr   t1
 
 
 .global _restore
 .align 4
 _restore:
+    /*返回用户空间时，有两个参数，a0  用户空间的trap_context上下文地址,所有进程用户空间都一样，为次高页帧，
+                                a1  返回的用户空间的根页表物理地址，保存在TCB块中
+    */
+    csrw satp, a1
+    sfence.vma
+    csrw sscratch, a0
+    mv a0, sp
+
+    ld t0, 32*8(sp)
+    ld t1, 33*8(sp)
+
+    csrw sstatus, t0
+    csrw sepc, t1
 
     ld x1, 1*8(sp)
-    #ld x2, 2*8(sp)
+    # ld x2, 2*8(sp)
     ld x3, 3*8(sp)
     ld x4, 4*8(sp)
     ld x5, 5*8(sp)
@@ -86,18 +106,8 @@ _restore:
     ld x30, 30*8(sp)
     ld x31, 31*8(sp)
 
-    ld t0, 32*8(sp)
-    ld t1, 33*8(sp)
-    ld t2, 2*8(sp)
-
-    csrw sstatus, t0
-    csrw sepc, t1
-    csrw sscratch, t2
-
-    addi sp, sp, 34*8
-
-    csrrw sp, sscratch, sp
-
+    ld sp, 2*8(sp)
+    
     sret
 
     .end

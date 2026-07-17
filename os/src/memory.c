@@ -1,9 +1,13 @@
 #include"memory.h"
 #include"stack.h"
 
+extern char trampoline[];
+extern char strampolinep[];
 
-static StrackFrameAllocator FrameAllocatorImpl;
-static PageTable KernalPAgeTable;
+extern void proc_mapstacks(PageTable* kpgtbl);
+
+StrackFrameAllocator FrameAllocatorImpl;
+PageTable KernalPAgeTable;
 
 extern char text_end[];
 extern char kernal_end[];
@@ -204,6 +208,10 @@ PageTable kvmmake(){
     printk("kernal text map \n");
     memory_map(&pt, VirtAddr_from_u64((uint64_t)text_end), PhysAddr_form_u64((uint64_t)text_end), PHYSTOP-(uint64_t)text_end, PTE_R | PTE_W | PTE_A | PTE_D);
     printk("data and memory map \n");
+    memory_map(&pt,VirtAddr_from_u64(TRAMPOLINE),PhysAddr_form_u64((uint64_t)trampoline),PAGE_SIZE,PTE_R|PTE_X);
+    printk("trampoline trap page map \n");
+    proc_mapstacks(&pt);
+    printk("task stacks map \n");
     return pt;
 }
 

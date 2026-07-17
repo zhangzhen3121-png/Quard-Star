@@ -3,11 +3,12 @@
 
 #include"types.h"
 
+
 typedef struct pt_regs_t
-{
+{   //在进入用户态时，上下文栈顶指针存放在sscratch寄存器
     reg_t x0;
     reg_t ra;
-    reg_t sp;
+    reg_t sp;//在进入内核态时保存用户栈指针
     reg_t gp;
     reg_t tp;
     reg_t t0;
@@ -36,10 +37,14 @@ typedef struct pt_regs_t
     reg_t t3;
     reg_t t4;
     reg_t t5;
-    reg_t t6;
+    reg_t t6;//31
 
     reg_t sstatus;
-    reg_t sepc;
+    reg_t sepc; //33
+
+    reg_t kernal_satp;//34
+    reg_t kernal_sa;
+    reg_t trap_handler
 }pt_regs;
 
 

@@ -1,17 +1,16 @@
 #include"task.h"
-
+#include"memory.h"
 
 struct TaskControlBlock tasks[MAX_TASKS];
 uint8_t UserStacks[MAX_TASKS][USER_STACK_SIZE];
 uint8_t KernalStacks[MAX_TASKS][USER_STACK_SIZE];
 
 
-
-
 static uint32_t _top = 0;
 static uint32_t _current = 0;
 
-
+extern StrackFrameAllocator FrameAllocatorImpl;
+extern PageTable KernalPAgeTable;
 
 
 void task_creat(void(*task_entry)(void)){
@@ -87,4 +86,17 @@ void run_first_task(){
     printk("switch \n\n");
     __switch(&curr_ctx_ptr,next_ctx_ptr);
     printk("switch feild \n\n");
+}
+
+PhysPageNum kalloc(){
+    PhysPageNum ppn = StrackFrameAllocator_alloc(&FrameAllocatorImpl);
+    return ppn;
+}
+
+void proc_mapstacks(PageTable* kpgtbl){
+    for(int i=0;i<MAX_TASKS;i++){
+        PhysAddr pa = PhysAddr_from_PhysPageNum(kalloc());
+        VirtAddr va = VirtAddr_from_u64(KSTACK(i));
+        memory_map(kpgtbl,va,pa,PAGE_SIZE,PTE_R|PTE_W);
+    }
 }
