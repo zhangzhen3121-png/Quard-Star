@@ -1,10 +1,8 @@
 #include"task.h"
 #include"memory.h"
+#include"load.h"
 
 struct TaskControlBlock tasks[MAX_TASKS];
-uint8_t UserStacks[MAX_TASKS][USER_STACK_SIZE];
-uint8_t KernalStacks[MAX_TASKS][USER_STACK_SIZE];
-
 
 static uint32_t _top = 0;
 static uint32_t _current = 0;
@@ -12,32 +10,37 @@ static uint32_t _current = 0;
 extern StrackFrameAllocator FrameAllocatorImpl;
 extern PageTable KernalPAgeTable;
 
+extern char trampoline[];
+extern char strampolinep[];
 
-void task_creat(void(*task_entry)(void)){
+
+extern void trap_return();
+extern void trap_hanlder();
+
+void app_init(int id){
+    TaskControlBlock* tcb = &tasks[id];
+    pt_regs* trap_ctx = tcb->trap_ctx_pa;
     
-    if(_top<MAX_TASKS){
-        pt_regs* ctx = (pt_regs*)(&KernalStacks[_top]+KERNAL_STACK_SIZE-sizeof(pt_regs));
-        reg_t user_sp =(reg_t)(&UserStacks[_top]+USER_STACK_SIZE);
+    reg_t sstatus = r_sstatus();
+    sstatus &= (0U<<8);
+    w_sstatus(sstatus);
 
-        reg_t sstatus = r_sstatus();
-        sstatus &= ~(0x1<<8);
-        w_sstatus(sstatus);
+    trap_ctx->sstatus = sstatus;
+    trap_ctx->sepc = tcb->entry;
+    trap_ctx->sp = tcb->ustack;
+    trap_ctx->kernal_sp = tcb->kstack;
+    trap_ctx->kernal_satp =PhysAddr_from_PhysPageNum(KernalPAgeTable.root_ppn).value;
+    trap_ctx->trap_handler = (uint64_t)trap_hanlder;
 
-        ctx->sstatus = sstatus;
-        ctx->sepc = (reg_t)task_entry;
-        ctx->sp = user_sp;
-        
-        tasks[_top].task_context = tcx_init((reg_t)ctx);
-        tasks[_top].task_state = Ready;
-        _top++;
-    }
+    tcb->task_context = tcx_init((reg_t)trap_ctx);
+    tcb->task_state = Ready;
+    
 }
-
 
 struct TaskContext tcx_init(reg_t kernal_ptr){
     struct TaskContext tcx;
 
-    tcx.ra = _restore;
+    tcx.ra = trap_return;
     tcx.sp = kernal_ptr;
     tcx.s0 = 0;
     tcx.s1 = 0;
@@ -88,15 +91,58 @@ void run_first_task(){
     printk("switch feild \n\n");
 }
 
-PhysPageNum kalloc(){
-    PhysPageNum ppn = StrackFrameAllocator_alloc(&FrameAllocatorImpl);
-    return ppn;
-}
 
 void proc_mapstacks(PageTable* kpgtbl){
     for(int i=0;i<MAX_TASKS;i++){
         PhysAddr pa = PhysAddr_from_PhysPageNum(kalloc());
         VirtAddr va = VirtAddr_from_u64(KSTACK(i));
         memory_map(kpgtbl,va,pa,PAGE_SIZE,PTE_R|PTE_W);
+        tasks[i].kstack = va.value;
     }
+}
+
+void proc_trap(TaskControlBlock* tcb){
+
+    
+    //映射trap上下文页
+    PhysAddr pa = PhysAddr_from_PhysPageNum(kalloc());
+    memory_map(&tcb->pagetable, VirtAddr_from_u64(TRAPCONTEXT), pa, PAGE_SIZE, PTE_U|PTE_R|PTE_W);
+    tcb->trap_ctx_pa = (pt_regs*)pa.value;
+
+    memset((void*)TRAPCONTEXT, 0, PAGE_SIZE);
+}
+
+
+void proc_pagetable(TaskControlBlock* tcb){
+    
+    tcb->pagetable.root_ppn = kalloc();
+
+    //映射trampline跳板页
+    memory_map(&tcb->pagetable, VirtAddr_from_u64(TRAMPOLINE), PhysAddr_form_u64((uint64_t)trampoline), PAGE_SIZE, PTE_U|PTE_R|PTE_X);
+
+
+
+}
+
+TaskControlBlock* task_creat_pt(int id){
+
+    if(id>=MAX_TASKS||_top>=MAX_TASKS)return NULL;
+    
+    proc_pagetable(&tasks[id]);
+    proc_trap(&tasks[id]);
+    _top++;
+
+    return &tasks[id];
+}
+
+TaskControlBlock* task_get_current(){
+    return &tasks[_current];
+}
+
+uint64_t current_user_token(){
+    return PhysAddr_from_PhysPageNum(tasks[_current].pagetable.root_ppn).value;
+}
+
+PageTable* current_user_pagetable(){
+    return &(tasks[_current].pagetable);
 }

@@ -37,11 +37,12 @@
 #define PTE_A (1<<6)    //访问标志位
 #define PTE_D (1<<7)    //脏位
 
-#define MAXVA   (1L << (9 + 9 + 9 + 12 - 1))
-#define TRAMPOLINE (MAXVA-PAGE_SIZE)
-#define KSTACK(p)  (TRAMPOLINE-((p)+1)*2*PAGE_SIZE)
+#define MAXVA       (1L << (9 + 9 + 9 + 12 - 1))
+#define TRAMPOLINE  (MAXVA-PAGE_SIZE)
+#define TRAPCONTEXT (MAXVA-2*PAGE_SIZE)
+#define KSTACK(p)   (TRAMPOLINE-((p)+1)*2*PAGE_SIZE)
 
-
+#define GROUNDUP(p) (((p) + PAGE_SIZE - 1) & ~(PAGE_SIZE - 1)) 
 
 typedef struct{
     uint64_t value;
@@ -80,9 +81,6 @@ typedef struct{
 
 
 
-
-
-
 PhysAddr PhysAddr_form_u64(uint64_t v);
 VirtAddr VirtAddr_from_u64(uint64_t v);
 PhysPageNum PhysPageNum_from_u64(uint64_t v);
@@ -117,6 +115,7 @@ void memory_unmap(PageTable* root_pt, VirtAddr va, uint64_t size);
 
 
 void FrameAllocator_init();
+PhysPageNum kalloc();
 PageTable kvmmake();
 void kvminit();
 void kvminithart();

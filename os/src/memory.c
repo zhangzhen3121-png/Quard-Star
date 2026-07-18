@@ -277,6 +277,13 @@ void FrameAllocator_init(){
     printk("physaddr end: %lx\r\n",PhysAddr_form_u64(PHYSTOP).value);
 }
 
+
+PhysPageNum kalloc(){
+    PhysPageNum ppn = StrackFrameAllocator_alloc(&FrameAllocatorImpl);
+    return ppn;
+}
+
+
 void kvminit(){
     KernalPAgeTable = kvmmake();
 }

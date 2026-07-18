@@ -5,10 +5,12 @@ CC = $(CROSS_COMPILE)gcc
 OBJCOPY = $(CROSS_COMPILE)objcopy
 OBJDUMP = $(CROSS_COMPILE)objdump
 
-INCLUDE := -I ../include/timeros
+INCLUDE := -I ../include/timeros -I ../include
 
 
-LIB = $(wildcard ../lib/*.c)
+LIB =  ../lib/printf.c \
+       ../lib/string.c \
+       ../lib/syscall.c
 
 
 write: write.c ${LIB}

@@ -7,7 +7,7 @@
 #include"types.h"
 #include"context.h"
 #include"riscv.h"
-#include"task.h"
+// #include"task.h"
 
 #define USER_STACK_SIZE     4096*2
 #define KERNAL_STACK_SIZE   4096*2

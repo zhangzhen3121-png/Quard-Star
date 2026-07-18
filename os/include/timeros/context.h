@@ -43,7 +43,7 @@ typedef struct pt_regs_t
     reg_t sepc; //33
 
     reg_t kernal_satp;//34
-    reg_t kernal_sa;
+    reg_t kernal_sp;
     reg_t trap_handler
 }pt_regs;
 

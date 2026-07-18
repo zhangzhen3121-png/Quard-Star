@@ -1,4 +1,10 @@
 #include "os.h"
+#include "task.h"
+
+
+
+
+
 
 size_t syscall(size_t id, reg_t arg1, reg_t arg2, reg_t arg3) {
     long ret;
