@@ -21,8 +21,9 @@ char* physaddr_from_uservritaddr(const char* buf, size_t len){
 
 void __sys_write(size_t fd, const char* buf, size_t len){
     if(fd==1){
+        // printk("sys_write: ");
         char* kbuf = physaddr_from_uservritaddr(buf,len);
-        printk(buf);
+        printk(kbuf);
     }
     else{
         printk("unsupport fd id sys_wirte \r\n");
@@ -51,32 +52,37 @@ void __SYSCALL(size_t id, reg_t arg1, reg_t arg2, reg_t arg3){
 
 
 void set_user_entry(){
-    w_stvec((reg_t)task_get_current()->entry);
+    w_stvec((reg_t)TRAMPOLINE);
 }
 
 void trap_return(){
-
+    // printk("trap return \n");
     set_user_entry();
-    pt_regs* ctx = task_get_current()->trap_ctx_pa;
-    uint64_t upt_addr =  PhysAddr_from_PhysPageNum(task_get_current()->pagetable.root_ppn).value;
+    uint64_t ctx_va = TRAPCONTEXT;
+    uint64_t upt_addr = SET_SATP(task_get_current()->pagetable.root_ppn.value);
     uint64_t restore_va = TRAMPOLINE+(_restore-_alltrap);
+    // printk("current task pagetable: %lx\n",task_get_current()->pagetable.root_ppn.value);
+
+    // PageTableEntry * trap_pte = Find_Pte(&task_get_current()->pagetable, VirtPageNum_from_VirtAddr(VirtAddr_from_u64(TRAPCONTEXT)));
+    // uint8_t trap_pte_flag = trap_pte->bits & 0xFF;
+    // printk("trap pte flag: %x\n",trap_pte_flag);
+
     asm volatile(
         "fence.i\n\t"
         "mv a0, %0\n\t"
         "mv a1, %1\n\t"
         "jr %2\n\t"
         :
-        :"r"(ctx),
+        :"r"(ctx_va),
          "r"(upt_addr),
          "r"(restore_va)
         :"a0","a1"
     );
-
 }
 
 
 void trap_hanlder(){
-
+    // printk("enter trap \r\n");
     pt_regs* ctx = task_get_current()->trap_ctx_pa;
     
     reg_t cause = r_scause();
@@ -112,5 +118,5 @@ void trap_hanlder(){
 
 
 void trap_init(){
-    w_stvec((reg_t)_alltrap);
+    w_stvec((reg_t)TRAMPOLINE);
 }

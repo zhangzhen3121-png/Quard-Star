@@ -11,7 +11,6 @@
 
 __switch:
 
-    
     sd ra, 0(a0)
     sd sp, 1*8(a0)
     

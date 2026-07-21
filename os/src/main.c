@@ -13,8 +13,10 @@ void os_main() {
     FrameAllocator_init();
     kvminit();
 
+  
     load_app(0);
     app_init(0);
+    
     load_app(1);
     app_init(1);
 

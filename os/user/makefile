@@ -1,5 +1,5 @@
 CROSS_COMPILE ?= riscv64-unknown-elf-
-CFLAGS = -nostdlib -fno-builtin
+CFLAGS = -nostdlib -fno-builtin -g3 -O0
 
 CC = $(CROSS_COMPILE)gcc
 OBJCOPY = $(CROSS_COMPILE)objcopy

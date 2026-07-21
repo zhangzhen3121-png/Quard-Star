@@ -52,10 +52,10 @@ void load_app(int id){
         elf64_phdr* phdr = matedata.addr + ehdr_t->e_phoff + i*ehdr_t->e_phentsize;
         if(phdr->p_type != PT_LOAD)continue;
         uint8_t flag = PTE_U|flag_to_mapflag(phdr->p_flags);
-        
-        for(uint64_t j=0;j<phdr->p_memsz+PAGE_SIZE-1;j+=PAGE_SIZE){
+        uint64_t memsize = GROUNDUP(phdr->p_memsz);
+        for(uint64_t j=0; j<memsize; j+=PAGE_SIZE){
             PhysPageNum ppn = kalloc();
-            memcpy((void*)PhysAddr_from_PhysPageNum(ppn).value, (void*)(matedata.addr+phdr->p_offset), PAGE_SIZE);
+            memcpy((void*)PhysAddr_from_PhysPageNum(ppn).value, (void*)(matedata.addr+phdr->p_offset + j), PAGE_SIZE);
             memory_map(&tcb->pagetable, VirtAddr_from_u64(phdr->p_vaddr + j), PhysAddr_from_PhysPageNum(ppn), PAGE_SIZE, flag);
         }
 

@@ -14,5 +14,5 @@ $SHELL_FOLDER/output/qemu/bin/qemu-system-riscv64 \
 --serial vc:$DEFAULT_VC \
 --monitor vc:$DEFAULT_VC  \
 --parallel none \
-#-s -S
+-s -S
 #-nographic --parallel none \

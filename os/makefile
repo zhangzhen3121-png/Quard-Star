@@ -1,5 +1,5 @@
 CROSS_COMPILE ?= riscv64-unknown-elf-
-CFLAGS = -nostdlib -fno-builtin -mcmodel=medany
+CFLAGS = -nostdlib -fno-builtin -mcmodel=medany -g
 
 CC = $(CROSS_COMPILE)gcc
 OBJCOPY = $(CROSS_COMPILE)objcopy
@@ -33,4 +33,7 @@ $(OS_DIR)/os.bin: $(OS_DIR)/os.elf
 	$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $<
 
 clean:
-	rm -f $(OBJS) $(OS_DIR)/os.elf $(OS_DIR)/os.bin $(OS_DIR)/os.map
+	rm -f $(OBJS)  $(OS_DIR)/os.bin 
+
+cleanall:
+	rm -f $(OBJS)  $(OS_DIR)/os.bin $(OS_DIR)/os.map $(OS_DIR)/os.elf 

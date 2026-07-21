@@ -22,17 +22,17 @@ void app_init(int id){
     pt_regs* trap_ctx = tcb->trap_ctx_pa;
     
     reg_t sstatus = r_sstatus();
-    sstatus &= (0U<<8);
-    w_sstatus(sstatus);
+    sstatus &= ~(1U<<8);
+    //w_sstatus(sstatus);
 
     trap_ctx->sstatus = sstatus;
     trap_ctx->sepc = tcb->entry;
     trap_ctx->sp = tcb->ustack;
     trap_ctx->kernal_sp = tcb->kstack;
-    trap_ctx->kernal_satp =PhysAddr_from_PhysPageNum(KernalPAgeTable.root_ppn).value;
+    trap_ctx->kernal_satp = SET_SATP(KernalPAgeTable.root_ppn.value);
     trap_ctx->trap_handler = (uint64_t)trap_hanlder;
 
-    tcb->task_context = tcx_init((reg_t)trap_ctx);
+    tcb->task_context = tcx_init((reg_t)tcb->kstack);
     tcb->task_state = Ready;
     
 }
@@ -61,14 +61,17 @@ struct TaskContext tcx_init(reg_t kernal_ptr){
 
 void schedule(){
     _current = _current%_top;
+    printk("current task: %d  top: %d\n",_current, _top);
     TaskContext* cur_tcx_ptr = &tasks[_current].task_context;
     TaskContext* nex_tcx_ptr = 0x0;
     for(int i=1;i<_top;i++){
         if(tasks[(_current+i)%_top].task_state == Ready){
+            printk("next task: %d\n",(_current+i)%_top);
             tasks[_current].task_state = Ready;
             nex_tcx_ptr = &tasks[(_current+i)%_top].task_context;
             tasks[(_current+i)%_top].task_state = Runing;
             _current += i;
+            _current = _current%_top;
             break;
         }
     }
@@ -78,10 +81,12 @@ void schedule(){
     else{
         printk("No ready task !");
     }
+    printk("here \n");
 }
 
 
 void run_first_task(){
+    printk("run first task  top: %d \n",_top);
     tasks[0].task_state = Runing;
     _current  = 0;
     TaskContext* next_ctx_ptr = &tasks[_current].task_context;
@@ -97,7 +102,7 @@ void proc_mapstacks(PageTable* kpgtbl){
         PhysAddr pa = PhysAddr_from_PhysPageNum(kalloc());
         VirtAddr va = VirtAddr_from_u64(KSTACK(i));
         memory_map(kpgtbl,va,pa,PAGE_SIZE,PTE_R|PTE_W);
-        tasks[i].kstack = va.value;
+        tasks[i].kstack = va.value+PAGE_SIZE;
     }
 }
 
@@ -106,10 +111,19 @@ void proc_trap(TaskControlBlock* tcb){
     
     //映射trap上下文页
     PhysAddr pa = PhysAddr_from_PhysPageNum(kalloc());
-    memory_map(&tcb->pagetable, VirtAddr_from_u64(TRAPCONTEXT), pa, PAGE_SIZE, PTE_U|PTE_R|PTE_W);
-    tcb->trap_ctx_pa = (pt_regs*)pa.value;
 
-    memset((void*)TRAPCONTEXT, 0, PAGE_SIZE);
+    if(pa.value==0){
+        printk("alloc trap page failed \r\n");
+        return;
+    }
+    memory_map(&tcb->pagetable, VirtAddr_from_u64(TRAPCONTEXT), pa, PAGE_SIZE, PTE_R|PTE_W);
+
+    PageTableEntry * trap_pte = Find_Pte(&tcb->pagetable, VirtPageNum_from_VirtAddr(VirtAddr_from_u64(TRAPCONTEXT)));
+    uint8_t trap_pte_flag = trap_pte->bits & 0xFF;
+    printk("pagetable %lx trap pte flag: %x\n",tcb->pagetable.root_ppn.value,trap_pte_flag);
+
+    tcb->trap_ctx_pa = (pt_regs*)pa.value;
+    memset((void*)pa.value, 0, PAGE_SIZE);
 }
 
 
@@ -118,10 +132,7 @@ void proc_pagetable(TaskControlBlock* tcb){
     tcb->pagetable.root_ppn = kalloc();
 
     //映射trampline跳板页
-    memory_map(&tcb->pagetable, VirtAddr_from_u64(TRAMPOLINE), PhysAddr_form_u64((uint64_t)trampoline), PAGE_SIZE, PTE_U|PTE_R|PTE_X);
-
-
-
+    memory_map(&tcb->pagetable, VirtAddr_from_u64(TRAMPOLINE), PhysAddr_form_u64((uint64_t)trampoline), PAGE_SIZE, PTE_R|PTE_X);
 }
 
 TaskControlBlock* task_creat_pt(int id){
@@ -130,8 +141,9 @@ TaskControlBlock* task_creat_pt(int id){
     
     proc_pagetable(&tasks[id]);
     proc_trap(&tasks[id]);
+    printk("creat task %d pegetable: %lx\n",id, tasks[id].pagetable.root_ppn.value);
     _top++;
-
+    // printk("top %d \n",_top);
     return &tasks[id];
 }
 

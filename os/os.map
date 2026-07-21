@@ -1,0 +1,465 @@
+
+内存配置
+
+名称           来源             长度             属性
+ram              0x0000000080200000 0x0000000008000000 axrl!w
+*default*        0x0000000000000000 0xffffffffffffffff
+
+链结器命令稿和内存映射
+
+LOAD /home/zz/quard-start/Quard-Star/os/src/entry.o
+LOAD /home/zz/quard-start/Quard-Star/os/src/kernaltrap.o
+LOAD /home/zz/quard-start/Quard-Star/os/src/link_app.o
+LOAD /home/zz/quard-start/Quard-Star/os/src/switch.o
+LOAD /home/zz/quard-start/Quard-Star/os/src/main.o
+LOAD /home/zz/quard-start/Quard-Star/os/src/memory.o
+LOAD /home/zz/quard-start/Quard-Star/os/src/task.o
+LOAD /home/zz/quard-start/Quard-Star/os/src/timer.o
+LOAD /home/zz/quard-start/Quard-Star/os/src/trap.o
+LOAD /home/zz/quard-start/Quard-Star/os/lib/arrsert.o
+LOAD /home/zz/quard-start/Quard-Star/os/lib/load.o
+LOAD /home/zz/quard-start/Quard-Star/os/lib/printf.o
+LOAD /home/zz/quard-start/Quard-Star/os/lib/printk.o
+LOAD /home/zz/quard-start/Quard-Star/os/lib/sbi.o
+LOAD /home/zz/quard-start/Quard-Star/os/lib/stack.o
+LOAD /home/zz/quard-start/Quard-Star/os/lib/string.o
+LOAD /home/zz/quard-start/Quard-Star/os/lib/syscall.o
+                0x0000000000000000                skernal = .
+
+.text           0x0000000080200000     0x5000
+ *(.text.ENTRY)
+ .text.ENTRY    0x0000000080200000        0xe /home/zz/quard-start/Quard-Star/os/src/entry.o
+                0x0000000080200000                _start
+                0x0000000080201000                . = ALIGN (0x1000)
+ *fill*         0x000000008020000e      0xff2 
+                0x0000000080201000                trampoline = .
+ *(.text.trampoline)
+ .text.trampoline
+                0x0000000080201000       0xda /home/zz/quard-start/Quard-Star/os/src/kernaltrap.o
+                0x0000000080201000                _alltrap
+                0x0000000080201070                _restore
+                0x0000000080202000                . = ALIGN (0x1000)
+ *fill*         0x00000000802010da      0xf26 
+                0x0000000080202000                strampoline = .
+ *(.text .text.*)
+ .text          0x0000000080202000        0x0 /home/zz/quard-start/Quard-Star/os/src/entry.o
+ .text          0x0000000080202000        0x0 /home/zz/quard-start/Quard-Star/os/src/kernaltrap.o
+ .text          0x0000000080202000        0x2 /home/zz/quard-start/Quard-Star/os/src/link_app.o
+ .text          0x0000000080202002       0x6a /home/zz/quard-start/Quard-Star/os/src/switch.o
+                0x0000000080202002                __switch
+ .text          0x000000008020206c       0x5e /home/zz/quard-start/Quard-Star/os/src/main.o
+                0x000000008020206c                os_main
+ .text          0x00000000802020ca      0xa30 /home/zz/quard-start/Quard-Star/os/src/memory.o
+                0x0000000080202110                PhysAddr_form_u64
+                0x0000000080202134                VirtAddr_from_u64
+                0x0000000080202158                PhysPageNum_from_u64
+                0x000000008020217c                VirtPageNum_from_u64
+                0x00000000802021a2                u64_from_PhysAddr
+                0x00000000802021b8                u64_from_VirtAddr
+                0x00000000802021ce                u64_from_PhysPageNum
+                0x00000000802021e4                u64_from_VirtPageNum
+                0x00000000802021fa                PhysPageNum_form_PhysAddr
+                0x000000008020221a                VirtPageNum_from_VirtAddr
+                0x000000008020223a                PhysAddr_from_PhysPageNum
+                0x000000008020225a                VirtAddr_from_VirtPageNum
+                0x000000008020227a                PageTableEntry_clean
+                0x0000000080202290                PhysPageNum_from_PageTableEntry
+                0x00000000802022b8                PageTableEntryPtr_from_PhysPageNum
+                0x00000000802022e0                PageTableEntry_from_PhysPageNum
+                0x0000000080202300                PageTableEntry_is_empty
+                0x000000008020232e                PageTableEntry_new
+                0x000000008020236a                PTindex_form_VirtPageNum
+                0x00000000802023c6                Find_Pte_Creat
+                0x000000008020248c                Find_Pte
+                0x0000000080202532                PageTable_map
+                0x00000000802025b4                PageTable_unmap
+                0x000000008020261a                memory_map
+                0x00000000802026aa                memory_unmap
+                0x000000008020270e                kvmmake
+                0x000000008020282e                StrackFrameAllocator_alloc
+                0x00000000802028b8                StrackFrameAllocator_free
+                0x000000008020295e                StrackFrameAllocator_Init
+                0x000000008020299c                FrameAllocator_init
+                0x0000000080202a32                kalloc
+                0x0000000080202a5a                kvminit
+                0x0000000080202a7c                kvminithart
+ .text          0x0000000080202afa      0x790 /home/zz/quard-start/Quard-Star/os/src/task.o
+                0x0000000080202b14                app_init
+                0x0000000080202bfe                tcx_init
+                0x0000000080202c76                schedule
+                0x0000000080202eb4                run_first_task
+                0x0000000080202f44                proc_mapstacks
+                0x0000000080202fe8                proc_trap
+                0x00000000802030ba                proc_pagetable
+                0x0000000080203118                task_creat_pt
+                0x00000000802031e8                task_get_current
+                0x0000000080203218                current_user_token
+                0x0000000080203254                current_user_pagetable
+ .text          0x000000008020328a      0x1b0 /home/zz/quard-start/Quard-Star/os/src/timer.o
+                0x000000008020330c                time_irq_enable
+                0x000000008020333a                time_irq_disable
+                0x0000000080203368                timer_init
+                0x00000000802033ea                set_next_trigger
+ .text          0x000000008020343a      0x2d2 /home/zz/quard-start/Quard-Star/os/src/trap.o
+                0x000000008020346e                physaddr_from_uservritaddr
+                0x00000000802034ea                __sys_write
+                0x0000000080203538                __sys_yield
+                0x000000008020354e                __SYSCALL
+                0x00000000802035b2                set_user_entry
+                0x00000000802035d2                trap_return
+                0x000000008020363c                trap_hanlder
+                0x00000000802036ec                trap_init
+ .text          0x000000008020370c       0x90 /home/zz/quard-start/Quard-Star/os/lib/arrsert.o
+                0x000000008020372a                assert_failure
+ .text          0x000000008020379c      0x36c /home/zz/quard-start/Quard-Star/os/lib/load.o
+                0x000000008020379c                flag_to_mapflag
+                0x0000000080203822                get_app_num
+                0x000000008020383c                get_app_data
+                0x00000000802038c0                load_app
+ .text          0x0000000080203b08      0x52a /home/zz/quard-start/Quard-Star/os/lib/printf.o
+                0x0000000080203fde                printf
+ .text          0x0000000080204032      0x536 /home/zz/quard-start/Quard-Star/os/lib/printk.o
+                0x0000000080204514                printk
+ .text          0x0000000080204568       0xfc /home/zz/quard-start/Quard-Star/os/lib/sbi.o
+                0x0000000080204568                sbi_call
+                0x00000000802045f2                sbi_print_char
+                0x0000000080204632                sbi_set_time
+ .text          0x0000000080204664      0x180 /home/zz/quard-start/Quard-Star/os/lib/stack.o
+                0x0000000080204664                Stack_init
+                0x0000000080204684                is_empty
+                0x00000000802046ac                is_full
+                0x00000000802046da                push
+                0x000000008020473e                pop
+                0x00000000802047a0                top
+ .text          0x00000000802047e4       0xd6 /home/zz/quard-start/Quard-Star/os/lib/string.o
+                0x00000000802047e4                strlen
+                0x000000008020481a                memcpy
+                0x0000000080204870                memset
+ .text          0x00000000802048ba       0x9c /home/zz/quard-start/Quard-Star/os/lib/syscall.o
+                0x00000000802048ba                syscall
+                0x00000000802048fe                sys_write
+                0x0000000080204934                sys_yield
+                0x0000000080205000                . = ALIGN (0x1000)
+ *fill*         0x0000000080204956      0x6aa 
+                0x0000000080205000                PROVIDE (text_end = .)
+
+.rodata         0x0000000080205000      0x4af
+ *(.rodata .rodata.*)
+ .rodata        0x0000000080205000       0x1e /home/zz/quard-start/Quard-Star/os/src/main.o
+ *fill*         0x000000008020501e        0x2 
+ .rodata        0x0000000080205020      0x174 /home/zz/quard-start/Quard-Star/os/src/memory.o
+ *fill*         0x0000000080205194        0x4 
+ .rodata        0x0000000080205198       0xee /home/zz/quard-start/Quard-Star/os/src/task.o
+ *fill*         0x0000000080205286        0x2 
+ .rodata        0x0000000080205288       0x6b /home/zz/quard-start/Quard-Star/os/src/trap.o
+ *fill*         0x00000000802052f3        0x5 
+ .rodata        0x00000000802052f8       0x74 /home/zz/quard-start/Quard-Star/os/lib/arrsert.o
+ *fill*         0x000000008020536c        0x4 
+ .rodata        0x0000000080205370       0x5f /home/zz/quard-start/Quard-Star/os/lib/load.o
+ *fill*         0x00000000802053cf        0x1 
+ .rodata        0x00000000802053d0       0x6f /home/zz/quard-start/Quard-Star/os/lib/printf.o
+ *fill*         0x000000008020543f        0x1 
+ .rodata        0x0000000080205440       0x6f /home/zz/quard-start/Quard-Star/os/lib/printk.o
+
+.rela.dyn       0x00000000802054b0        0x0
+ .rela.text     0x00000000802054b0        0x0 /home/zz/quard-start/Quard-Star/os/src/entry.o
+
+.data           0x00000000802054b0     0x5920
+                0x0000000080206000                . = ALIGN (0x1000)
+ *fill*         0x00000000802054b0      0xb50 
+ *(.sdata .sdata.*)
+ *(.data .data.*)
+ .data          0x0000000080206000        0x0 /home/zz/quard-start/Quard-Star/os/src/entry.o
+ .data          0x0000000080206000        0x0 /home/zz/quard-start/Quard-Star/os/src/kernaltrap.o
+ .data          0x0000000080206000     0x4dd0 /home/zz/quard-start/Quard-Star/os/src/link_app.o
+                0x0000000080206000                _num_app
+                0x0000000080206020                app_0_start
+                0x00000000802086f8                app_0_end
+                0x00000000802086f8                app_1_start
+                0x000000008020add0                app_1_end
+ .data          0x000000008020add0        0x0 /home/zz/quard-start/Quard-Star/os/src/switch.o
+ .data          0x000000008020add0        0x0 /home/zz/quard-start/Quard-Star/os/src/main.o
+ .data          0x000000008020add0        0x0 /home/zz/quard-start/Quard-Star/os/src/memory.o
+ .data          0x000000008020add0        0x0 /home/zz/quard-start/Quard-Star/os/src/task.o
+ .data          0x000000008020add0        0x0 /home/zz/quard-start/Quard-Star/os/src/timer.o
+ .data          0x000000008020add0        0x0 /home/zz/quard-start/Quard-Star/os/src/trap.o
+ .data          0x000000008020add0        0x0 /home/zz/quard-start/Quard-Star/os/lib/arrsert.o
+ .data          0x000000008020add0        0x0 /home/zz/quard-start/Quard-Star/os/lib/load.o
+ .data          0x000000008020add0        0x0 /home/zz/quard-start/Quard-Star/os/lib/printf.o
+ .data          0x000000008020add0        0x0 /home/zz/quard-start/Quard-Star/os/lib/printk.o
+ .data          0x000000008020add0        0x0 /home/zz/quard-start/Quard-Star/os/lib/sbi.o
+ .data          0x000000008020add0        0x0 /home/zz/quard-start/Quard-Star/os/lib/stack.o
+ .data          0x000000008020add0        0x0 /home/zz/quard-start/Quard-Star/os/lib/string.o
+ .data          0x000000008020add0        0x0 /home/zz/quard-start/Quard-Star/os/lib/syscall.o
+                [!provide]                        PROVIDE (_data_end = .)
+
+.bss            0x000000008020add0    0x12db0
+ *(.sbss .sbss.*)
+ .sbss          0x000000008020add0        0x8 /home/zz/quard-start/Quard-Star/os/src/memory.o
+                0x000000008020add0                KernalPAgeTable
+ *(.bss .bss.*)
+ .bss           0x000000008020add8        0x0 /home/zz/quard-start/Quard-Star/os/src/entry.o
+ .bss.stack     0x000000008020add8    0x10000 /home/zz/quard-start/Quard-Star/os/src/entry.o
+                0x000000008020add8                boot_stack_low_bound
+                0x000000008021add8                boot_stack_top
+ .bss           0x000000008021add8        0x0 /home/zz/quard-start/Quard-Star/os/src/kernaltrap.o
+ .bss           0x000000008021add8        0x0 /home/zz/quard-start/Quard-Star/os/src/link_app.o
+ .bss           0x000000008021add8        0x0 /home/zz/quard-start/Quard-Star/os/src/switch.o
+ .bss           0x000000008021add8        0x0 /home/zz/quard-start/Quard-Star/os/src/main.o
+ .bss           0x000000008021add8     0x1f58 /home/zz/quard-start/Quard-Star/os/src/memory.o
+                0x000000008021add8                FrameAllocatorImpl
+ .bss           0x000000008021cd30      0x648 /home/zz/quard-start/Quard-Star/os/src/task.o
+                0x000000008021cd30                tasks
+ .bss           0x000000008021d378        0x8 /home/zz/quard-start/Quard-Star/os/src/timer.o
+ .bss           0x000000008021d380        0x0 /home/zz/quard-start/Quard-Star/os/src/trap.o
+ .bss           0x000000008021d380        0x0 /home/zz/quard-start/Quard-Star/os/lib/arrsert.o
+ .bss           0x000000008021d380        0x0 /home/zz/quard-start/Quard-Star/os/lib/load.o
+ .bss           0x000000008021d380      0x400 /home/zz/quard-start/Quard-Star/os/lib/printf.o
+ .bss           0x000000008021d780      0x400 /home/zz/quard-start/Quard-Star/os/lib/printk.o
+ .bss           0x000000008021db80        0x0 /home/zz/quard-start/Quard-Star/os/lib/sbi.o
+ .bss           0x000000008021db80        0x0 /home/zz/quard-start/Quard-Star/os/lib/stack.o
+ .bss           0x000000008021db80        0x0 /home/zz/quard-start/Quard-Star/os/lib/string.o
+ .bss           0x000000008021db80        0x0 /home/zz/quard-start/Quard-Star/os/lib/syscall.o
+ *(COMMON)
+                0x000000008021e000                . = ALIGN (0x1000)
+                0x000000008021e000                PROVIDE (kernal_end = .)
+OUTPUT(/home/zz/quard-start/Quard-Star/os/os.elf elf64-littleriscv)
+
+.riscv.attributes
+                0x0000000000000000       0x57
+ .riscv.attributes
+                0x0000000000000000       0x51 /home/zz/quard-start/Quard-Star/os/src/entry.o
+ .riscv.attributes
+                0x0000000000000051       0x55 /home/zz/quard-start/Quard-Star/os/src/kernaltrap.o
+ .riscv.attributes
+                0x00000000000000a6       0x51 /home/zz/quard-start/Quard-Star/os/src/link_app.o
+ .riscv.attributes
+                0x00000000000000f7       0x51 /home/zz/quard-start/Quard-Star/os/src/switch.o
+ .riscv.attributes
+                0x0000000000000148       0x53 /home/zz/quard-start/Quard-Star/os/src/main.o
+ .riscv.attributes
+                0x000000000000019b       0x57 /home/zz/quard-start/Quard-Star/os/src/memory.o
+ .riscv.attributes
+                0x00000000000001f2       0x57 /home/zz/quard-start/Quard-Star/os/src/task.o
+ .riscv.attributes
+                0x0000000000000249       0x57 /home/zz/quard-start/Quard-Star/os/src/timer.o
+ .riscv.attributes
+                0x00000000000002a0       0x57 /home/zz/quard-start/Quard-Star/os/src/trap.o
+ .riscv.attributes
+                0x00000000000002f7       0x53 /home/zz/quard-start/Quard-Star/os/lib/arrsert.o
+ .riscv.attributes
+                0x000000000000034a       0x53 /home/zz/quard-start/Quard-Star/os/lib/load.o
+ .riscv.attributes
+                0x000000000000039d       0x53 /home/zz/quard-start/Quard-Star/os/lib/printf.o
+ .riscv.attributes
+                0x00000000000003f0       0x53 /home/zz/quard-start/Quard-Star/os/lib/printk.o
+ .riscv.attributes
+                0x0000000000000443       0x53 /home/zz/quard-start/Quard-Star/os/lib/sbi.o
+ .riscv.attributes
+                0x0000000000000496       0x53 /home/zz/quard-start/Quard-Star/os/lib/stack.o
+ .riscv.attributes
+                0x00000000000004e9       0x53 /home/zz/quard-start/Quard-Star/os/lib/string.o
+ .riscv.attributes
+                0x000000000000053c       0x53 /home/zz/quard-start/Quard-Star/os/lib/syscall.o
+
+.comment        0x0000000000000000        0xf
+ .comment       0x0000000000000000        0xf /home/zz/quard-start/Quard-Star/os/src/main.o
+                                         0x10 (松开之前的大小)
+ .comment       0x000000000000000f       0x10 /home/zz/quard-start/Quard-Star/os/src/memory.o
+ .comment       0x000000000000000f       0x10 /home/zz/quard-start/Quard-Star/os/src/task.o
+ .comment       0x000000000000000f       0x10 /home/zz/quard-start/Quard-Star/os/src/timer.o
+ .comment       0x000000000000000f       0x10 /home/zz/quard-start/Quard-Star/os/src/trap.o
+ .comment       0x000000000000000f       0x10 /home/zz/quard-start/Quard-Star/os/lib/arrsert.o
+ .comment       0x000000000000000f       0x10 /home/zz/quard-start/Quard-Star/os/lib/load.o
+ .comment       0x000000000000000f       0x10 /home/zz/quard-start/Quard-Star/os/lib/printf.o
+ .comment       0x000000000000000f       0x10 /home/zz/quard-start/Quard-Star/os/lib/printk.o
+ .comment       0x000000000000000f       0x10 /home/zz/quard-start/Quard-Star/os/lib/sbi.o
+ .comment       0x000000000000000f       0x10 /home/zz/quard-start/Quard-Star/os/lib/stack.o
+ .comment       0x000000000000000f       0x10 /home/zz/quard-start/Quard-Star/os/lib/string.o
+ .comment       0x000000000000000f       0x10 /home/zz/quard-start/Quard-Star/os/lib/syscall.o
+
+.debug_line     0x0000000000000000     0x2a0f
+ .debug_line    0x0000000000000000       0x58 /home/zz/quard-start/Quard-Star/os/src/entry.o
+ .debug_line    0x0000000000000058      0x238 /home/zz/quard-start/Quard-Star/os/src/kernaltrap.o
+ .debug_line    0x0000000000000290       0x72 /home/zz/quard-start/Quard-Star/os/src/switch.o
+ .debug_line    0x0000000000000302       0xc5 /home/zz/quard-start/Quard-Star/os/src/main.o
+ .debug_line    0x00000000000003c7      0x932 /home/zz/quard-start/Quard-Star/os/src/memory.o
+ .debug_line    0x0000000000000cf9      0x4fb /home/zz/quard-start/Quard-Star/os/src/task.o
+ .debug_line    0x00000000000011f4      0x1c4 /home/zz/quard-start/Quard-Star/os/src/timer.o
+ .debug_line    0x00000000000013b8      0x2c5 /home/zz/quard-start/Quard-Star/os/src/trap.o
+ .debug_line    0x000000000000167d       0x9b /home/zz/quard-start/Quard-Star/os/lib/arrsert.o
+ .debug_line    0x0000000000001718      0x35b /home/zz/quard-start/Quard-Star/os/lib/load.o
+ .debug_line    0x0000000000001a73      0x5a7 /home/zz/quard-start/Quard-Star/os/lib/printf.o
+ .debug_line    0x000000000000201a      0x5b7 /home/zz/quard-start/Quard-Star/os/lib/printk.o
+ .debug_line    0x00000000000025d1       0xf9 /home/zz/quard-start/Quard-Star/os/lib/sbi.o
+ .debug_line    0x00000000000026ca      0x17c /home/zz/quard-start/Quard-Star/os/lib/stack.o
+ .debug_line    0x0000000000002846      0x121 /home/zz/quard-start/Quard-Star/os/lib/string.o
+ .debug_line    0x0000000000002967       0xa8 /home/zz/quard-start/Quard-Star/os/lib/syscall.o
+
+.debug_line_str
+                0x0000000000000000      0x472
+ .debug_line_str
+                0x0000000000000000       0x52 /home/zz/quard-start/Quard-Star/os/src/entry.o
+ .debug_line_str
+                0x0000000000000052        0xd /home/zz/quard-start/Quard-Star/os/src/kernaltrap.o
+                                         0x57 (松开之前的大小)
+ .debug_line_str
+                0x000000000000005f        0x9 /home/zz/quard-start/Quard-Star/os/src/switch.o
+                                         0x53 (松开之前的大小)
+ .debug_line_str
+                0x0000000000000068       0xa8 /home/zz/quard-start/Quard-Star/os/src/main.o
+                                        0x12b (松开之前的大小)
+ .debug_line_str
+                0x0000000000000110       0x92 /home/zz/quard-start/Quard-Star/os/src/memory.o
+                                        0x15a (松开之前的大小)
+ .debug_line_str
+                0x00000000000001a2       0x38 /home/zz/quard-start/Quard-Star/os/src/task.o
+                                        0x154 (松开之前的大小)
+ .debug_line_str
+                0x00000000000001da       0x35 /home/zz/quard-start/Quard-Star/os/src/timer.o
+                                         0xf5 (松开之前的大小)
+ .debug_line_str
+                0x000000000000020f       0x2e /home/zz/quard-start/Quard-Star/os/src/trap.o
+                                        0x154 (松开之前的大小)
+ .debug_line_str
+                0x000000000000023d       0x58 /home/zz/quard-start/Quard-Star/os/lib/arrsert.o
+                                         0xea (松开之前的大小)
+ .debug_line_str
+                0x0000000000000295       0x2e /home/zz/quard-start/Quard-Star/os/lib/load.o
+                                        0x17e (松开之前的大小)
+ .debug_line_str
+                0x00000000000002c3       0x39 /home/zz/quard-start/Quard-Star/os/lib/printf.o
+                                        0x139 (松开之前的大小)
+ .debug_line_str
+                0x00000000000002fc       0x30 /home/zz/quard-start/Quard-Star/os/lib/printk.o
+                                        0x139 (松开之前的大小)
+ .debug_line_str
+                0x000000000000032c       0xb6 /home/zz/quard-start/Quard-Star/os/lib/sbi.o
+                                        0x168 (松开之前的大小)
+ .debug_line_str
+                0x00000000000003e2       0x2f /home/zz/quard-start/Quard-Star/os/lib/stack.o
+                                         0xef (松开之前的大小)
+ .debug_line_str
+                0x0000000000000411       0x30 /home/zz/quard-start/Quard-Star/os/lib/string.o
+                                         0xf8 (松开之前的大小)
+ .debug_line_str
+                0x0000000000000441       0x31 /home/zz/quard-start/Quard-Star/os/lib/syscall.o
+                                        0x136 (松开之前的大小)
+
+.debug_info     0x0000000000000000     0x394c
+ .debug_info    0x0000000000000000       0x28 /home/zz/quard-start/Quard-Star/os/src/entry.o
+ .debug_info    0x0000000000000028       0x29 /home/zz/quard-start/Quard-Star/os/src/kernaltrap.o
+ .debug_info    0x0000000000000051       0x28 /home/zz/quard-start/Quard-Star/os/src/switch.o
+ .debug_info    0x0000000000000079      0x157 /home/zz/quard-start/Quard-Star/os/src/main.o
+ .debug_info    0x00000000000001d0      0xd05 /home/zz/quard-start/Quard-Star/os/src/memory.o
+ .debug_info    0x0000000000000ed5      0x8d4 /home/zz/quard-start/Quard-Star/os/src/task.o
+ .debug_info    0x00000000000017a9      0x24d /home/zz/quard-start/Quard-Star/os/src/timer.o
+ .debug_info    0x00000000000019f6      0x7c4 /home/zz/quard-start/Quard-Star/os/src/trap.o
+ .debug_info    0x00000000000021ba      0x11c /home/zz/quard-start/Quard-Star/os/lib/arrsert.o
+ .debug_info    0x00000000000022d6      0x840 /home/zz/quard-start/Quard-Star/os/lib/load.o
+ .debug_info    0x0000000000002b16      0x390 /home/zz/quard-start/Quard-Star/os/lib/printf.o
+ .debug_info    0x0000000000002ea6      0x36e /home/zz/quard-start/Quard-Star/os/lib/printk.o
+ .debug_info    0x0000000000003214      0x238 /home/zz/quard-start/Quard-Star/os/lib/sbi.o
+ .debug_info    0x000000000000344c      0x20f /home/zz/quard-start/Quard-Star/os/lib/stack.o
+ .debug_info    0x000000000000365b      0x17e /home/zz/quard-start/Quard-Star/os/lib/string.o
+ .debug_info    0x00000000000037d9      0x173 /home/zz/quard-start/Quard-Star/os/lib/syscall.o
+
+.debug_abbrev   0x0000000000000000     0x1306
+ .debug_abbrev  0x0000000000000000       0x14 /home/zz/quard-start/Quard-Star/os/src/entry.o
+ .debug_abbrev  0x0000000000000014       0x14 /home/zz/quard-start/Quard-Star/os/src/kernaltrap.o
+ .debug_abbrev  0x0000000000000028       0x14 /home/zz/quard-start/Quard-Star/os/src/switch.o
+ .debug_abbrev  0x000000000000003c       0xc2 /home/zz/quard-start/Quard-Star/os/src/main.o
+ .debug_abbrev  0x00000000000000fe      0x326 /home/zz/quard-start/Quard-Star/os/src/memory.o
+ .debug_abbrev  0x0000000000000424      0x26b /home/zz/quard-start/Quard-Star/os/src/task.o
+ .debug_abbrev  0x000000000000068f      0x120 /home/zz/quard-start/Quard-Star/os/src/timer.o
+ .debug_abbrev  0x00000000000007af      0x223 /home/zz/quard-start/Quard-Star/os/src/trap.o
+ .debug_abbrev  0x00000000000009d2       0xb3 /home/zz/quard-start/Quard-Star/os/lib/arrsert.o
+ .debug_abbrev  0x0000000000000a85      0x20c /home/zz/quard-start/Quard-Star/os/lib/load.o
+ .debug_abbrev  0x0000000000000c91      0x151 /home/zz/quard-start/Quard-Star/os/lib/printf.o
+ .debug_abbrev  0x0000000000000de2      0x14e /home/zz/quard-start/Quard-Star/os/lib/printk.o
+ .debug_abbrev  0x0000000000000f30      0x10d /home/zz/quard-start/Quard-Star/os/lib/sbi.o
+ .debug_abbrev  0x000000000000103d      0x138 /home/zz/quard-start/Quard-Star/os/lib/stack.o
+ .debug_abbrev  0x0000000000001175       0xc0 /home/zz/quard-start/Quard-Star/os/lib/string.o
+ .debug_abbrev  0x0000000000001235       0xd1 /home/zz/quard-start/Quard-Star/os/lib/syscall.o
+
+.debug_aranges  0x0000000000000000      0x300
+ .debug_aranges
+                0x0000000000000000       0x30 /home/zz/quard-start/Quard-Star/os/src/entry.o
+ .debug_aranges
+                0x0000000000000030       0x30 /home/zz/quard-start/Quard-Star/os/src/kernaltrap.o
+ .debug_aranges
+                0x0000000000000060       0x30 /home/zz/quard-start/Quard-Star/os/src/switch.o
+ .debug_aranges
+                0x0000000000000090       0x30 /home/zz/quard-start/Quard-Star/os/src/main.o
+ .debug_aranges
+                0x00000000000000c0       0x30 /home/zz/quard-start/Quard-Star/os/src/memory.o
+ .debug_aranges
+                0x00000000000000f0       0x30 /home/zz/quard-start/Quard-Star/os/src/task.o
+ .debug_aranges
+                0x0000000000000120       0x30 /home/zz/quard-start/Quard-Star/os/src/timer.o
+ .debug_aranges
+                0x0000000000000150       0x30 /home/zz/quard-start/Quard-Star/os/src/trap.o
+ .debug_aranges
+                0x0000000000000180       0x30 /home/zz/quard-start/Quard-Star/os/lib/arrsert.o
+ .debug_aranges
+                0x00000000000001b0       0x30 /home/zz/quard-start/Quard-Star/os/lib/load.o
+ .debug_aranges
+                0x00000000000001e0       0x30 /home/zz/quard-start/Quard-Star/os/lib/printf.o
+ .debug_aranges
+                0x0000000000000210       0x30 /home/zz/quard-start/Quard-Star/os/lib/printk.o
+ .debug_aranges
+                0x0000000000000240       0x30 /home/zz/quard-start/Quard-Star/os/lib/sbi.o
+ .debug_aranges
+                0x0000000000000270       0x30 /home/zz/quard-start/Quard-Star/os/lib/stack.o
+ .debug_aranges
+                0x00000000000002a0       0x30 /home/zz/quard-start/Quard-Star/os/lib/string.o
+ .debug_aranges
+                0x00000000000002d0       0x30 /home/zz/quard-start/Quard-Star/os/lib/syscall.o
+
+.debug_str      0x0000000000000000      0xb95
+ .debug_str     0x0000000000000000       0x60 /home/zz/quard-start/Quard-Star/os/src/entry.o
+ .debug_str     0x0000000000000060       0x34 /home/zz/quard-start/Quard-Star/os/src/kernaltrap.o
+                                         0x65 (松开之前的大小)
+ .debug_str     0x0000000000000094       0x30 /home/zz/quard-start/Quard-Star/os/src/switch.o
+                                         0x61 (松开之前的大小)
+ .debug_str     0x00000000000000c4      0x151 /home/zz/quard-start/Quard-Star/os/src/main.o
+                                        0x185 (松开之前的大小)
+ .debug_str     0x0000000000000215      0x3d5 /home/zz/quard-start/Quard-Star/os/src/memory.o
+                                        0x571 (松开之前的大小)
+ .debug_str     0x00000000000005ea      0x1c0 /home/zz/quard-start/Quard-Star/os/src/task.o
+                                        0x41b (松开之前的大小)
+ .debug_str     0x00000000000007aa       0x6e /home/zz/quard-start/Quard-Star/os/src/timer.o
+                                        0x197 (松开之前的大小)
+ .debug_str     0x0000000000000818       0xb0 /home/zz/quard-start/Quard-Star/os/src/trap.o
+                                        0x3c0 (松开之前的大小)
+ .debug_str     0x00000000000008c8       0x14 /home/zz/quard-start/Quard-Star/os/lib/arrsert.o
+                                        0x12c (松开之前的大小)
+ .debug_str     0x00000000000008dc      0x135 /home/zz/quard-start/Quard-Star/os/lib/load.o
+                                        0x3e5 (松开之前的大小)
+ .debug_str     0x0000000000000a11       0x87 /home/zz/quard-start/Quard-Star/os/lib/printf.o
+                                        0x1af (松开之前的大小)
+ .debug_str     0x0000000000000a98       0x30 /home/zz/quard-start/Quard-Star/os/lib/printk.o
+                                        0x1af (松开之前的大小)
+ .debug_str     0x0000000000000ac8       0xb2 /home/zz/quard-start/Quard-Star/os/lib/sbi.o
+                                        0x1c5 (松开之前的大小)
+ .debug_str     0x0000000000000b7a        0x8 /home/zz/quard-start/Quard-Star/os/lib/stack.o
+                                        0x12b (松开之前的大小)
+ .debug_str     0x0000000000000b82        0xb /home/zz/quard-start/Quard-Star/os/lib/string.o
+                                        0x129 (松开之前的大小)
+ .debug_str     0x0000000000000b8d        0x8 /home/zz/quard-start/Quard-Star/os/lib/syscall.o
+                                        0x143 (松开之前的大小)
+
+.debug_frame    0x0000000000000000     0x1330
+ .debug_frame   0x0000000000000000       0x38 /home/zz/quard-start/Quard-Star/os/src/main.o
+ .debug_frame   0x0000000000000038      0x6d8 /home/zz/quard-start/Quard-Star/os/src/memory.o
+ .debug_frame   0x0000000000000710      0x278 /home/zz/quard-start/Quard-Star/os/src/task.o
+ .debug_frame   0x0000000000000988      0x1c0 /home/zz/quard-start/Quard-Star/os/src/timer.o
+ .debug_frame   0x0000000000000b48      0x1f0 /home/zz/quard-start/Quard-Star/os/src/trap.o
+ .debug_frame   0x0000000000000d38       0x68 /home/zz/quard-start/Quard-Star/os/lib/arrsert.o
+ .debug_frame   0x0000000000000da0       0xe0 /home/zz/quard-start/Quard-Star/os/lib/load.o
+ .debug_frame   0x0000000000000e80       0xd0 /home/zz/quard-start/Quard-Star/os/lib/printf.o
+ .debug_frame   0x0000000000000f50       0xd0 /home/zz/quard-start/Quard-Star/os/lib/printk.o
+ .debug_frame   0x0000000000001020       0xa0 /home/zz/quard-start/Quard-Star/os/lib/sbi.o
+ .debug_frame   0x00000000000010c0      0x130 /home/zz/quard-start/Quard-Star/os/lib/stack.o
+ .debug_frame   0x00000000000011f0       0xa0 /home/zz/quard-start/Quard-Star/os/lib/string.o
+ .debug_frame   0x0000000000001290       0xa0 /home/zz/quard-start/Quard-Star/os/lib/syscall.o
