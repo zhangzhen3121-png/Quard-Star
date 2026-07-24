@@ -3,9 +3,6 @@
 
 
 
-
-
-
 size_t syscall(size_t id, reg_t arg1, reg_t arg2, reg_t arg3) {
     long ret;
 
@@ -25,6 +22,10 @@ size_t syscall(size_t id, reg_t arg1, reg_t arg2, reg_t arg3) {
 
 size_t sys_write(size_t fd, const char* buf, size_t size) {
     return syscall(__NR_write, (reg_t)fd, (reg_t)buf, (reg_t)size);
+}
+
+size_t sys_read(size_t fd, const char* buf, size_t size) {
+    return syscall(__NR_read, (reg_t)fd, (reg_t)buf, (reg_t)size);
 }
 
 size_t sys_yield(void) {

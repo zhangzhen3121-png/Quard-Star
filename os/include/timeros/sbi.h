@@ -17,5 +17,5 @@ struct sbi_ret {
 struct sbi_ret sbi_call(long ext, long func, long arg0, long arg1, long arg2, long arg3, long arg4, long arg5);
 int sbi_print_char(char ch);
 void sbi_set_time(unsigned long stime);
-
+int sbi_read_char(void);
 #endif

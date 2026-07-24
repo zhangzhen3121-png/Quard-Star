@@ -1,86 +1,104 @@
 
 舍弃的输入节
 
- .group         0x0000000000000000        0xc /tmp/ccnF6zkl.o
- .group         0x0000000000000000        0xc /tmp/ccnF6zkl.o
- .group         0x0000000000000000        0xc /tmp/ccnF6zkl.o
- .group         0x0000000000000000        0xc /tmp/ccnF6zkl.o
- .debug_info    0x0000000000000000       0xf6 /tmp/ccnF6zkl.o
- .debug_abbrev  0x0000000000000000       0x93 /tmp/ccnF6zkl.o
+ .group         0x0000000000000000        0xc /tmp/cc8ifLqS.o
+ .group         0x0000000000000000        0xc /tmp/cc8ifLqS.o
+ .group         0x0000000000000000        0xc /tmp/cc8ifLqS.o
+ .group         0x0000000000000000        0xc /tmp/cc8ifLqS.o
+ .debug_info    0x0000000000000000       0xe5 /tmp/cc8ifLqS.o
+ .debug_abbrev  0x0000000000000000       0xa7 /tmp/cc8ifLqS.o
  .debug_aranges
-                0x0000000000000000       0x30 /tmp/ccnF6zkl.o
- .debug_macro   0x0000000000000000       0x50 /tmp/ccnF6zkl.o
- .debug_macro   0x0000000000000000      0x7ba /tmp/ccnF6zkl.o
- .debug_macro   0x0000000000000000       0x58 /tmp/ccnF6zkl.o
- .debug_macro   0x0000000000000000      0x189 /tmp/ccnF6zkl.o
- .debug_macro   0x0000000000000000       0x1c /tmp/ccnF6zkl.o
- .debug_line    0x0000000000000000       0xc8 /tmp/ccnF6zkl.o
- .debug_str     0x0000000000000000     0x2ba9 /tmp/ccnF6zkl.o
+                0x0000000000000000       0x30 /tmp/cc8ifLqS.o
+ .debug_macro   0x0000000000000000       0x50 /tmp/cc8ifLqS.o
+ .debug_macro   0x0000000000000000      0x7ba /tmp/cc8ifLqS.o
+ .debug_macro   0x0000000000000000       0x58 /tmp/cc8ifLqS.o
+ .debug_macro   0x0000000000000000      0x189 /tmp/cc8ifLqS.o
+ .debug_macro   0x0000000000000000       0x22 /tmp/cc8ifLqS.o
+ .debug_line    0x0000000000000000       0x94 /tmp/cc8ifLqS.o
+ .debug_str     0x0000000000000000     0x2bbe /tmp/cc8ifLqS.o
  .debug_line_str
-                0x0000000000000000       0xec /tmp/ccnF6zkl.o
- .debug_frame   0x0000000000000000       0x38 /tmp/ccnF6zkl.o
- .group         0x0000000000000000        0xc /tmp/ccHVEY5w.o
- .group         0x0000000000000000        0xc /tmp/ccHVEY5w.o
- .group         0x0000000000000000        0xc /tmp/ccHVEY5w.o
- .group         0x0000000000000000        0xc /tmp/ccHVEY5w.o
- .debug_info    0x0000000000000000      0x394 /tmp/ccHVEY5w.o
- .debug_abbrev  0x0000000000000000      0x153 /tmp/ccHVEY5w.o
+                0x0000000000000000       0xec /tmp/cc8ifLqS.o
+ .debug_frame   0x0000000000000000       0x38 /tmp/cc8ifLqS.o
+ .group         0x0000000000000000        0xc /tmp/ccY5bebg.o
+ .group         0x0000000000000000        0xc /tmp/ccY5bebg.o
+ .group         0x0000000000000000        0xc /tmp/ccY5bebg.o
+ .group         0x0000000000000000        0xc /tmp/ccY5bebg.o
+ .debug_info    0x0000000000000000      0x394 /tmp/ccY5bebg.o
+ .debug_abbrev  0x0000000000000000      0x153 /tmp/ccY5bebg.o
  .debug_aranges
-                0x0000000000000000       0x30 /tmp/ccHVEY5w.o
- .debug_macro   0x0000000000000000       0x50 /tmp/ccHVEY5w.o
- .debug_macro   0x0000000000000000      0x7ba /tmp/ccHVEY5w.o
- .debug_macro   0x0000000000000000       0x58 /tmp/ccHVEY5w.o
- .debug_macro   0x0000000000000000      0x189 /tmp/ccHVEY5w.o
- .debug_macro   0x0000000000000000       0x1c /tmp/ccHVEY5w.o
- .debug_line    0x0000000000000000      0x5b6 /tmp/ccHVEY5w.o
- .debug_str     0x0000000000000000     0x2c4f /tmp/ccHVEY5w.o
+                0x0000000000000000       0x30 /tmp/ccY5bebg.o
+ .debug_macro   0x0000000000000000       0x50 /tmp/ccY5bebg.o
+ .debug_macro   0x0000000000000000      0x7ba /tmp/ccY5bebg.o
+ .debug_macro   0x0000000000000000       0x58 /tmp/ccY5bebg.o
+ .debug_macro   0x0000000000000000      0x189 /tmp/ccY5bebg.o
+ .debug_macro   0x0000000000000000       0x22 /tmp/ccY5bebg.o
+ .debug_line    0x0000000000000000      0x5b6 /tmp/ccY5bebg.o
+ .debug_str     0x0000000000000000     0x2c5c /tmp/ccY5bebg.o
  .debug_line_str
-                0x0000000000000000       0xfd /tmp/ccHVEY5w.o
- .debug_frame   0x0000000000000000       0xd0 /tmp/ccHVEY5w.o
- .group         0x0000000000000000        0xc /tmp/ccuq3OCN.o
- .group         0x0000000000000000        0xc /tmp/ccuq3OCN.o
- .group         0x0000000000000000        0xc /tmp/ccuq3OCN.o
- .group         0x0000000000000000        0xc /tmp/ccuq3OCN.o
- .debug_info    0x0000000000000000      0x182 /tmp/ccuq3OCN.o
- .debug_abbrev  0x0000000000000000       0xc2 /tmp/ccuq3OCN.o
+                0x0000000000000000       0xfd /tmp/ccY5bebg.o
+ .debug_frame   0x0000000000000000       0xd0 /tmp/ccY5bebg.o
+ .group         0x0000000000000000        0xc /tmp/ccpPy3ga.o
+ .group         0x0000000000000000        0xc /tmp/ccpPy3ga.o
+ .group         0x0000000000000000        0xc /tmp/ccpPy3ga.o
+ .group         0x0000000000000000        0xc /tmp/ccpPy3ga.o
+ .debug_info    0x0000000000000000      0x182 /tmp/ccpPy3ga.o
+ .debug_abbrev  0x0000000000000000       0xc2 /tmp/ccpPy3ga.o
  .debug_aranges
-                0x0000000000000000       0x30 /tmp/ccuq3OCN.o
- .debug_macro   0x0000000000000000       0x50 /tmp/ccuq3OCN.o
- .debug_macro   0x0000000000000000      0x7ba /tmp/ccuq3OCN.o
- .debug_macro   0x0000000000000000       0x58 /tmp/ccuq3OCN.o
- .debug_macro   0x0000000000000000      0x189 /tmp/ccuq3OCN.o
- .debug_macro   0x0000000000000000       0x1c /tmp/ccuq3OCN.o
- .debug_line    0x0000000000000000      0x13e /tmp/ccuq3OCN.o
- .debug_str     0x0000000000000000     0x2bc9 /tmp/ccuq3OCN.o
+                0x0000000000000000       0x30 /tmp/ccpPy3ga.o
+ .debug_macro   0x0000000000000000       0x50 /tmp/ccpPy3ga.o
+ .debug_macro   0x0000000000000000      0x7ba /tmp/ccpPy3ga.o
+ .debug_macro   0x0000000000000000       0x58 /tmp/ccpPy3ga.o
+ .debug_macro   0x0000000000000000      0x189 /tmp/ccpPy3ga.o
+ .debug_macro   0x0000000000000000       0x22 /tmp/ccpPy3ga.o
+ .debug_line    0x0000000000000000      0x13e /tmp/ccpPy3ga.o
+ .debug_str     0x0000000000000000     0x2bd6 /tmp/ccpPy3ga.o
  .debug_line_str
-                0x0000000000000000       0xfd /tmp/ccuq3OCN.o
- .debug_frame   0x0000000000000000       0xa0 /tmp/ccuq3OCN.o
- .group         0x0000000000000000        0xc /tmp/cc0RdyPv.o
- .group         0x0000000000000000        0xc /tmp/cc0RdyPv.o
- .group         0x0000000000000000        0xc /tmp/cc0RdyPv.o
- .group         0x0000000000000000        0xc /tmp/cc0RdyPv.o
- .group         0x0000000000000000        0xc /tmp/cc0RdyPv.o
- .group         0x0000000000000000        0xc /tmp/cc0RdyPv.o
- .group         0x0000000000000000        0xc /tmp/cc0RdyPv.o
- .group         0x0000000000000000        0xc /tmp/cc0RdyPv.o
- .debug_info    0x0000000000000000      0x177 /tmp/cc0RdyPv.o
- .debug_abbrev  0x0000000000000000       0xd3 /tmp/cc0RdyPv.o
+                0x0000000000000000       0xfd /tmp/ccpPy3ga.o
+ .debug_frame   0x0000000000000000       0xa0 /tmp/ccpPy3ga.o
+ .group         0x0000000000000000        0xc /tmp/ccAP4ANF.o
+ .group         0x0000000000000000        0xc /tmp/ccAP4ANF.o
+ .group         0x0000000000000000        0xc /tmp/ccAP4ANF.o
+ .group         0x0000000000000000        0xc /tmp/ccAP4ANF.o
+ .group         0x0000000000000000        0xc /tmp/ccAP4ANF.o
+ .group         0x0000000000000000        0xc /tmp/ccAP4ANF.o
+ .group         0x0000000000000000        0xc /tmp/ccAP4ANF.o
+ .group         0x0000000000000000        0xc /tmp/ccAP4ANF.o
+ .debug_info    0x0000000000000000      0x1bf /tmp/ccAP4ANF.o
+ .debug_abbrev  0x0000000000000000       0xd5 /tmp/ccAP4ANF.o
  .debug_aranges
-                0x0000000000000000       0x30 /tmp/cc0RdyPv.o
- .debug_macro   0x0000000000000000       0x84 /tmp/cc0RdyPv.o
- .debug_macro   0x0000000000000000      0x7ba /tmp/cc0RdyPv.o
- .debug_macro   0x0000000000000000       0x58 /tmp/cc0RdyPv.o
- .debug_macro   0x0000000000000000      0x189 /tmp/cc0RdyPv.o
- .debug_macro   0x0000000000000000       0x1c /tmp/cc0RdyPv.o
- .debug_macro   0x0000000000000000       0x10 /tmp/cc0RdyPv.o
- .debug_macro   0x0000000000000000       0x10 /tmp/cc0RdyPv.o
- .debug_macro   0x0000000000000000       0x9a /tmp/cc0RdyPv.o
- .debug_macro   0x0000000000000000       0x16 /tmp/cc0RdyPv.o
- .debug_line    0x0000000000000000       0xd0 /tmp/cc0RdyPv.o
- .debug_str     0x0000000000000000     0x2ed8 /tmp/cc0RdyPv.o
+                0x0000000000000000       0x30 /tmp/ccAP4ANF.o
+ .debug_macro   0x0000000000000000       0x84 /tmp/ccAP4ANF.o
+ .debug_macro   0x0000000000000000      0x7ba /tmp/ccAP4ANF.o
+ .debug_macro   0x0000000000000000       0x58 /tmp/ccAP4ANF.o
+ .debug_macro   0x0000000000000000      0x189 /tmp/ccAP4ANF.o
+ .debug_macro   0x0000000000000000       0x22 /tmp/ccAP4ANF.o
+ .debug_macro   0x0000000000000000       0x10 /tmp/ccAP4ANF.o
+ .debug_macro   0x0000000000000000       0x10 /tmp/ccAP4ANF.o
+ .debug_macro   0x0000000000000000       0x9a /tmp/ccAP4ANF.o
+ .debug_macro   0x0000000000000000       0x16 /tmp/ccAP4ANF.o
+ .debug_line    0x0000000000000000       0xe8 /tmp/ccAP4ANF.o
+ .debug_str     0x0000000000000000     0x2eee /tmp/ccAP4ANF.o
  .debug_line_str
-                0x0000000000000000      0x121 /tmp/cc0RdyPv.o
- .debug_frame   0x0000000000000000       0xa0 /tmp/cc0RdyPv.o
+                0x0000000000000000      0x121 /tmp/ccAP4ANF.o
+ .debug_frame   0x0000000000000000       0xd0 /tmp/ccAP4ANF.o
+ .group         0x0000000000000000        0xc /tmp/ccIQri6B.o
+ .group         0x0000000000000000        0xc /tmp/ccIQri6B.o
+ .group         0x0000000000000000        0xc /tmp/ccIQri6B.o
+ .group         0x0000000000000000        0xc /tmp/ccIQri6B.o
+ .debug_info    0x0000000000000000       0xee /tmp/ccIQri6B.o
+ .debug_abbrev  0x0000000000000000       0xa5 /tmp/ccIQri6B.o
+ .debug_aranges
+                0x0000000000000000       0x30 /tmp/ccIQri6B.o
+ .debug_macro   0x0000000000000000       0x50 /tmp/ccIQri6B.o
+ .debug_macro   0x0000000000000000      0x7ba /tmp/ccIQri6B.o
+ .debug_macro   0x0000000000000000       0x58 /tmp/ccIQri6B.o
+ .debug_macro   0x0000000000000000      0x189 /tmp/ccIQri6B.o
+ .debug_macro   0x0000000000000000       0x22 /tmp/ccIQri6B.o
+ .debug_line    0x0000000000000000       0x8c /tmp/ccIQri6B.o
+ .debug_str     0x0000000000000000     0x2bc2 /tmp/ccIQri6B.o
+ .debug_line_str
+                0x0000000000000000      0x100 /tmp/ccIQri6B.o
+ .debug_frame   0x0000000000000000       0x40 /tmp/ccIQri6B.o
 
 内存配置
 
@@ -89,53 +107,59 @@
 
 链结器命令稿和内存映射
 
-LOAD /tmp/ccnF6zkl.o
-LOAD /tmp/ccHVEY5w.o
-LOAD /tmp/ccuq3OCN.o
-LOAD /tmp/cc0RdyPv.o
+LOAD /tmp/cc8ifLqS.o
+LOAD /tmp/ccY5bebg.o
+LOAD /tmp/ccpPy3ga.o
+LOAD /tmp/ccAP4ANF.o
+LOAD /tmp/ccIQri6B.o
                 0x0000000000010000                BASE_ADDRESS = 0x10000
                 0x0000000000010000                . = BASE_ADDRESS
 
-.text           0x0000000000010000      0x6ce
+.text           0x0000000000010000      0x706
  *(.text.entry)
  *(.text .text.*)
- .text          0x0000000000010000       0x48 /tmp/ccnF6zkl.o
+ .text          0x0000000000010000       0x26 /tmp/cc8ifLqS.o
                 0x0000000000010000                main
- .text          0x0000000000010048      0x514 /tmp/ccHVEY5w.o
-                0x0000000000010508                printf
- .text          0x000000000001055c       0xd6 /tmp/ccuq3OCN.o
-                0x000000000001055c                strlen
-                0x0000000000010592                memcpy
-                0x00000000000105e8                memset
- .text          0x0000000000010632       0x9c /tmp/cc0RdyPv.o
-                0x0000000000010632                syscall
-                0x0000000000010676                sys_write
-                0x00000000000106ac                sys_yield
+ .text          0x0000000000010026      0x514 /tmp/ccY5bebg.o
+                0x00000000000104e6                printf
+ .text          0x000000000001053a       0xd6 /tmp/ccpPy3ga.o
+                0x000000000001053a                strlen
+                0x0000000000010570                memcpy
+                0x00000000000105c6                memset
+ .text          0x0000000000010610       0xd2 /tmp/ccAP4ANF.o
+                0x0000000000010610                syscall
+                0x0000000000010654                sys_write
+                0x000000000001068a                sys_read
+                0x00000000000106c0                sys_yield
+ .text          0x00000000000106e2       0x24 /tmp/ccIQri6B.o
+                0x00000000000106e2                getchar
                 0x0000000000011000                . = ALIGN (0x1000)
 
-.rodata         0x0000000000011000       0x87
+.rodata         0x0000000000011000       0x77
  *(.rodata .rodata.*)
- .rodata        0x0000000000011000       0x12 /tmp/ccnF6zkl.o
- *fill*         0x0000000000011012        0x6 
- .rodata        0x0000000000011018       0x6f /tmp/ccHVEY5w.o
+ .rodata        0x0000000000011000        0x3 /tmp/cc8ifLqS.o
+ *fill*         0x0000000000011003        0x5 
+ .rodata        0x0000000000011008       0x6f /tmp/ccY5bebg.o
  *(.srodata .srodata.*)
                 0x0000000000012000                . = ALIGN (0x1000)
 
 .data           0x0000000000012000        0x0
  *(.data .data.*)
- .data          0x0000000000012000        0x0 /tmp/ccnF6zkl.o
- .data          0x0000000000012000        0x0 /tmp/ccHVEY5w.o
- .data          0x0000000000012000        0x0 /tmp/ccuq3OCN.o
- .data          0x0000000000012000        0x0 /tmp/cc0RdyPv.o
+ .data          0x0000000000012000        0x0 /tmp/cc8ifLqS.o
+ .data          0x0000000000012000        0x0 /tmp/ccY5bebg.o
+ .data          0x0000000000012000        0x0 /tmp/ccpPy3ga.o
+ .data          0x0000000000012000        0x0 /tmp/ccAP4ANF.o
+ .data          0x0000000000012000        0x0 /tmp/ccIQri6B.o
  *(.sdata .sdata.*)
                 0x0000000000012000                . = ALIGN (0x1000)
 
 .bss            0x0000000000012000      0x400
  *(.bss .bss.*)
- .bss           0x0000000000012000        0x0 /tmp/ccnF6zkl.o
- .bss           0x0000000000012000      0x400 /tmp/ccHVEY5w.o
- .bss           0x0000000000012400        0x0 /tmp/ccuq3OCN.o
- .bss           0x0000000000012400        0x0 /tmp/cc0RdyPv.o
+ .bss           0x0000000000012000        0x0 /tmp/cc8ifLqS.o
+ .bss           0x0000000000012000      0x400 /tmp/ccY5bebg.o
+ .bss           0x0000000000012400        0x0 /tmp/ccpPy3ga.o
+ .bss           0x0000000000012400        0x0 /tmp/ccAP4ANF.o
+ .bss           0x0000000000012400        0x0 /tmp/ccIQri6B.o
  *(.sbss .sbss.*)
 
 /DISCARD/
@@ -144,19 +168,22 @@ LOAD /tmp/cc0RdyPv.o
 OUTPUT(./bin/write elf64-littleriscv)
 
 .comment        0x0000000000000000        0xf
- .comment       0x0000000000000000        0xf /tmp/ccnF6zkl.o
+ .comment       0x0000000000000000        0xf /tmp/cc8ifLqS.o
                                          0x10 (松开之前的大小)
- .comment       0x000000000000000f       0x10 /tmp/ccHVEY5w.o
- .comment       0x000000000000000f       0x10 /tmp/ccuq3OCN.o
- .comment       0x000000000000000f       0x10 /tmp/cc0RdyPv.o
+ .comment       0x000000000000000f       0x10 /tmp/ccY5bebg.o
+ .comment       0x000000000000000f       0x10 /tmp/ccpPy3ga.o
+ .comment       0x000000000000000f       0x10 /tmp/ccAP4ANF.o
+ .comment       0x000000000000000f       0x10 /tmp/ccIQri6B.o
 
 .riscv.attributes
                 0x0000000000000000       0x53
  .riscv.attributes
-                0x0000000000000000       0x53 /tmp/ccnF6zkl.o
+                0x0000000000000000       0x53 /tmp/cc8ifLqS.o
  .riscv.attributes
-                0x0000000000000053       0x53 /tmp/ccHVEY5w.o
+                0x0000000000000053       0x53 /tmp/ccY5bebg.o
  .riscv.attributes
-                0x00000000000000a6       0x53 /tmp/ccuq3OCN.o
+                0x00000000000000a6       0x53 /tmp/ccpPy3ga.o
  .riscv.attributes
-                0x00000000000000f9       0x53 /tmp/cc0RdyPv.o
+                0x00000000000000f9       0x53 /tmp/ccAP4ANF.o
+ .riscv.attributes
+                0x000000000000014c       0x53 /tmp/ccIQri6B.o

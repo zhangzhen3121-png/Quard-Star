@@ -10,7 +10,8 @@ INCLUDE := -I ../include/timeros -I ../include
 
 LIB =  ../lib/printf.c \
        ../lib/string.c \
-       ../lib/syscall.c
+       ../lib/syscall.c \
+	   ../lib/getchar.c
 
 
 write: write.c ${LIB}

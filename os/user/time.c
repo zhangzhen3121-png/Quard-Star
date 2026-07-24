@@ -9,7 +9,7 @@ int main(){
             int j = 10000;
             while (j--);     
         }
-        printf("this timer task \n");
+        // printf("this timer task \n");
     }
     
     return 0;

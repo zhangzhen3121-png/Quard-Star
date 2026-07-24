@@ -29,6 +29,10 @@ int sbi_print_char(char ch){
     return sbi_call(SBI_EXT_0_1_CONSOLE_PUTCHAR, 0, ch, 0, 0, 0, 0, 0).value;
 }
 
+int sbi_read_char(void){
+    return sbi_call(SBI_EXT_0_1_CONSOLE_GETCHAR, 0, 0, 0, 0, 0, 0, 0).error;
+}
+
 void sbi_set_time(unsigned long stime){
     sbi_call(SBI_EXT_SET_TIMER,0,stime,0,0,0,0,0);
 }

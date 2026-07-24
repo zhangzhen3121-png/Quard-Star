@@ -14,6 +14,7 @@
 
 
 #define __NR_write 64
+#define __NR_read  63
 #define __NR_sched_yield 124
 
 
@@ -21,9 +22,6 @@
 extern void _alltrap();
 extern void _restore(pt_regs* next);
 extern void __switch(TaskContext* curr_ctx_ptr,TaskContext* next_ctx_ptr);
-
-
-
 
 
 extern int printk(const char *format, ...);

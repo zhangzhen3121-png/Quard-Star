@@ -30,6 +30,23 @@ void __sys_write(size_t fd, const char* buf, size_t len){
     }
 }
 
+
+void __sys_read(size_t fd, const char* buf, size_t len){
+    if(fd==0){
+        char* kbuf = physaddr_from_uservritaddr(buf,len);
+        int c;
+        while (1)
+        {
+            c = sbi_read_char();
+            if(c!=-1)break;
+        }
+        kbuf[0] = c;
+    }
+    else{
+        printk("unsupport fd id sys_read \r\n");
+    }
+}
+
 void __sys_yield(){
     schedule();
 }
@@ -43,6 +60,9 @@ void __SYSCALL(size_t id, reg_t arg1, reg_t arg2, reg_t arg3){
         break;
     case __NR_sched_yield:
         __sys_yield();
+        break;
+    case __NR_read:
+        __sys_read(arg1, (const char*)arg2, arg3);
         break;
     default:
         printk("unsupport syscall id\r\n");

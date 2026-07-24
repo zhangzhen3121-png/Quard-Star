@@ -61,12 +61,12 @@ struct TaskContext tcx_init(reg_t kernal_ptr){
 
 void schedule(){
     _current = _current%_top;
-    printk("current task: %d  top: %d\n",_current, _top);
+    // printk("current task: %d  top: %d\n",_current, _top);
     TaskContext* cur_tcx_ptr = &tasks[_current].task_context;
     TaskContext* nex_tcx_ptr = 0x0;
     for(int i=1;i<_top;i++){
         if(tasks[(_current+i)%_top].task_state == Ready){
-            printk("next task: %d\n",(_current+i)%_top);
+            // printk("next task: %d\n",(_current+i)%_top);
             tasks[_current].task_state = Ready;
             nex_tcx_ptr = &tasks[(_current+i)%_top].task_context;
             tasks[(_current+i)%_top].task_state = Runing;
@@ -81,7 +81,7 @@ void schedule(){
     else{
         printk("No ready task !");
     }
-    printk("here \n");
+    
 }
 
 
