@@ -18,6 +18,9 @@
 #define PF_W		(1 << 1)	/* Segment is writable */
 #define PF_R		(1 << 2)	/* Segment is readable */
 
+
+#define NAME_MAX_LEN    10
+
 typedef struct 
 {
   unsigned char	e_ident[EI_NIDENT]; /* Magic number and other info */       // 1 byte * 16

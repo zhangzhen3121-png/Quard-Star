@@ -33,11 +33,18 @@ void insert_app_data(){
     }
     
     fprintf(f,".align 3\n.section .data\n.global _num_app\n_num_app:");
-    fprintf(f,"\n.quad 2");
+    fprintf(f,"\n.quad %d",app_num);
+
     for(int i=0;i<app_num;i++){
         fprintf(f,"\n.quad app_%d_start",i);
         if(i==app_num-1)fprintf(f,"\n.quad app_%d_end",i);
     }
+
+    fprintf(f,"\n.align 3\n.global _name_app\n_name_app:");
+    for(int i=0;i<app_num;i++){
+        fprintf(f,"\n.string \"%s\"",app[i]);
+    }
+
 
     for(int i=0;i<app_num;i++){
         fprintf(f,"\n.align 3\n.global app_%d_start\n.global app_%d_end\napp_%d_start:",i,i,i);

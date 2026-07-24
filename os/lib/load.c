@@ -2,7 +2,9 @@
 #include"memory.h"
 #include"task.h"
 
+
 extern uint64_t _num_app[];
+extern char _name_app[];
 extern uint8_t trampoline[];
 
 uint8_t flag_to_mapflag(uint8_t flag){
@@ -13,6 +15,22 @@ uint8_t flag_to_mapflag(uint8_t flag){
 
 int get_app_num(){
     return (int)_num_app[0];
+}
+
+char *get_app_name(int id)
+{
+    if (id < 0 || id >= get_app_num())
+        return NULL;
+
+    char *name = _name_app;
+
+    while (id-- > 0) {
+        while (*name != '\0')
+            name++;
+        name++;  // 跳过当前名字末尾的 '\0'
+    }
+
+    return name;
 }
 
 APPMATEDATA get_app_data(int id){
@@ -29,6 +47,9 @@ void load_app(int id){
     if(id>=app_num){
         return;
     }
+
+    char* app_name = get_app_name(id);
+    printk("%s loading ...\n",app_name);
 
     APPMATEDATA matedata = get_app_data(id);
     elf64_ehdr_t* ehdr_t = matedata.addr;
