@@ -112,6 +112,9 @@ PageTableEntry PageTableEntry_new(PhysPageNum ppn, uint8_t pte_flag){
     return pte;
 } 
 
+uint8_t PteFlag_from_PageTableEntry(PageTableEntry pte){
+    return (uint8_t)(pte.bits & 0xFF);
+}
 
 void PTindex_form_VirtPageNum(VirtPageNum vpn, uint64_t *index){
     uint64_t v  = vpn.value;
@@ -151,8 +154,8 @@ PageTableEntry* Find_Pte(PageTable* pt, VirtPageNum vpn){
     for(int i=0;i<3;i++){
         pte_ptr = &PageTableEntryPtr_from_PhysPageNum(pt_ppn)[pt_index[i]];
 
-        if(PageTableEntry_is_empty(*pte_ptr) && i != 2){
-            return NULL;
+        if(PageTableEntry_is_empty(*pte_ptr)){
+            return 0;
         }
         pt_ppn = PhysPageNum_from_PageTableEntry(*pte_ptr);
     }

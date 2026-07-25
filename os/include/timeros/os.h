@@ -15,6 +15,7 @@
 
 #define __NR_write 64
 #define __NR_read  63
+#define __NR_clone 62
 #define __NR_sched_yield 124
 
 

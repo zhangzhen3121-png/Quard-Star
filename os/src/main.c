@@ -12,7 +12,7 @@ void os_main() {
     printk("app_num: %d \n",(int)get_app_num());
     FrameAllocator_init();
     kvminit();
-
+    proc_init();
   
     load_app(0);
     app_init(0);
@@ -22,7 +22,7 @@ void os_main() {
 
     kvminithart();
     trap_init();
-    timer_init(500);
+    timer_init(10);
     run_first_task();
 
     while (1);

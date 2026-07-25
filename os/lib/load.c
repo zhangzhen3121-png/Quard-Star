@@ -86,7 +86,7 @@ void load_app(int id){
     PhysPageNum stack_ppn = kalloc();
     tcb->ustack +=  2*PAGE_SIZE;
     memory_map(&tcb->pagetable, VirtAddr_from_u64(tcb->ustack-PAGE_SIZE), PhysAddr_from_PhysPageNum(stack_ppn), PAGE_SIZE, PTE_U|PTE_R|PTE_W);
-
+    tcb->usize = tcb->ustack;
     printk("app %d load success !\n",id);
 
 }

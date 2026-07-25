@@ -36,6 +36,7 @@
 #define PTE_G (1<<5)    //全局映射
 #define PTE_A (1<<6)    //访问标志位
 #define PTE_D (1<<7)    //脏位
+   
 
 #define MAXVA       (1L << (9 + 9 + 9 + 12 - 1))
 #define TRAMPOLINE  (MAXVA-PAGE_SIZE)
@@ -104,6 +105,7 @@ PageTableEntry* PageTableEntryPtr_from_PhysPageNum(PhysPageNum ppn);
 PageTableEntry PageTableEntry_from_PhysPageNum(PhysPageNum ppn);
 bool PageTableEntry_is_empty(PageTableEntry pte);
 PageTableEntry PageTableEntry_new(PhysPageNum ppn, uint8_t pte_flag);
+uint8_t PteFlag_from_PageTableEntry(PageTableEntry pte);
 void PTindex_form_VirtPageNum(VirtPageNum vpn, uint64_t *index);
 PageTableEntry* Find_Pte_Creat(PageTable* pt, VirtPageNum vpn);
 PageTableEntry* Find_Pte(PageTable* pt, VirtPageNum vpn);

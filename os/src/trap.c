@@ -19,6 +19,32 @@ char* physaddr_from_uservritaddr(const char* buf, size_t len){
 }
 
 
+void trap_return(){
+    // printk("trap return \n");
+    set_user_entry();
+    uint64_t ctx_va = TRAPCONTEXT;
+    uint64_t upt_addr = SET_SATP(task_get_current()->pagetable.root_ppn.value);
+    uint64_t restore_va = TRAMPOLINE+(_restore-_alltrap);
+    // printk("current task pagetable: %lx\n",task_get_current()->pagetable.root_ppn.value);
+
+    // PageTableEntry * trap_pte = Find_Pte(&task_get_current()->pagetable, VirtPageNum_from_VirtAddr(VirtAddr_from_u64(TRAPCONTEXT)));
+    // uint8_t trap_pte_flag = trap_pte->bits & 0xFF;
+    // printk("trap pte flag: %x\n",trap_pte_flag);
+
+    asm volatile(
+        "fence.i\n\t"
+        "mv a0, %0\n\t"
+        "mv a1, %1\n\t"
+        "jr %2\n\t"
+        :
+        :"r"(ctx_va),
+         "r"(upt_addr),
+         "r"(restore_va)
+        :"a0","a1"
+    );
+}
+
+
 void __sys_write(size_t fd, const char* buf, size_t len){
     if(fd==1){
         // printk("sys_write: ");
@@ -47,6 +73,31 @@ void __sys_read(size_t fd, const char* buf, size_t len){
     }
 }
 
+void __sys_fork(){
+
+    TaskControlBlock* new_tcb = proc_alloc();
+    TaskControlBlock* cur_tcb = task_get_current();
+    if(!new_tcb){
+        cur_tcb->trap_ctx_pa->a0 = -1;
+        return;
+    }
+    uvmcopy(&cur_tcb->pagetable,&new_tcb->pagetable,cur_tcb->usize);
+    memcpy(new_tcb->trap_ctx_pa, cur_tcb->trap_ctx_pa, PAGE_SIZE);
+    
+    new_tcb->usize = cur_tcb->usize;
+    new_tcb->entry = cur_tcb->entry;
+    new_tcb->task_state = Ready;
+
+    new_tcb->task_context.ra = trap_return;
+    new_tcb->task_context.sp = new_tcb->kstack;
+    
+    new_tcb->trap_ctx_pa->sepc += 4;
+    new_tcb->trap_ctx_pa->a0 = 0;
+    cur_tcb->trap_ctx_pa->a0 = new_tcb->pid;
+}
+
+
+
 void __sys_yield(){
     schedule();
 }
@@ -64,6 +115,9 @@ void __SYSCALL(size_t id, reg_t arg1, reg_t arg2, reg_t arg3){
     case __NR_read:
         __sys_read(arg1, (const char*)arg2, arg3);
         break;
+    case __NR_clone:
+        __sys_fork();
+        break;
     default:
         printk("unsupport syscall id\r\n");
         break;
@@ -75,30 +129,6 @@ void set_user_entry(){
     w_stvec((reg_t)TRAMPOLINE);
 }
 
-void trap_return(){
-    // printk("trap return \n");
-    set_user_entry();
-    uint64_t ctx_va = TRAPCONTEXT;
-    uint64_t upt_addr = SET_SATP(task_get_current()->pagetable.root_ppn.value);
-    uint64_t restore_va = TRAMPOLINE+(_restore-_alltrap);
-    // printk("current task pagetable: %lx\n",task_get_current()->pagetable.root_ppn.value);
-
-    // PageTableEntry * trap_pte = Find_Pte(&task_get_current()->pagetable, VirtPageNum_from_VirtAddr(VirtAddr_from_u64(TRAPCONTEXT)));
-    // uint8_t trap_pte_flag = trap_pte->bits & 0xFF;
-    // printk("trap pte flag: %x\n",trap_pte_flag);
-
-    asm volatile(
-        "fence.i\n\t"
-        "mv a0, %0\n\t"
-        "mv a1, %1\n\t"
-        "jr %2\n\t"
-        :
-        :"r"(ctx_va),
-         "r"(upt_addr),
-         "r"(restore_va)
-        :"a0","a1"
-    );
-}
 
 
 void trap_hanlder(){

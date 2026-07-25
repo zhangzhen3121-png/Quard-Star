@@ -31,3 +31,11 @@ size_t sys_read(size_t fd, const char* buf, size_t size) {
 size_t sys_yield(void) {
     return syscall(__NR_sched_yield, 0, 0, 0);
 }
+
+size_t sys_fork(void) {
+    return syscall(__NR_clone, 0, 0, 0);
+}
+
+size_t fork(){
+    return sys_fork();
+}

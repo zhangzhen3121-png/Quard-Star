@@ -4,6 +4,7 @@
 
 struct TaskControlBlock tasks[MAX_TASKS];
 
+static uint32_t _pid = 0;
 static uint32_t _top = 0;
 static uint32_t _current = 0;
 
@@ -34,6 +35,7 @@ void app_init(int id){
 
     tcb->task_context = tcx_init((reg_t)tcb->kstack);
     tcb->task_state = Ready;
+    tcb->pid = alloc_pid();
     
 }
 
@@ -97,6 +99,13 @@ void run_first_task(){
 }
 
 
+uint64_t alloc_pid(){
+    int pid = _pid;
+    _top++;
+    _pid++;
+    return pid;
+}
+
 void proc_mapstacks(PageTable* kpgtbl){
     for(int i=0;i<MAX_TASKS;i++){
         PhysAddr pa = PhysAddr_from_PhysPageNum(kalloc());
@@ -135,6 +144,46 @@ void proc_pagetable(TaskControlBlock* tcb){
     memory_map(&tcb->pagetable, VirtAddr_from_u64(TRAMPOLINE), PhysAddr_form_u64((uint64_t)trampoline), PAGE_SIZE, PTE_R|PTE_X);
 }
 
+
+void proc_init(){
+    for(int i=0;i<MAX_TASKS;i++){
+        tasks[i].task_state = Unint;
+    }
+}
+
+TaskControlBlock* proc_alloc(){
+    
+    TaskControlBlock* tcb = tasks;
+    for(tcb;tcb<=&tasks[MAX_TASKS-1];tcb++){
+        if(tcb->task_state == Unint)break;
+    }
+    if(tcb > &tasks[MAX_TASKS-1])return NULL;
+
+    proc_pagetable(tcb);
+    proc_trap(tcb);
+    tcb->pid = alloc_pid();
+
+    return tcb;
+}
+
+
+void uvmcopy(PageTable* pt_fa, PageTable* pt_sub, uint64_t usize){
+    uint64_t va = 0;
+    uint64_t size = GROUNDUP(usize);
+
+    for(va=0; va<size; va+=PAGE_SIZE){
+        PageTableEntry* pte = Find_Pte(pt_fa, VirtPageNum_from_VirtAddr(VirtAddr_from_u64(va)));
+        if(pte == 0)continue;
+        uint64_t fa_addr = PhysAddr_from_PhysPageNum(PhysPageNum_from_PageTableEntry(*pte)).value;
+        uint64_t sub_addr = PhysAddr_from_PhysPageNum(StrackFrameAllocator_alloc(&FrameAllocatorImpl)).value;
+        memcpy(sub_addr,fa_addr,PAGE_SIZE);
+        memory_map(pt_sub,VirtAddr_from_u64(va),PhysAddr_form_u64(sub_addr),PAGE_SIZE, PteFlag_from_PageTableEntry(*pte));
+    }
+
+}
+
+
+
 TaskControlBlock* task_creat_pt(int id){
 
     if(id>=MAX_TASKS||_top>=MAX_TASKS)return NULL;
@@ -142,7 +191,7 @@ TaskControlBlock* task_creat_pt(int id){
     proc_pagetable(&tasks[id]);
     proc_trap(&tasks[id]);
     printk("creat task %d pegetable: %lx\n",id, tasks[id].pagetable.root_ppn.value);
-    _top++;
+    //_top++;
     // printk("top %d \n",_top);
     return &tasks[id];
 }

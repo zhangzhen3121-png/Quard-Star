@@ -25,6 +25,8 @@ typedef struct TaskControlBlock
     TaskState task_state;
     TaskContext task_context;
     PageTable pagetable;
+    uint64_t pid;
+    uint64_t usize;
     uint64_t ustack;
     uint64_t kstack;
     uint64_t entry;
@@ -33,7 +35,14 @@ typedef struct TaskControlBlock
 }TaskControlBlock;
 
 
+uint64_t alloc_pid();
+void uvmcopy(PageTable* pt_fa, PageTable* pt_sub, uint64_t usize);
 
+TaskControlBlock* proc_alloc();
+void proc_init();
+void proc_pagetable(TaskControlBlock* tcb);
+void proc_trap(TaskControlBlock* tcb);
+void proc_mapstacks(PageTable* kpgtbl);
 
 struct TaskContext tcx_init(reg_t kernal_ptr);
 
