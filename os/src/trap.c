@@ -95,6 +95,11 @@ void __sys_fork(){
 void __sys_exec(char* name, size_t len){
     char* kname = physaddr_from_uservritaddr(name,len);
     TaskControlBlock* proc = task_get_current();
+    if(!check_name(kname)){
+        proc->trap_ctx_pa->a0 = 0;
+        return;
+    }
+    
     PageTable oldpte = proc->pagetable;
     size_t oldsize = proc->usize;
     proc_pagetable(proc);
@@ -102,7 +107,7 @@ void __sys_exec(char* name, size_t len){
     exec_load(proc,kname);
     exec_init(proc);
     proc_freepagetable(&oldpte,oldsize);
-    
+    proc->trap_ctx_pa->a0 = 1;
 }
 
 

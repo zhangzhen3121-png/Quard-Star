@@ -64,12 +64,13 @@ typedef struct
 int get_app_num();
 
 bool check_elf(elf64_ehdr_t* ehdr_t);
+bool check_name(char* name);
 elf64_ehdr_t* get_elf64_id(int id);
 elf64_ehdr_t* get_elf64_name(char* name);
 void load_segment(TaskControlBlock* tcb, elf64_ehdr_t* ehdr_t);
 void map_ustack(TaskControlBlock* tcb);
 APPMATEDATA get_app_data(int id);
 void load_app(int id);
-void exec_load(TaskControlBlock* tcb ,char* name);
+size_t exec_load(TaskControlBlock* tcb ,char* name);
 
 #endif

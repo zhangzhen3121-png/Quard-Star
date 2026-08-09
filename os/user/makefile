@@ -23,6 +23,9 @@ time: time.c ${LIB}
 xec: xec.c ${LIB}
 	$(CC) $(CFLAGS) $(INCLUDE) -T user.ld -Wl,-Map=xec.map -o ./bin/xec $^
 
+shell: user_shell.c ${LIB}
+	$(CC) $(CFLAGS) $(INCLUDE) -T user.ld -Wl,-Map=shell.map -o ./bin/shell $^
+
 clean:
 	rm -f *.o *.elf *.bin
 

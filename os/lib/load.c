@@ -87,6 +87,19 @@ elf64_ehdr_t* get_elf64_name(char* name){
     return ehdr_t;
 }
 
+bool check_name(char* name){
+    int app_num = get_app_num();
+    int id = 0;
+    char* app_name;
+    for(id=0; id<app_num; id++){
+        app_name = get_app_name(id);
+        if(cmpstr(name,app_name))break;
+    }
+    if(id == app_num)return false;
+
+    return true;
+}
+
 void load_segment(TaskControlBlock* tcb, elf64_ehdr_t* ehdr_t){
     uint8_t *elf_data = (uint8_t *)ehdr_t;
 
@@ -125,11 +138,13 @@ void map_ustack(TaskControlBlock* tcb){
 }
 
 
-void exec_load(TaskControlBlock* tcb ,char* name){
+
+
+size_t exec_load(TaskControlBlock* tcb ,char* name){
 
     elf64_ehdr_t* ehdr_t = get_elf64_name(name);
-    if(ehdr_t==0)return;
-    if(!check_elf(ehdr_t))return;
+    if(ehdr_t==0)return 0;
+    if(!check_elf(ehdr_t))return 0;
 
     tcb->entry = ehdr_t->e_entry;
 
@@ -138,6 +153,8 @@ void exec_load(TaskControlBlock* tcb ,char* name){
     map_ustack(tcb);
 
     printk("app %s load success !\n", name);
+
+    return 1;
 }
 
 void load_app(int id){

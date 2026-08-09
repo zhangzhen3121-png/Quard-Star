@@ -17,8 +17,8 @@ void os_main() {
     load_app(0);
     app_init(0);
     
-    load_app(1);
-    app_init(1);
+    // load_app(1);
+    // app_init(1);
 
     kvminithart();
     trap_init();

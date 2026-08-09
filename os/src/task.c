@@ -84,10 +84,10 @@ void schedule(){
     // printk("current task: %d  top: %d\n",_current, _top);
     TaskContext* cur_tcx_ptr = &tasks[_current].task_context;
     TaskContext* nex_tcx_ptr = 0x0;
-    for(int i=1;i<_top;i++){
+    tasks[_current].task_state = Ready;
+    for(int i=1;i<_top+1;i++){
         if(tasks[(_current+i)%_top].task_state == Ready){
             // printk("next task: %d\n",(_current+i)%_top);
-            tasks[_current].task_state = Ready;
             nex_tcx_ptr = &tasks[(_current+i)%_top].task_context;
             tasks[(_current+i)%_top].task_state = Runing;
             _current += i;
