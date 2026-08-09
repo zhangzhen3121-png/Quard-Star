@@ -18,13 +18,30 @@ extern char strampolinep[];
 extern void trap_return();
 extern void trap_hanlder();
 
+void exec_init(TaskControlBlock* tcb){
+
+    pt_regs* trap_ctx = tcb->trap_ctx_pa;
+    
+    reg_t sstatus = r_sstatus();
+    sstatus &= ~(1U<<8);
+    w_sstatus(sstatus);
+
+    trap_ctx->sstatus = sstatus;
+    trap_ctx->sepc = tcb->entry;
+    trap_ctx->sp = tcb->ustack;
+    trap_ctx->kernal_sp = tcb->kstack;
+    trap_ctx->kernal_satp = SET_SATP(KernalPAgeTable.root_ppn.value);
+    trap_ctx->trap_handler = (uint64_t)trap_hanlder;
+}
+
+
 void app_init(int id){
     TaskControlBlock* tcb = &tasks[id];
     pt_regs* trap_ctx = tcb->trap_ctx_pa;
     
     reg_t sstatus = r_sstatus();
     sstatus &= ~(1U<<8);
-    //w_sstatus(sstatus);
+    w_sstatus(sstatus);
 
     trap_ctx->sstatus = sstatus;
     trap_ctx->sepc = tcb->entry;
@@ -39,9 +56,10 @@ void app_init(int id){
     
 }
 
+
+
 struct TaskContext tcx_init(reg_t kernal_ptr){
     struct TaskContext tcx;
-
     tcx.ra = trap_return;
     tcx.sp = kernal_ptr;
     tcx.s0 = 0;

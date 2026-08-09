@@ -52,5 +52,6 @@ void run_first_task();
 uint64_t current_user_token();
 PageTable* current_user_pagetable();
 void app_init(int id);
+void exec_init(TaskControlBlock* tcb);
 TaskControlBlock* task_get_current();
 #endif

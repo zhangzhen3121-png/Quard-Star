@@ -1,20 +1,20 @@
 #include "os.h"
 
-extern size_t fork();
+extern char getchar(void);
 
 int main(){
-
-    size_t subpid = fork();
-    if(subpid == 0)sys_exec("xec");
     while (1)
-    {   
-        printf("this timer task \n");
-
+    {
+        printf("this xec task \n");
         int i = 10000;
         while(i--){
             int j = 10000;
             while (j--);     
         }
+        // ;
+        // char c = getchar();
+        // printf("%c",c);
+        
     }
     
     return 0;

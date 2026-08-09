@@ -203,6 +203,51 @@ void memory_unmap(PageTable* root_pt, VirtAddr va, uint64_t size){
     }
 }
 
+
+void uvmunmap(PageTable* root_pt, VirtPageNum vpn, uint64_t npages, int dofree){
+    PageTableEntry* pa_pte;
+    while(npages--){
+        pa_pte = Find_Pte(root_pt, vpn);
+        if(pa_pte && pa_pte->bits >0){
+            printk("");
+            if(dofree){
+                kfree(PhysPageNum_from_PageTableEntry(*pa_pte));
+            }
+            *pa_pte = PageTableEntry_clean();
+        }
+        vpn.value++;
+    }
+}
+
+
+void freewalk(PhysPageNum pt_ppn){
+
+    PageTableEntry* pte_ptr;
+    for(int i=0;i<512;i++){
+        pte_ptr = &PageTableEntryPtr_from_PhysPageNum(pt_ppn)[i];
+        if(PageTableEntry_is_empty(*pte_ptr))continue;
+        freewalk(PhysPageNum_from_PageTableEntry(*pte_ptr));
+        *pte_ptr = PageTableEntry_clean();
+    }
+    kfree(pt_ppn);
+}
+
+
+void uvmfree(PageTable* root_pt, uint64_t usize){
+    if(usize > 0){
+        uvmunmap(root_pt, VirtPageNum_from_VirtAddr(VirtAddr_from_u64(0)), GROUNDUP(usize)/PAGE_SIZE, 1);
+        freewalk(root_pt->root_ppn);
+    }
+}
+
+
+void proc_freepagetable(PageTable* root_pt,uint64_t usize){
+    uvmunmap(root_pt, VirtPageNum_from_VirtAddr(VirtAddr_from_u64(TRAMPOLINE)), 1, 0);
+    uvmunmap(root_pt, VirtPageNum_from_VirtAddr(VirtAddr_from_u64(TRAPCONTEXT)), 1, 1);
+    uvmfree(root_pt, usize);
+}
+
+
 PageTable kvmmake(){
     PageTable pt;
     pt.root_ppn= StrackFrameAllocator_alloc(&FrameAllocatorImpl);
@@ -264,6 +309,9 @@ void StrackFrameAllocator_free(StrackFrameAllocator* allocator, PhysPageNum ppn)
     push(recyle,ppn.value);
 }
 
+void kfree(PhysPageNum ppn){
+    StrackFrameAllocator_free(&FrameAllocatorImpl, ppn);
+}
 
 void StrackFrameAllocator_Init(StrackFrameAllocator* allocator, PhysPageNum ppn_start, PhysPageNum ppn_end){
     allocator->unused_current = ppn_start.value;

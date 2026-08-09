@@ -3,7 +3,7 @@
 #include"os.h"
 #include"task.h"
 #include"memory.h"
-
+#include"load.h"
 
 extern void set_next_trigger();
 
@@ -25,11 +25,7 @@ void trap_return(){
     uint64_t ctx_va = TRAPCONTEXT;
     uint64_t upt_addr = SET_SATP(task_get_current()->pagetable.root_ppn.value);
     uint64_t restore_va = TRAMPOLINE+(_restore-_alltrap);
-    // printk("current task pagetable: %lx\n",task_get_current()->pagetable.root_ppn.value);
 
-    // PageTableEntry * trap_pte = Find_Pte(&task_get_current()->pagetable, VirtPageNum_from_VirtAddr(VirtAddr_from_u64(TRAPCONTEXT)));
-    // uint8_t trap_pte_flag = trap_pte->bits & 0xFF;
-    // printk("trap pte flag: %x\n",trap_pte_flag);
 
     asm volatile(
         "fence.i\n\t"
@@ -83,19 +79,31 @@ void __sys_fork(){
     }
     uvmcopy(&cur_tcb->pagetable,&new_tcb->pagetable,cur_tcb->usize);
     memcpy(new_tcb->trap_ctx_pa, cur_tcb->trap_ctx_pa, PAGE_SIZE);
-    
+
+    new_tcb->trap_ctx_pa->kernal_sp = new_tcb->kstack;
+
     new_tcb->usize = cur_tcb->usize;
     new_tcb->entry = cur_tcb->entry;
     new_tcb->task_state = Ready;
 
-    new_tcb->task_context.ra = trap_return;
-    new_tcb->task_context.sp = new_tcb->kstack;
+    new_tcb->task_context = tcx_init(new_tcb->kstack);
     
-    new_tcb->trap_ctx_pa->sepc += 4;
     new_tcb->trap_ctx_pa->a0 = 0;
     cur_tcb->trap_ctx_pa->a0 = new_tcb->pid;
 }
 
+void __sys_exec(char* name, size_t len){
+    char* kname = physaddr_from_uservritaddr(name,len);
+    TaskControlBlock* proc = task_get_current();
+    PageTable oldpte = proc->pagetable;
+    size_t oldsize = proc->usize;
+    proc_pagetable(proc);
+    proc_trap(proc);
+    exec_load(proc,kname);
+    exec_init(proc);
+    proc_freepagetable(&oldpte,oldsize);
+    
+}
 
 
 void __sys_yield(){
@@ -117,6 +125,9 @@ void __SYSCALL(size_t id, reg_t arg1, reg_t arg2, reg_t arg3){
         break;
     case __NR_clone:
         __sys_fork();
+        break;
+    case __NR_exec:
+        __sys_exec((const char*)arg1,(size_t)arg2);
         break;
     default:
         printk("unsupport syscall id\r\n");
@@ -154,14 +165,24 @@ void trap_hanlder(){
     else{
         switch (code)
         {
-        case 8:
-            __SYSCALL(ctx->a7,ctx->a0,ctx->a1,ctx->a2);
-            ctx->sepc+=4;
-            break;
-        default:
-            printk("undefined scause\r\n");
-            break;
+            case 8:{
+                reg_t syscall_id = ctx->a7;
+                reg_t arg0 = ctx->a0;
+                reg_t arg1 = ctx->a1;
+                reg_t arg2 = ctx->a2;
+
+                // ecall 固定为 4 字节，先越过旧程序的 ecall
+                ctx->sepc += 4;
+
+                __SYSCALL(syscall_id, arg0, arg1, arg2);
+                break;
+            }
+            default:{
+                printk("undefined scause\r\n");
+                break;
+            }
         }
+        
     }
     trap_return();
 }

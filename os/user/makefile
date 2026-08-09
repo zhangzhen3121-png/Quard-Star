@@ -20,6 +20,9 @@ write: write.c ${LIB}
 time: time.c ${LIB}
 	$(CC) $(CFLAGS) $(INCLUDE) -T user.ld -Wl,-Map=time.map -o ./bin/time $^
 
+xec: xec.c ${LIB}
+	$(CC) $(CFLAGS) $(INCLUDE) -T user.ld -Wl,-Map=xec.map -o ./bin/xec $^
+
 clean:
 	rm -f *.o *.elf *.bin
 

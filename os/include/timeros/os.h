@@ -16,6 +16,7 @@
 #define __NR_write 64
 #define __NR_read  63
 #define __NR_clone 62
+#define __NR_exec  61
 #define __NR_sched_yield 124
 
 
@@ -34,6 +35,7 @@ extern int printf(const char *format, ...);
 extern size_t syscall(size_t id, reg_t arg1, reg_t arg2, reg_t arg3);
 extern size_t sys_write(size_t fd, const char* buf, size_t size);
 extern size_t sys_yield(void);
+extern size_t sys_exec(char* name);
 
 
 

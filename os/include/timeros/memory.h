@@ -121,8 +121,8 @@ PhysPageNum kalloc();
 PageTable kvmmake();
 void kvminit();
 void kvminithart();
-
-
+void kfree(PhysPageNum ppn);
+void proc_freepagetable(PageTable* root_pt,uint64_t usize);
 
 
 

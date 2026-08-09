@@ -36,6 +36,11 @@ size_t sys_fork(void) {
     return syscall(__NR_clone, 0, 0, 0);
 }
 
+size_t sys_exec(char* name) {
+    
+    return syscall(__NR_exec, (reg_t)name, strlen(name), 0);
+}
+
 size_t fork(){
     return sys_fork();
 }
