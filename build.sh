@@ -32,7 +32,9 @@ if [ ! -d "$SHELL_FOLDER/output/trusted_domain" ]; then
 mkdir $SHELL_FOLDER/output/trusted_domain
 fi  
 cd $SHELL_FOLDER/trusted_domain
-$CROSS_PREFIX-gcc -x assembler-with-cpp -c startup.s -o $SHELL_FOLDER/output/trusted_domain/startup.o
+# $CROSS_PREFIX-gcc -x assembler-with-cpp -c startup.s -o $SHELL_FOLDER/output/trusted_domain/startup.o
+make
+cp ./build/trusted_fw.bin $SHELL_FOLDER/output/trusted_domain/trusted_fw.bin
 
 $CROSS_PREFIX-gcc \
   -nostdlib \
@@ -95,6 +97,6 @@ dd of=fw.bin bs=1k conv=notrunc seek=512 if=$SHELL_FOLDER/output/opensbi/quard_s
 # 写入 fw_jump.bin 地址偏移量为 2K*1K= 0x200000，因此 fw_jump.bin的地址偏移量为  0x200000
 dd of=fw.bin bs=1k conv=notrunc seek=2k if=$SHELL_FOLDER/output/opensbi/fw_jump.bin
 # 写入 startup.bin 地址偏移量为 4K*1K= 0x400000，因此 startup.bin的地址偏移量为  0x400000
-dd of=fw.bin bs=1k conv=notrunc seek=4k if=$SHELL_FOLDER/output/trusted_domain/startup.bin
+dd of=fw.bin bs=1k conv=notrunc seek=4k if=$SHELL_FOLDER/output/trusted_domain/trusted_fw.bin
 # 写入 os.bin 地址偏移量为 8K*1K= 0x800000，因此 os.bin的地址偏移量为  0x800000
 dd of=fw.bin bs=1k conv=notrunc seek=8k if=$SHELL_FOLDER/output/os/os.bin

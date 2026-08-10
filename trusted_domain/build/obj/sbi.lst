@@ -1,0 +1,1299 @@
+GAS LISTING /tmp/ccNRiKf2.s 			page 1
+
+
+   1              		.file	"sbi.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.file 1 "/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c"
+  10              		.section	.text.sbi_ecall,"ax",@progbits
+  11              		.align	2
+  12              		.globl	sbi_ecall
+  14              	sbi_ecall:
+  15              	.LFB0:
+   1:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** #include <stdint.h>
+   2:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** #include "sbi.h"
+   3:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 
+   4:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 
+   5:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** struct sbiret sbi_ecall(int ext, int fid, unsigned long arg0,
+   6:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 			unsigned long arg1, unsigned long arg2,
+   7:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 			unsigned long arg3, unsigned long arg4,
+   8:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 			unsigned long arg5)
+   9:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** {
+  16              		.loc 1 9 1
+  17              		.cfi_startproc
+  18              	.LVL0:
+  19 0000 130101FE 		addi	sp,sp,-32
+  20              	.LCFI0:
+  21              		.cfi_def_cfa_offset 32
+  22 0004 13030500 		mv	t1,a0
+  23 0008 138E0500 		mv	t3,a1
+  10:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	struct sbiret ret;
+  24              		.loc 1 10 2
+  11:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 
+  12:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****     //使用GCC的扩展语法，用于将一个值存储到RISC-V架构中的寄存器a0中。
+  13:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	register uintptr_t a0 asm ("a0") = (uintptr_t)(arg0);
+  25              		.loc 1 13 2
+  26              		.loc 1 13 21 is_stmt 0
+  27 000c 13050600 		mv	a0,a2
+  28              	.LVL1:
+  14:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	register uintptr_t a1 asm ("a1") = (uintptr_t)(arg1);
+  29              		.loc 1 14 2 is_stmt 1
+  30              		.loc 1 14 21 is_stmt 0
+  31 0010 93850600 		mv	a1,a3
+  32              	.LVL2:
+  15:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	register uintptr_t a2 asm ("a2") = (uintptr_t)(arg2);
+  33              		.loc 1 15 2 is_stmt 1
+  34              		.loc 1 15 21 is_stmt 0
+  35 0014 13060700 		mv	a2,a4
+  36              	.LVL3:
+  16:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	register uintptr_t a3 asm ("a3") = (uintptr_t)(arg3);
+  37              		.loc 1 16 2 is_stmt 1
+  38              		.loc 1 16 21 is_stmt 0
+  39 0018 93860700 		mv	a3,a5
+  40              	.LVL4:
+  17:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	register uintptr_t a4 asm ("a4") = (uintptr_t)(arg4);
+  41              		.loc 1 17 2 is_stmt 1
+GAS LISTING /tmp/ccNRiKf2.s 			page 2
+
+
+  42              		.loc 1 17 21 is_stmt 0
+  43 001c 13070800 		mv	a4,a6
+  44              	.LVL5:
+  18:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	register uintptr_t a5 asm ("a5") = (uintptr_t)(arg5);
+  45              		.loc 1 18 2 is_stmt 1
+  46              		.loc 1 18 21 is_stmt 0
+  47 0020 93870800 		mv	a5,a7
+  48              	.LVL6:
+  19:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	register uintptr_t a6 asm ("a6") = (uintptr_t)(fid);
+  49              		.loc 1 19 2 is_stmt 1
+  50              		.loc 1 19 21 is_stmt 0
+  51 0024 13080E00 		mv	a6,t3
+  52              	.LVL7:
+  20:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	register uintptr_t a7 asm ("a7") = (uintptr_t)(ext);
+  53              		.loc 1 20 2 is_stmt 1
+  54              		.loc 1 20 21 is_stmt 0
+  55 0028 93080300 		mv	a7,t1
+  56              	.LVL8:
+  21:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	asm volatile ("ecall"
+  57              		.loc 1 21 2 is_stmt 1
+  58              	 #APP
+  59              	# 21 "/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c" 1
+  22              			      : "+r" (a0), "+r" (a1)
+  60              		ecall
+  61              	# 0 "" 2
+  62              	.LVL9:
+  23:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 		      : "r" (a2), "r" (a3), "r" (a4), "r" (a5), "r" (a6), "r" (a7)
+  24:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 		      : "memory");
+  25:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	ret.error = a0;
+  63              		.loc 1 25 2
+  64              		.loc 1 25 12 is_stmt 0
+  65              	 #NO_APP
+  66 0030 2330A100 		sd	a0,0(sp)
+  26:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	ret.value = a1;
+  67              		.loc 1 26 2 is_stmt 1
+  68              		.loc 1 26 12 is_stmt 0
+  69 0034 2334B100 		sd	a1,8(sp)
+  27:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 
+  28:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	return ret;
+  70              		.loc 1 28 2 is_stmt 1
+  71              		.loc 1 28 9 is_stmt 0
+  72 0038 2338A100 		sd	a0,16(sp)
+  73 003c 233CB100 		sd	a1,24(sp)
+  29:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** }
+  74              		.loc 1 29 1
+  75 0040 13010102 		addi	sp,sp,32
+  76              	.LCFI1:
+  77              		.cfi_def_cfa_offset 0
+  78 0044 67800000 		jr	ra
+  79              		.cfi_endproc
+  80              	.LFE0:
+  82              		.section	.text.sbi_set_timer,"ax",@progbits
+  83              		.align	2
+  84              		.globl	sbi_set_timer
+  86              	sbi_set_timer:
+  87              	.LFB1:
+  30:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 
+GAS LISTING /tmp/ccNRiKf2.s 			page 3
+
+
+  31:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 
+  32:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** /**
+  33:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * sbi_set_timer() - Program the timer for next timer event.
+  34:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * @stime_value: The value after which next timer event should fire.
+  35:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  *
+  36:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * Return: None
+  37:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  */
+  38:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** void sbi_set_timer(uint64_t stime_value)
+  39:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** {
+  88              		.loc 1 39 1 is_stmt 1
+  89              		.cfi_startproc
+  90              	.LVL10:
+  91 0000 130101FF 		addi	sp,sp,-16
+  92              	.LCFI2:
+  93              		.cfi_def_cfa_offset 16
+  94 0004 23341100 		sd	ra,8(sp)
+  95              		.cfi_offset 1, -8
+  96 0008 13060500 		mv	a2,a0
+  40:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** #if __riscv_xlen == 32
+  41:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	sbi_ecall(SBI_EXT_SET_TIMER, SBI_FID_SET_TIMER, stime_value,
+  42:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 		  stime_value >> 32, 0, 0, 0, 0);
+  43:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** #else
+  44:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	sbi_ecall(SBI_EXT_SET_TIMER, SBI_FID_SET_TIMER, stime_value,
+  97              		.loc 1 44 2
+  98 000c 93080000 		li	a7,0
+  99 0010 13080000 		li	a6,0
+ 100 0014 93070000 		li	a5,0
+ 101 0018 13070000 		li	a4,0
+ 102 001c 93060000 		li	a3,0
+ 103 0020 93050000 		li	a1,0
+ 104 0024 37554954 		li	a0,1414090752
+ 105              	.LVL11:
+ 106 0028 130555D4 		addi	a0,a0,-699
+ 107 002c 97000000 		call	sbi_ecall
+ 107      E7800000 
+ 108              	.LVL12:
+  45:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 		  0, 0, 0, 0, 0);
+  46:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** #endif
+  47:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** }
+ 109              		.loc 1 47 1 is_stmt 0
+ 110 0034 83308100 		ld	ra,8(sp)
+ 111              		.cfi_restore 1
+ 112 0038 13010101 		addi	sp,sp,16
+ 113              	.LCFI3:
+ 114              		.cfi_def_cfa_offset 0
+ 115 003c 67800000 		jr	ra
+ 116              		.cfi_endproc
+ 117              	.LFE1:
+ 119              		.section	.text.sbi_get_spec_version,"ax",@progbits
+ 120              		.align	2
+ 121              		.globl	sbi_get_spec_version
+ 123              	sbi_get_spec_version:
+ 124              	.LFB2:
+  48:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 
+  49:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 
+  50:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** /**
+  51:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * sbi_get_spec_version() - get current SBI specification version
+GAS LISTING /tmp/ccNRiKf2.s 			page 4
+
+
+  52:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * 获取SBI规范版本 (FID #0)
+  53:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * Return: version id
+  54:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  */
+  55:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** long sbi_get_spec_version(void)
+  56:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** {
+ 125              		.loc 1 56 1 is_stmt 1
+ 126              		.cfi_startproc
+ 127 0000 130101FE 		addi	sp,sp,-32
+ 128              	.LCFI4:
+ 129              		.cfi_def_cfa_offset 32
+ 130 0004 233C1100 		sd	ra,24(sp)
+ 131              		.cfi_offset 1, -8
+  57:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	struct sbiret ret;
+ 132              		.loc 1 57 2
+  58:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 
+  59:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	ret = sbi_ecall(SBI_EXT_BASE, SBI_EXT_BASE_GET_SPEC_VERSION,
+ 133              		.loc 1 59 2
+ 134              		.loc 1 59 8 is_stmt 0
+ 135 0008 93080000 		li	a7,0
+ 136 000c 13080000 		li	a6,0
+ 137 0010 93070000 		li	a5,0
+ 138 0014 13070000 		li	a4,0
+ 139 0018 93060000 		li	a3,0
+ 140 001c 13060000 		li	a2,0
+ 141 0020 93050000 		li	a1,0
+ 142 0024 13050001 		li	a0,16
+ 143 0028 97000000 		call	sbi_ecall
+ 143      E7800000 
+ 144              	.LVL13:
+ 145 0030 2330A100 		sd	a0,0(sp)
+ 146 0034 2334B100 		sd	a1,8(sp)
+  60:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 			0, 0, 0, 0, 0, 0);
+  61:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	if (!ret.error)
+ 147              		.loc 1 61 2 is_stmt 1
+ 148              		.loc 1 61 5 is_stmt 0
+ 149 0038 63100502 		bne	a0,zero,.L7
+  62:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 		if (ret.value)
+ 150              		.loc 1 62 3 is_stmt 1
+ 151              		.loc 1 62 10 is_stmt 0
+ 152 003c 13850500 		mv	a0,a1
+ 153              		.loc 1 62 6
+ 154 0040 63880500 		beq	a1,zero,.L9
+ 155              	.L5:
+  63:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 			return ret.value;
+  64:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 
+  65:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	return -1;
+  66:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** }
+ 156              		.loc 1 66 1
+ 157 0044 83308101 		ld	ra,24(sp)
+ 158              		.cfi_remember_state
+ 159              		.cfi_restore 1
+ 160 0048 13010102 		addi	sp,sp,32
+ 161              	.LCFI5:
+ 162              		.cfi_def_cfa_offset 0
+ 163 004c 67800000 		jr	ra
+ 164              	.L9:
+ 165              	.LCFI6:
+GAS LISTING /tmp/ccNRiKf2.s 			page 5
+
+
+ 166              		.cfi_restore_state
+  65:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** }
+ 167              		.loc 1 65 9
+ 168 0050 1305F0FF 		li	a0,-1
+ 169 0054 6FF01FFF 		j	.L5
+ 170              	.L7:
+ 171 0058 1305F0FF 		li	a0,-1
+ 172 005c 6FF09FFE 		j	.L5
+ 173              		.cfi_endproc
+ 174              	.LFE2:
+ 176              		.section	.text.sbi_get_impl_id,"ax",@progbits
+ 177              		.align	2
+ 178              		.globl	sbi_get_impl_id
+ 180              	sbi_get_impl_id:
+ 181              	.LFB3:
+  67:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 
+  68:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** /**
+  69:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * sbi_get_impl_id() - get SBI implementation ID
+  70:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * 获取SBI规范版本 (FID #0)  基本拓展 EID = 0x10
+  71:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * Return: implementation ID
+  72:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  */
+  73:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** int sbi_get_impl_id(void)
+  74:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** {
+ 182              		.loc 1 74 1 is_stmt 1
+ 183              		.cfi_startproc
+ 184 0000 130101FE 		addi	sp,sp,-32
+ 185              	.LCFI7:
+ 186              		.cfi_def_cfa_offset 32
+ 187 0004 233C1100 		sd	ra,24(sp)
+ 188              		.cfi_offset 1, -8
+  75:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	struct sbiret ret;
+ 189              		.loc 1 75 2
+  76:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 
+  77:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	ret = sbi_ecall(SBI_EXT_BASE, SBI_EXT_BASE_GET_IMP_ID,
+ 190              		.loc 1 77 2
+ 191              		.loc 1 77 8 is_stmt 0
+ 192 0008 93080000 		li	a7,0
+ 193 000c 13080000 		li	a6,0
+ 194 0010 93070000 		li	a5,0
+ 195 0014 13070000 		li	a4,0
+ 196 0018 93060000 		li	a3,0
+ 197 001c 13060000 		li	a2,0
+ 198 0020 93051000 		li	a1,1
+ 199 0024 13050001 		li	a0,16
+ 200 0028 97000000 		call	sbi_ecall
+ 200      E7800000 
+ 201              	.LVL14:
+ 202 0030 2330A100 		sd	a0,0(sp)
+ 203 0034 2334B100 		sd	a1,8(sp)
+  78:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 			0, 0, 0, 0, 0, 0);
+  79:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	if (!ret.error)
+ 204              		.loc 1 79 2 is_stmt 1
+ 205              		.loc 1 79 5 is_stmt 0
+ 206 0038 631C0500 		bne	a0,zero,.L12
+  80:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 		if (ret.value)
+ 207              		.loc 1 80 3 is_stmt 1
+ 208              		.loc 1 80 6 is_stmt 0
+GAS LISTING /tmp/ccNRiKf2.s 			page 6
+
+
+ 209 003c 638E0500 		beq	a1,zero,.L13
+  81:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 			return ret.value;
+ 210              		.loc 1 81 4 is_stmt 1
+ 211              		.loc 1 81 14 is_stmt 0
+ 212 0040 1B850500 		sext.w	a0,a1
+ 213              	.L11:
+  82:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 
+  83:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	return -1;
+  84:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** }
+ 214              		.loc 1 84 1
+ 215 0044 83308101 		ld	ra,24(sp)
+ 216              		.cfi_remember_state
+ 217              		.cfi_restore 1
+ 218 0048 13010102 		addi	sp,sp,32
+ 219              	.LCFI8:
+ 220              		.cfi_def_cfa_offset 0
+ 221 004c 67800000 		jr	ra
+ 222              	.L12:
+ 223              	.LCFI9:
+ 224              		.cfi_restore_state
+  83:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** }
+ 225              		.loc 1 83 9
+ 226 0050 1305F0FF 		li	a0,-1
+ 227 0054 6FF01FFF 		j	.L11
+ 228              	.L13:
+ 229 0058 1305F0FF 		li	a0,-1
+ 230 005c 6FF09FFE 		j	.L11
+ 231              		.cfi_endproc
+ 232              	.LFE3:
+ 234              		.section	.text.sbi_probe_extension,"ax",@progbits
+ 235              		.align	2
+ 236              		.globl	sbi_probe_extension
+ 238              	sbi_probe_extension:
+ 239              	.LFB4:
+  85:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 
+  86:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 
+  87:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** /**
+  88:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * sbi_probe_extension() - Check if an SBI extension ID is supported or not.
+  89:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * @extid: The extension ID to be probed.
+  90:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  *  探测SBI扩展功能 (FID #3) 基本拓展 EID = 0x10
+  91:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * Return: Extension specific nonzero value f yes, -1 otherwise.
+  92:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  */
+  93:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** int sbi_probe_extension(int extid)
+  94:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** {
+ 240              		.loc 1 94 1 is_stmt 1
+ 241              		.cfi_startproc
+ 242              	.LVL15:
+ 243 0000 130101FE 		addi	sp,sp,-32
+ 244              	.LCFI10:
+ 245              		.cfi_def_cfa_offset 32
+ 246 0004 233C1100 		sd	ra,24(sp)
+ 247              		.cfi_offset 1, -8
+ 248 0008 13060500 		mv	a2,a0
+  95:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	struct sbiret ret;
+ 249              		.loc 1 95 2
+  96:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 
+  97:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	ret = sbi_ecall(SBI_EXT_BASE, SBI_EXT_BASE_PROBE_EXT, extid,
+GAS LISTING /tmp/ccNRiKf2.s 			page 7
+
+
+ 250              		.loc 1 97 2
+ 251              		.loc 1 97 8 is_stmt 0
+ 252 000c 93080000 		li	a7,0
+ 253 0010 13080000 		li	a6,0
+ 254 0014 93070000 		li	a5,0
+ 255 0018 13070000 		li	a4,0
+ 256 001c 93060000 		li	a3,0
+ 257 0020 93053000 		li	a1,3
+ 258 0024 13050001 		li	a0,16
+ 259              	.LVL16:
+ 260 0028 97000000 		call	sbi_ecall
+ 260      E7800000 
+ 261              	.LVL17:
+ 262 0030 2330A100 		sd	a0,0(sp)
+ 263 0034 2334B100 		sd	a1,8(sp)
+  98:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 			0, 0, 0, 0, 0);
+  99:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	if (!ret.error)
+ 264              		.loc 1 99 2 is_stmt 1
+ 265              		.loc 1 99 5 is_stmt 0
+ 266 0038 631C0500 		bne	a0,zero,.L17
+ 100:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 		if (ret.value)
+ 267              		.loc 1 100 3 is_stmt 1
+ 268              		.loc 1 100 6 is_stmt 0
+ 269 003c 638E0500 		beq	a1,zero,.L18
+ 101:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 			return ret.value;
+ 270              		.loc 1 101 4 is_stmt 1
+ 271              		.loc 1 101 14 is_stmt 0
+ 272 0040 1B850500 		sext.w	a0,a1
+ 273              	.L16:
+ 102:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 
+ 103:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	return -1;
+ 104:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** }
+ 274              		.loc 1 104 1
+ 275 0044 83308101 		ld	ra,24(sp)
+ 276              		.cfi_remember_state
+ 277              		.cfi_restore 1
+ 278 0048 13010102 		addi	sp,sp,32
+ 279              	.LCFI11:
+ 280              		.cfi_def_cfa_offset 0
+ 281 004c 67800000 		jr	ra
+ 282              	.L17:
+ 283              	.LCFI12:
+ 284              		.cfi_restore_state
+ 103:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** }
+ 285              		.loc 1 103 9
+ 286 0050 1305F0FF 		li	a0,-1
+ 287 0054 6FF01FFF 		j	.L16
+ 288              	.L18:
+ 289 0058 1305F0FF 		li	a0,-1
+ 290 005c 6FF09FFE 		j	.L16
+ 291              		.cfi_endproc
+ 292              	.LFE4:
+ 294              		.section	.text.sbi_console_putchar,"ax",@progbits
+ 295              		.align	2
+ 296              		.globl	sbi_console_putchar
+ 298              	sbi_console_putchar:
+ 299              	.LFB5:
+GAS LISTING /tmp/ccNRiKf2.s 			page 8
+
+
+ 105:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 
+ 106:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 
+ 107:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** /**
+ 108:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * sbi_console_putchar() - Writes given character to the console device.
+ 109:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * @ch: The data to be written to the console.
+ 110:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  *
+ 111:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * Return: None
+ 112:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  */
+ 113:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** void sbi_console_putchar(int ch)
+ 114:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** {
+ 300              		.loc 1 114 1 is_stmt 1
+ 301              		.cfi_startproc
+ 302              	.LVL18:
+ 303 0000 130101FF 		addi	sp,sp,-16
+ 304              	.LCFI13:
+ 305              		.cfi_def_cfa_offset 16
+ 306 0004 23341100 		sd	ra,8(sp)
+ 307              		.cfi_offset 1, -8
+ 308 0008 13060500 		mv	a2,a0
+ 115:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	sbi_ecall(SBI_EXT_0_1_CONSOLE_PUTCHAR, 0, ch, 0, 0, 0, 0, 0);
+ 309              		.loc 1 115 2
+ 310 000c 93080000 		li	a7,0
+ 311 0010 13080000 		li	a6,0
+ 312 0014 93070000 		li	a5,0
+ 313 0018 13070000 		li	a4,0
+ 314 001c 93060000 		li	a3,0
+ 315 0020 93050000 		li	a1,0
+ 316 0024 13051000 		li	a0,1
+ 317              	.LVL19:
+ 318 0028 97000000 		call	sbi_ecall
+ 318      E7800000 
+ 319              	.LVL20:
+ 116:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** }
+ 320              		.loc 1 116 1 is_stmt 0
+ 321 0030 83308100 		ld	ra,8(sp)
+ 322              		.cfi_restore 1
+ 323 0034 13010101 		addi	sp,sp,16
+ 324              	.LCFI14:
+ 325              		.cfi_def_cfa_offset 0
+ 326 0038 67800000 		jr	ra
+ 327              		.cfi_endproc
+ 328              	.LFE5:
+ 330              		.section	.text.sbi_console_getchar,"ax",@progbits
+ 331              		.align	2
+ 332              		.globl	sbi_console_getchar
+ 334              	sbi_console_getchar:
+ 335              	.LFB6:
+ 117:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 
+ 118:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** /**
+ 119:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * sbi_console_getchar() - Reads a byte from console device.
+ 120:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  *
+ 121:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * Returns the value read from console.
+ 122:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  */
+ 123:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** int sbi_console_getchar(void)
+ 124:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** {
+ 336              		.loc 1 124 1 is_stmt 1
+ 337              		.cfi_startproc
+GAS LISTING /tmp/ccNRiKf2.s 			page 9
+
+
+ 338 0000 130101FE 		addi	sp,sp,-32
+ 339              	.LCFI15:
+ 340              		.cfi_def_cfa_offset 32
+ 341 0004 233C1100 		sd	ra,24(sp)
+ 342              		.cfi_offset 1, -8
+ 125:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	struct sbiret ret;
+ 343              		.loc 1 125 2
+ 126:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 
+ 127:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	ret = sbi_ecall(SBI_EXT_0_1_CONSOLE_GETCHAR, 0, 0, 0, 0, 0, 0, 0);
+ 344              		.loc 1 127 2
+ 345              		.loc 1 127 8 is_stmt 0
+ 346 0008 93080000 		li	a7,0
+ 347 000c 13080000 		li	a6,0
+ 348 0010 93070000 		li	a5,0
+ 349 0014 13070000 		li	a4,0
+ 350 0018 93060000 		li	a3,0
+ 351 001c 13060000 		li	a2,0
+ 352 0020 93050000 		li	a1,0
+ 353 0024 13052000 		li	a0,2
+ 354 0028 97000000 		call	sbi_ecall
+ 354      E7800000 
+ 355              	.LVL21:
+ 356 0030 2330A100 		sd	a0,0(sp)
+ 357 0034 2334B100 		sd	a1,8(sp)
+ 128:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 
+ 129:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	return ret.error;
+ 358              		.loc 1 129 2 is_stmt 1
+ 130:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** }
+ 359              		.loc 1 130 1 is_stmt 0
+ 360 0038 1B050500 		sext.w	a0,a0
+ 361 003c 83308101 		ld	ra,24(sp)
+ 362              		.cfi_restore 1
+ 363 0040 13010102 		addi	sp,sp,32
+ 364              	.LCFI16:
+ 365              		.cfi_def_cfa_offset 0
+ 366 0044 67800000 		jr	ra
+ 367              		.cfi_endproc
+ 368              	.LFE6:
+ 370              		.section	.text.sbi_clear_ipi,"ax",@progbits
+ 371              		.align	2
+ 372              		.globl	sbi_clear_ipi
+ 374              	sbi_clear_ipi:
+ 375              	.LFB7:
+ 131:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 
+ 132:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 
+ 133:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** /**
+ 134:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * sbi_clear_ipi() - Clear any pending IPIs for the calling hart.
+ 135:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * 清除IPI (EID #0x03) 清除任何挂起的IPI（处理器核间中断）。
+ 136:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * Return: None
+ 137:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  */
+ 138:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** void sbi_clear_ipi(void)
+ 139:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** {
+ 376              		.loc 1 139 1 is_stmt 1
+ 377              		.cfi_startproc
+ 378 0000 130101FF 		addi	sp,sp,-16
+ 379              	.LCFI17:
+ 380              		.cfi_def_cfa_offset 16
+GAS LISTING /tmp/ccNRiKf2.s 			page 10
+
+
+ 381 0004 23341100 		sd	ra,8(sp)
+ 382              		.cfi_offset 1, -8
+ 140:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	sbi_ecall(SBI_EXT_0_1_CLEAR_IPI, 0, 0, 0, 0, 0, 0, 0);
+ 383              		.loc 1 140 2
+ 384 0008 93080000 		li	a7,0
+ 385 000c 13080000 		li	a6,0
+ 386 0010 93070000 		li	a5,0
+ 387 0014 13070000 		li	a4,0
+ 388 0018 93060000 		li	a3,0
+ 389 001c 13060000 		li	a2,0
+ 390 0020 93050000 		li	a1,0
+ 391 0024 13053000 		li	a0,3
+ 392 0028 97000000 		call	sbi_ecall
+ 392      E7800000 
+ 393              	.LVL22:
+ 141:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** }
+ 394              		.loc 1 141 1 is_stmt 0
+ 395 0030 83308100 		ld	ra,8(sp)
+ 396              		.cfi_restore 1
+ 397 0034 13010101 		addi	sp,sp,16
+ 398              	.LCFI18:
+ 399              		.cfi_def_cfa_offset 0
+ 400 0038 67800000 		jr	ra
+ 401              		.cfi_endproc
+ 402              	.LFE7:
+ 404              		.section	.text.sbi_shutdown,"ax",@progbits
+ 405              		.align	2
+ 406              		.globl	sbi_shutdown
+ 408              	sbi_shutdown:
+ 409              	.LFB8:
+ 142:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 
+ 143:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** /**
+ 144:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * sbi_shutdown() - Remove all the harts from executing supervisor code.
+ 145:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * 系统关闭 (EID #0x08)
+ 146:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * Return: None
+ 147:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  */
+ 148:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** void sbi_shutdown(void)
+ 149:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** {
+ 410              		.loc 1 149 1 is_stmt 1
+ 411              		.cfi_startproc
+ 412 0000 130101FF 		addi	sp,sp,-16
+ 413              	.LCFI19:
+ 414              		.cfi_def_cfa_offset 16
+ 415 0004 23341100 		sd	ra,8(sp)
+ 416              		.cfi_offset 1, -8
+ 150:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	sbi_ecall(SBI_EXT_0_1_SHUTDOWN, 0, 0, 0, 0, 0, 0, 0);
+ 417              		.loc 1 150 2
+ 418 0008 93080000 		li	a7,0
+ 419 000c 13080000 		li	a6,0
+ 420 0010 93070000 		li	a5,0
+ 421 0014 13070000 		li	a4,0
+ 422 0018 93060000 		li	a3,0
+ 423 001c 13060000 		li	a2,0
+ 424 0020 93050000 		li	a1,0
+ 425 0024 13058000 		li	a0,8
+ 426 0028 97000000 		call	sbi_ecall
+ 426      E7800000 
+GAS LISTING /tmp/ccNRiKf2.s 			page 11
+
+
+ 427              	.LVL23:
+ 151:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** }
+ 428              		.loc 1 151 1 is_stmt 0
+ 429 0030 83308100 		ld	ra,8(sp)
+ 430              		.cfi_restore 1
+ 431 0034 13010101 		addi	sp,sp,16
+ 432              	.LCFI20:
+ 433              		.cfi_def_cfa_offset 0
+ 434 0038 67800000 		jr	ra
+ 435              		.cfi_endproc
+ 436              	.LFE8:
+ 438              		.section	.text.sbi_send_ipi,"ax",@progbits
+ 439              		.align	2
+ 440              		.globl	sbi_send_ipi
+ 442              	sbi_send_ipi:
+ 443              	.LFB9:
+ 152:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 
+ 153:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 
+ 154:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** /**
+ 155:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * sbi_send_ipi() - Send an IPI to any hart.
+ 156:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * @hart_mask: A cpu mask containing all the target harts.
+ 157:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * 向 hart_mask 中定义的所有 hart 发送跨处理器中断。
+ 158:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * Return: None
+ 159:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  */
+ 160:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** void sbi_send_ipi(const unsigned long *hart_mask)
+ 161:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** {
+ 444              		.loc 1 161 1 is_stmt 1
+ 445              		.cfi_startproc
+ 446              	.LVL24:
+ 447 0000 130101FF 		addi	sp,sp,-16
+ 448              	.LCFI21:
+ 449              		.cfi_def_cfa_offset 16
+ 450 0004 23341100 		sd	ra,8(sp)
+ 451              		.cfi_offset 1, -8
+ 452 0008 13060500 		mv	a2,a0
+ 162:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	sbi_ecall(SBI_EXT_SEND_IPI, SBI_FID_SEND_IPI, (unsigned long)hart_mask,
+ 453              		.loc 1 162 2
+ 454 000c 93080000 		li	a7,0
+ 455 0010 13080000 		li	a6,0
+ 456 0014 93070000 		li	a5,0
+ 457 0018 13070000 		li	a4,0
+ 458 001c 93060000 		li	a3,0
+ 459 0020 93050000 		li	a1,0
+ 460 0024 37557300 		li	a0,7557120
+ 461              	.LVL25:
+ 462 0028 13059504 		addi	a0,a0,73
+ 463 002c 97000000 		call	sbi_ecall
+ 463      E7800000 
+ 464              	.LVL26:
+ 163:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 		  0, 0, 0, 0, 0);
+ 164:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** }
+ 465              		.loc 1 164 1 is_stmt 0
+ 466 0034 83308100 		ld	ra,8(sp)
+ 467              		.cfi_restore 1
+ 468 0038 13010101 		addi	sp,sp,16
+ 469              	.LCFI22:
+ 470              		.cfi_def_cfa_offset 0
+GAS LISTING /tmp/ccNRiKf2.s 			page 12
+
+
+ 471 003c 67800000 		jr	ra
+ 472              		.cfi_endproc
+ 473              	.LFE9:
+ 475              		.section	.text.sbi_remote_fence_i,"ax",@progbits
+ 476              		.align	2
+ 477              		.globl	sbi_remote_fence_i
+ 479              	sbi_remote_fence_i:
+ 480              	.LFB10:
+ 165:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 
+ 166:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** /**
+ 167:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * sbi_remote_fence_i() - Execute FENCE.I instruction on given remote harts.
+ 168:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * @hart_mask: A cpu mask containing all the target harts.
+ 169:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * 远程指示harts执行FENCE.I指令
+ 170:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * Return: None
+ 171:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  */
+ 172:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** void sbi_remote_fence_i(const unsigned long *hart_mask)
+ 173:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** {
+ 481              		.loc 1 173 1 is_stmt 1
+ 482              		.cfi_startproc
+ 483              	.LVL27:
+ 484 0000 130101FF 		addi	sp,sp,-16
+ 485              	.LCFI23:
+ 486              		.cfi_def_cfa_offset 16
+ 487 0004 23341100 		sd	ra,8(sp)
+ 488              		.cfi_offset 1, -8
+ 489 0008 13060500 		mv	a2,a0
+ 174:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	sbi_ecall(SBI_EXT_REMOTE_FENCE_I, SBI_FID_REMOTE_FENCE_I,
+ 490              		.loc 1 174 2
+ 491 000c 93080000 		li	a7,0
+ 492 0010 13080000 		li	a6,0
+ 493 0014 93070000 		li	a5,0
+ 494 0018 13070000 		li	a4,0
+ 495 001c 93060000 		li	a3,0
+ 496 0020 93050000 		li	a1,0
+ 497 0024 37554652 		li	a0,1380339712
+ 498              	.LVL28:
+ 499 0028 130535E4 		addi	a0,a0,-445
+ 500 002c 97000000 		call	sbi_ecall
+ 500      E7800000 
+ 501              	.LVL29:
+ 175:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 		  (unsigned long)hart_mask, 0, 0, 0, 0, 0);
+ 176:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** }
+ 502              		.loc 1 176 1 is_stmt 0
+ 503 0034 83308100 		ld	ra,8(sp)
+ 504              		.cfi_restore 1
+ 505 0038 13010101 		addi	sp,sp,16
+ 506              	.LCFI24:
+ 507              		.cfi_def_cfa_offset 0
+ 508 003c 67800000 		jr	ra
+ 509              		.cfi_endproc
+ 510              	.LFE10:
+ 512              		.section	.text.sbi_remote_sfence_vma,"ax",@progbits
+ 513              		.align	2
+ 514              		.globl	sbi_remote_sfence_vma
+ 516              	sbi_remote_sfence_vma:
+ 517              	.LFB11:
+ 177:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 
+GAS LISTING /tmp/ccNRiKf2.s 			page 13
+
+
+ 178:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** /**
+ 179:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * sbi_remote_sfence_vma() - Execute SFENCE.VMA instructions on given remote
+ 180:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  *			     harts for the specified virtual address range.
+ 181:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * @hart_mask: A cpu mask containing all the target harts.
+ 182:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * @start: Start of the virtual address
+ 183:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * @size: Total size of the virtual address range.
+ 184:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * 指示远程hart执行一个或多个SFENCE.VMA指令，覆盖从start到size的虚拟地址范�
+ 185:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * Return: None
+ 186:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  */
+ 187:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** void sbi_remote_sfence_vma(const unsigned long *hart_mask,
+ 188:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 			   unsigned long start,
+ 189:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 			   unsigned long size)
+ 190:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** {
+ 518              		.loc 1 190 1 is_stmt 1
+ 519              		.cfi_startproc
+ 520              	.LVL30:
+ 521 0000 130101FF 		addi	sp,sp,-16
+ 522              	.LCFI25:
+ 523              		.cfi_def_cfa_offset 16
+ 524 0004 23341100 		sd	ra,8(sp)
+ 525              		.cfi_offset 1, -8
+ 526 0008 93860500 		mv	a3,a1
+ 527 000c 13070600 		mv	a4,a2
+ 191:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	sbi_ecall(SBI_EXT_REMOTE_SFENCE_VMA, SBI_FID_REMOTE_SFENCE_VMA,
+ 528              		.loc 1 191 2
+ 529 0010 93080000 		li	a7,0
+ 530 0014 13080000 		li	a6,0
+ 531 0018 93070000 		li	a5,0
+ 532 001c 13060500 		mv	a2,a0
+ 533              	.LVL31:
+ 534 0020 93051000 		li	a1,1
+ 535              	.LVL32:
+ 536 0024 37554652 		li	a0,1380339712
+ 537              	.LVL33:
+ 538 0028 130535E4 		addi	a0,a0,-445
+ 539 002c 97000000 		call	sbi_ecall
+ 539      E7800000 
+ 540              	.LVL34:
+ 192:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 		  (unsigned long)hart_mask, start, size, 0, 0, 0);
+ 193:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** }
+ 541              		.loc 1 193 1 is_stmt 0
+ 542 0034 83308100 		ld	ra,8(sp)
+ 543              		.cfi_restore 1
+ 544 0038 13010101 		addi	sp,sp,16
+ 545              	.LCFI26:
+ 546              		.cfi_def_cfa_offset 0
+ 547 003c 67800000 		jr	ra
+ 548              		.cfi_endproc
+ 549              	.LFE11:
+ 551              		.section	.text.sbi_remote_sfence_vma_asid,"ax",@progbits
+ 552              		.align	2
+ 553              		.globl	sbi_remote_sfence_vma_asid
+ 555              	sbi_remote_sfence_vma_asid:
+ 556              	.LFB12:
+ 194:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 
+ 195:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 
+ 196:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** /**
+GAS LISTING /tmp/ccNRiKf2.s 			page 14
+
+
+ 197:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * sbi_remote_sfence_vma_asid() - Execute SFENCE.VMA instructions on given
+ 198:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * remote harts for a virtual address range belonging to a specific ASID.
+ 199:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  *
+ 200:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * @hart_mask: A cpu mask containing all the target harts.
+ 201:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * @start: Start of the virtual address
+ 202:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * @size: Total size of the virtual address range.
+ 203:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * @asid: The value of address space identifier (ASID).
+ 204:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * 指示远程hart执行一个或多个SFENCE.VMA指令，覆盖从start到size的虚拟地址范�
+ 205:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  * Return: None
+ 206:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c ****  */
+ 207:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** void sbi_remote_sfence_vma_asid(const unsigned long *hart_mask,
+ 208:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 				unsigned long start,
+ 209:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 				unsigned long size,
+ 210:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 				unsigned long asid)
+ 211:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** {
+ 557              		.loc 1 211 1 is_stmt 1
+ 558              		.cfi_startproc
+ 559              	.LVL35:
+ 560 0000 130101FF 		addi	sp,sp,-16
+ 561              	.LCFI27:
+ 562              		.cfi_def_cfa_offset 16
+ 563 0004 23341100 		sd	ra,8(sp)
+ 564              		.cfi_offset 1, -8
+ 565 0008 13070600 		mv	a4,a2
+ 566 000c 93870600 		mv	a5,a3
+ 212:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 	sbi_ecall(SBI_EXT_REMOTE_SFENCE_VMA_ASID,
+ 567              		.loc 1 212 2
+ 568 0010 93080000 		li	a7,0
+ 569 0014 13080000 		li	a6,0
+ 570 0018 93860500 		mv	a3,a1
+ 571              	.LVL36:
+ 572 001c 13060500 		mv	a2,a0
+ 573              	.LVL37:
+ 574 0020 93052000 		li	a1,2
+ 575              	.LVL38:
+ 576 0024 37554652 		li	a0,1380339712
+ 577              	.LVL39:
+ 578 0028 130535E4 		addi	a0,a0,-445
+ 579 002c 97000000 		call	sbi_ecall
+ 579      E7800000 
+ 580              	.LVL40:
+ 213:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 		  SBI_FID_REMOTE_SFENCE_VMA_ASID,
+ 214:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** 		  (unsigned long)hart_mask, start, size, asid, 0, 0);
+ 215:/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c **** }
+ 581              		.loc 1 215 1 is_stmt 0
+ 582 0034 83308100 		ld	ra,8(sp)
+ 583              		.cfi_restore 1
+ 584 0038 13010101 		addi	sp,sp,16
+ 585              	.LCFI28:
+ 586              		.cfi_def_cfa_offset 0
+ 587 003c 67800000 		jr	ra
+ 588              		.cfi_endproc
+ 589              	.LFE12:
+ 591              		.text
+ 592              	.Letext0:
+ 593              		.file 2 "/home/zz/riscv/riscv/riscv64-unknown-elf/include/machine/_default_types.h"
+ 594              		.file 3 "/home/zz/riscv/riscv/riscv64-unknown-elf/include/sys/_stdint.h"
+GAS LISTING /tmp/ccNRiKf2.s 			page 15
+
+
+ 595              		.file 4 "/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.h"
+GAS LISTING /tmp/ccNRiKf2.s 			page 16
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 sbi.c
+     /tmp/ccNRiKf2.s:14     .text.sbi_ecall:0000000000000000 sbi_ecall
+     /tmp/ccNRiKf2.s:17     .text.sbi_ecall:0000000000000000 .L0 
+     /tmp/ccNRiKf2.s:19     .text.sbi_ecall:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/ccNRiKf2.s:19     .text.sbi_ecall:0000000000000000 .L0 
+     /tmp/ccNRiKf2.s:21     .text.sbi_ecall:0000000000000004 .L0 
+     /tmp/ccNRiKf2.s:25     .text.sbi_ecall:000000000000000c .L0 
+     /tmp/ccNRiKf2.s:26     .text.sbi_ecall:000000000000000c .L0 
+     /tmp/ccNRiKf2.s:27     .text.sbi_ecall:000000000000000c .L0 
+     /tmp/ccNRiKf2.s:30     .text.sbi_ecall:0000000000000010 .L0 
+     /tmp/ccNRiKf2.s:31     .text.sbi_ecall:0000000000000010 .L0 
+     /tmp/ccNRiKf2.s:34     .text.sbi_ecall:0000000000000014 .L0 
+     /tmp/ccNRiKf2.s:35     .text.sbi_ecall:0000000000000014 .L0 
+     /tmp/ccNRiKf2.s:38     .text.sbi_ecall:0000000000000018 .L0 
+     /tmp/ccNRiKf2.s:39     .text.sbi_ecall:0000000000000018 .L0 
+     /tmp/ccNRiKf2.s:42     .text.sbi_ecall:000000000000001c .L0 
+     /tmp/ccNRiKf2.s:43     .text.sbi_ecall:000000000000001c .L0 
+     /tmp/ccNRiKf2.s:46     .text.sbi_ecall:0000000000000020 .L0 
+     /tmp/ccNRiKf2.s:47     .text.sbi_ecall:0000000000000020 .L0 
+     /tmp/ccNRiKf2.s:50     .text.sbi_ecall:0000000000000024 .L0 
+     /tmp/ccNRiKf2.s:51     .text.sbi_ecall:0000000000000024 .L0 
+     /tmp/ccNRiKf2.s:54     .text.sbi_ecall:0000000000000028 .L0 
+     /tmp/ccNRiKf2.s:55     .text.sbi_ecall:0000000000000028 .L0 
+/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.c:21     .text.sbi_ecall:000000000000002c .L0 
+     /tmp/ccNRiKf2.s:64     .text.sbi_ecall:0000000000000030 .L0 
+     /tmp/ccNRiKf2.s:66     .text.sbi_ecall:0000000000000030 .L0 
+     /tmp/ccNRiKf2.s:68     .text.sbi_ecall:0000000000000034 .L0 
+     /tmp/ccNRiKf2.s:69     .text.sbi_ecall:0000000000000034 .L0 
+     /tmp/ccNRiKf2.s:71     .text.sbi_ecall:0000000000000038 .L0 
+     /tmp/ccNRiKf2.s:72     .text.sbi_ecall:0000000000000038 .L0 
+     /tmp/ccNRiKf2.s:75     .text.sbi_ecall:0000000000000040 .L0 
+     /tmp/ccNRiKf2.s:77     .text.sbi_ecall:0000000000000044 .L0 
+     /tmp/ccNRiKf2.s:79     .text.sbi_ecall:0000000000000048 .L0 
+     /tmp/ccNRiKf2.s:86     .text.sbi_set_timer:0000000000000000 sbi_set_timer
+     /tmp/ccNRiKf2.s:89     .text.sbi_set_timer:0000000000000000 .L0 
+     /tmp/ccNRiKf2.s:91     .text.sbi_set_timer:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/ccNRiKf2.s:91     .text.sbi_set_timer:0000000000000000 .L0 
+     /tmp/ccNRiKf2.s:93     .text.sbi_set_timer:0000000000000004 .L0 
+     /tmp/ccNRiKf2.s:95     .text.sbi_set_timer:0000000000000008 .L0 
+     /tmp/ccNRiKf2.s:98     .text.sbi_set_timer:000000000000000c .L0 
+     /tmp/ccNRiKf2.s:110    .text.sbi_set_timer:0000000000000034 .L0 
+     /tmp/ccNRiKf2.s:111    .text.sbi_set_timer:0000000000000038 .L0 
+     /tmp/ccNRiKf2.s:114    .text.sbi_set_timer:000000000000003c .L0 
+     /tmp/ccNRiKf2.s:116    .text.sbi_set_timer:0000000000000040 .L0 
+     /tmp/ccNRiKf2.s:123    .text.sbi_get_spec_version:0000000000000000 sbi_get_spec_version
+     /tmp/ccNRiKf2.s:126    .text.sbi_get_spec_version:0000000000000000 .L0 
+     /tmp/ccNRiKf2.s:127    .text.sbi_get_spec_version:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/ccNRiKf2.s:127    .text.sbi_get_spec_version:0000000000000000 .L0 
+     /tmp/ccNRiKf2.s:129    .text.sbi_get_spec_version:0000000000000004 .L0 
+     /tmp/ccNRiKf2.s:131    .text.sbi_get_spec_version:0000000000000008 .L0 
+     /tmp/ccNRiKf2.s:133    .text.sbi_get_spec_version:0000000000000008 .L0 
+     /tmp/ccNRiKf2.s:134    .text.sbi_get_spec_version:0000000000000008 .L0 
+     /tmp/ccNRiKf2.s:135    .text.sbi_get_spec_version:0000000000000008 .L0 
+     /tmp/ccNRiKf2.s:148    .text.sbi_get_spec_version:0000000000000038 .L0 
+     /tmp/ccNRiKf2.s:149    .text.sbi_get_spec_version:0000000000000038 .L0 
+     /tmp/ccNRiKf2.s:151    .text.sbi_get_spec_version:000000000000003c .L0 
+GAS LISTING /tmp/ccNRiKf2.s 			page 17
+
+
+     /tmp/ccNRiKf2.s:152    .text.sbi_get_spec_version:000000000000003c .L0 
+     /tmp/ccNRiKf2.s:154    .text.sbi_get_spec_version:0000000000000040 .L0 
+     /tmp/ccNRiKf2.s:157    .text.sbi_get_spec_version:0000000000000044 .L0 
+     /tmp/ccNRiKf2.s:158    .text.sbi_get_spec_version:0000000000000048 .L0 
+     /tmp/ccNRiKf2.s:159    .text.sbi_get_spec_version:0000000000000048 .L0 
+     /tmp/ccNRiKf2.s:162    .text.sbi_get_spec_version:000000000000004c .L0 
+     /tmp/ccNRiKf2.s:166    .text.sbi_get_spec_version:0000000000000050 .L0 
+     /tmp/ccNRiKf2.s:168    .text.sbi_get_spec_version:0000000000000050 .L0 
+     /tmp/ccNRiKf2.s:173    .text.sbi_get_spec_version:0000000000000060 .L0 
+     /tmp/ccNRiKf2.s:180    .text.sbi_get_impl_id:0000000000000000 sbi_get_impl_id
+     /tmp/ccNRiKf2.s:183    .text.sbi_get_impl_id:0000000000000000 .L0 
+     /tmp/ccNRiKf2.s:184    .text.sbi_get_impl_id:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/ccNRiKf2.s:184    .text.sbi_get_impl_id:0000000000000000 .L0 
+     /tmp/ccNRiKf2.s:186    .text.sbi_get_impl_id:0000000000000004 .L0 
+     /tmp/ccNRiKf2.s:188    .text.sbi_get_impl_id:0000000000000008 .L0 
+     /tmp/ccNRiKf2.s:190    .text.sbi_get_impl_id:0000000000000008 .L0 
+     /tmp/ccNRiKf2.s:191    .text.sbi_get_impl_id:0000000000000008 .L0 
+     /tmp/ccNRiKf2.s:192    .text.sbi_get_impl_id:0000000000000008 .L0 
+     /tmp/ccNRiKf2.s:205    .text.sbi_get_impl_id:0000000000000038 .L0 
+     /tmp/ccNRiKf2.s:206    .text.sbi_get_impl_id:0000000000000038 .L0 
+     /tmp/ccNRiKf2.s:208    .text.sbi_get_impl_id:000000000000003c .L0 
+     /tmp/ccNRiKf2.s:209    .text.sbi_get_impl_id:000000000000003c .L0 
+     /tmp/ccNRiKf2.s:211    .text.sbi_get_impl_id:0000000000000040 .L0 
+     /tmp/ccNRiKf2.s:212    .text.sbi_get_impl_id:0000000000000040 .L0 
+     /tmp/ccNRiKf2.s:215    .text.sbi_get_impl_id:0000000000000044 .L0 
+     /tmp/ccNRiKf2.s:216    .text.sbi_get_impl_id:0000000000000048 .L0 
+     /tmp/ccNRiKf2.s:217    .text.sbi_get_impl_id:0000000000000048 .L0 
+     /tmp/ccNRiKf2.s:220    .text.sbi_get_impl_id:000000000000004c .L0 
+     /tmp/ccNRiKf2.s:224    .text.sbi_get_impl_id:0000000000000050 .L0 
+     /tmp/ccNRiKf2.s:226    .text.sbi_get_impl_id:0000000000000050 .L0 
+     /tmp/ccNRiKf2.s:231    .text.sbi_get_impl_id:0000000000000060 .L0 
+     /tmp/ccNRiKf2.s:238    .text.sbi_probe_extension:0000000000000000 sbi_probe_extension
+     /tmp/ccNRiKf2.s:241    .text.sbi_probe_extension:0000000000000000 .L0 
+     /tmp/ccNRiKf2.s:243    .text.sbi_probe_extension:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/ccNRiKf2.s:243    .text.sbi_probe_extension:0000000000000000 .L0 
+     /tmp/ccNRiKf2.s:245    .text.sbi_probe_extension:0000000000000004 .L0 
+     /tmp/ccNRiKf2.s:247    .text.sbi_probe_extension:0000000000000008 .L0 
+     /tmp/ccNRiKf2.s:250    .text.sbi_probe_extension:000000000000000c .L0 
+     /tmp/ccNRiKf2.s:251    .text.sbi_probe_extension:000000000000000c .L0 
+     /tmp/ccNRiKf2.s:252    .text.sbi_probe_extension:000000000000000c .L0 
+     /tmp/ccNRiKf2.s:265    .text.sbi_probe_extension:0000000000000038 .L0 
+     /tmp/ccNRiKf2.s:266    .text.sbi_probe_extension:0000000000000038 .L0 
+     /tmp/ccNRiKf2.s:268    .text.sbi_probe_extension:000000000000003c .L0 
+     /tmp/ccNRiKf2.s:269    .text.sbi_probe_extension:000000000000003c .L0 
+     /tmp/ccNRiKf2.s:271    .text.sbi_probe_extension:0000000000000040 .L0 
+     /tmp/ccNRiKf2.s:272    .text.sbi_probe_extension:0000000000000040 .L0 
+     /tmp/ccNRiKf2.s:275    .text.sbi_probe_extension:0000000000000044 .L0 
+     /tmp/ccNRiKf2.s:276    .text.sbi_probe_extension:0000000000000048 .L0 
+     /tmp/ccNRiKf2.s:277    .text.sbi_probe_extension:0000000000000048 .L0 
+     /tmp/ccNRiKf2.s:280    .text.sbi_probe_extension:000000000000004c .L0 
+     /tmp/ccNRiKf2.s:284    .text.sbi_probe_extension:0000000000000050 .L0 
+     /tmp/ccNRiKf2.s:286    .text.sbi_probe_extension:0000000000000050 .L0 
+     /tmp/ccNRiKf2.s:291    .text.sbi_probe_extension:0000000000000060 .L0 
+     /tmp/ccNRiKf2.s:298    .text.sbi_console_putchar:0000000000000000 sbi_console_putchar
+     /tmp/ccNRiKf2.s:301    .text.sbi_console_putchar:0000000000000000 .L0 
+     /tmp/ccNRiKf2.s:303    .text.sbi_console_putchar:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/ccNRiKf2.s:303    .text.sbi_console_putchar:0000000000000000 .L0 
+GAS LISTING /tmp/ccNRiKf2.s 			page 18
+
+
+     /tmp/ccNRiKf2.s:305    .text.sbi_console_putchar:0000000000000004 .L0 
+     /tmp/ccNRiKf2.s:307    .text.sbi_console_putchar:0000000000000008 .L0 
+     /tmp/ccNRiKf2.s:310    .text.sbi_console_putchar:000000000000000c .L0 
+     /tmp/ccNRiKf2.s:321    .text.sbi_console_putchar:0000000000000030 .L0 
+     /tmp/ccNRiKf2.s:322    .text.sbi_console_putchar:0000000000000034 .L0 
+     /tmp/ccNRiKf2.s:325    .text.sbi_console_putchar:0000000000000038 .L0 
+     /tmp/ccNRiKf2.s:327    .text.sbi_console_putchar:000000000000003c .L0 
+     /tmp/ccNRiKf2.s:334    .text.sbi_console_getchar:0000000000000000 sbi_console_getchar
+     /tmp/ccNRiKf2.s:337    .text.sbi_console_getchar:0000000000000000 .L0 
+     /tmp/ccNRiKf2.s:338    .text.sbi_console_getchar:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/ccNRiKf2.s:338    .text.sbi_console_getchar:0000000000000000 .L0 
+     /tmp/ccNRiKf2.s:340    .text.sbi_console_getchar:0000000000000004 .L0 
+     /tmp/ccNRiKf2.s:342    .text.sbi_console_getchar:0000000000000008 .L0 
+     /tmp/ccNRiKf2.s:344    .text.sbi_console_getchar:0000000000000008 .L0 
+     /tmp/ccNRiKf2.s:345    .text.sbi_console_getchar:0000000000000008 .L0 
+     /tmp/ccNRiKf2.s:346    .text.sbi_console_getchar:0000000000000008 .L0 
+     /tmp/ccNRiKf2.s:359    .text.sbi_console_getchar:0000000000000038 .L0 
+     /tmp/ccNRiKf2.s:360    .text.sbi_console_getchar:0000000000000038 .L0 
+     /tmp/ccNRiKf2.s:362    .text.sbi_console_getchar:0000000000000040 .L0 
+     /tmp/ccNRiKf2.s:365    .text.sbi_console_getchar:0000000000000044 .L0 
+     /tmp/ccNRiKf2.s:367    .text.sbi_console_getchar:0000000000000048 .L0 
+     /tmp/ccNRiKf2.s:374    .text.sbi_clear_ipi:0000000000000000 sbi_clear_ipi
+     /tmp/ccNRiKf2.s:377    .text.sbi_clear_ipi:0000000000000000 .L0 
+     /tmp/ccNRiKf2.s:378    .text.sbi_clear_ipi:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/ccNRiKf2.s:378    .text.sbi_clear_ipi:0000000000000000 .L0 
+     /tmp/ccNRiKf2.s:380    .text.sbi_clear_ipi:0000000000000004 .L0 
+     /tmp/ccNRiKf2.s:382    .text.sbi_clear_ipi:0000000000000008 .L0 
+     /tmp/ccNRiKf2.s:384    .text.sbi_clear_ipi:0000000000000008 .L0 
+     /tmp/ccNRiKf2.s:395    .text.sbi_clear_ipi:0000000000000030 .L0 
+     /tmp/ccNRiKf2.s:396    .text.sbi_clear_ipi:0000000000000034 .L0 
+     /tmp/ccNRiKf2.s:399    .text.sbi_clear_ipi:0000000000000038 .L0 
+     /tmp/ccNRiKf2.s:401    .text.sbi_clear_ipi:000000000000003c .L0 
+     /tmp/ccNRiKf2.s:408    .text.sbi_shutdown:0000000000000000 sbi_shutdown
+     /tmp/ccNRiKf2.s:411    .text.sbi_shutdown:0000000000000000 .L0 
+     /tmp/ccNRiKf2.s:412    .text.sbi_shutdown:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/ccNRiKf2.s:412    .text.sbi_shutdown:0000000000000000 .L0 
+     /tmp/ccNRiKf2.s:414    .text.sbi_shutdown:0000000000000004 .L0 
+     /tmp/ccNRiKf2.s:416    .text.sbi_shutdown:0000000000000008 .L0 
+     /tmp/ccNRiKf2.s:418    .text.sbi_shutdown:0000000000000008 .L0 
+     /tmp/ccNRiKf2.s:429    .text.sbi_shutdown:0000000000000030 .L0 
+     /tmp/ccNRiKf2.s:430    .text.sbi_shutdown:0000000000000034 .L0 
+     /tmp/ccNRiKf2.s:433    .text.sbi_shutdown:0000000000000038 .L0 
+     /tmp/ccNRiKf2.s:435    .text.sbi_shutdown:000000000000003c .L0 
+     /tmp/ccNRiKf2.s:442    .text.sbi_send_ipi:0000000000000000 sbi_send_ipi
+     /tmp/ccNRiKf2.s:445    .text.sbi_send_ipi:0000000000000000 .L0 
+     /tmp/ccNRiKf2.s:447    .text.sbi_send_ipi:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/ccNRiKf2.s:447    .text.sbi_send_ipi:0000000000000000 .L0 
+     /tmp/ccNRiKf2.s:449    .text.sbi_send_ipi:0000000000000004 .L0 
+     /tmp/ccNRiKf2.s:451    .text.sbi_send_ipi:0000000000000008 .L0 
+     /tmp/ccNRiKf2.s:454    .text.sbi_send_ipi:000000000000000c .L0 
+     /tmp/ccNRiKf2.s:466    .text.sbi_send_ipi:0000000000000034 .L0 
+     /tmp/ccNRiKf2.s:467    .text.sbi_send_ipi:0000000000000038 .L0 
+     /tmp/ccNRiKf2.s:470    .text.sbi_send_ipi:000000000000003c .L0 
+     /tmp/ccNRiKf2.s:472    .text.sbi_send_ipi:0000000000000040 .L0 
+     /tmp/ccNRiKf2.s:479    .text.sbi_remote_fence_i:0000000000000000 sbi_remote_fence_i
+     /tmp/ccNRiKf2.s:482    .text.sbi_remote_fence_i:0000000000000000 .L0 
+     /tmp/ccNRiKf2.s:484    .text.sbi_remote_fence_i:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+GAS LISTING /tmp/ccNRiKf2.s 			page 19
+
+
+     /tmp/ccNRiKf2.s:484    .text.sbi_remote_fence_i:0000000000000000 .L0 
+     /tmp/ccNRiKf2.s:486    .text.sbi_remote_fence_i:0000000000000004 .L0 
+     /tmp/ccNRiKf2.s:488    .text.sbi_remote_fence_i:0000000000000008 .L0 
+     /tmp/ccNRiKf2.s:491    .text.sbi_remote_fence_i:000000000000000c .L0 
+     /tmp/ccNRiKf2.s:503    .text.sbi_remote_fence_i:0000000000000034 .L0 
+     /tmp/ccNRiKf2.s:504    .text.sbi_remote_fence_i:0000000000000038 .L0 
+     /tmp/ccNRiKf2.s:507    .text.sbi_remote_fence_i:000000000000003c .L0 
+     /tmp/ccNRiKf2.s:509    .text.sbi_remote_fence_i:0000000000000040 .L0 
+     /tmp/ccNRiKf2.s:516    .text.sbi_remote_sfence_vma:0000000000000000 sbi_remote_sfence_vma
+     /tmp/ccNRiKf2.s:519    .text.sbi_remote_sfence_vma:0000000000000000 .L0 
+     /tmp/ccNRiKf2.s:521    .text.sbi_remote_sfence_vma:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/ccNRiKf2.s:521    .text.sbi_remote_sfence_vma:0000000000000000 .L0 
+     /tmp/ccNRiKf2.s:523    .text.sbi_remote_sfence_vma:0000000000000004 .L0 
+     /tmp/ccNRiKf2.s:525    .text.sbi_remote_sfence_vma:0000000000000008 .L0 
+     /tmp/ccNRiKf2.s:529    .text.sbi_remote_sfence_vma:0000000000000010 .L0 
+     /tmp/ccNRiKf2.s:542    .text.sbi_remote_sfence_vma:0000000000000034 .L0 
+     /tmp/ccNRiKf2.s:543    .text.sbi_remote_sfence_vma:0000000000000038 .L0 
+     /tmp/ccNRiKf2.s:546    .text.sbi_remote_sfence_vma:000000000000003c .L0 
+     /tmp/ccNRiKf2.s:548    .text.sbi_remote_sfence_vma:0000000000000040 .L0 
+     /tmp/ccNRiKf2.s:555    .text.sbi_remote_sfence_vma_asid:0000000000000000 sbi_remote_sfence_vma_asid
+     /tmp/ccNRiKf2.s:558    .text.sbi_remote_sfence_vma_asid:0000000000000000 .L0 
+     /tmp/ccNRiKf2.s:560    .text.sbi_remote_sfence_vma_asid:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/ccNRiKf2.s:560    .text.sbi_remote_sfence_vma_asid:0000000000000000 .L0 
+     /tmp/ccNRiKf2.s:562    .text.sbi_remote_sfence_vma_asid:0000000000000004 .L0 
+     /tmp/ccNRiKf2.s:564    .text.sbi_remote_sfence_vma_asid:0000000000000008 .L0 
+     /tmp/ccNRiKf2.s:568    .text.sbi_remote_sfence_vma_asid:0000000000000010 .L0 
+     /tmp/ccNRiKf2.s:582    .text.sbi_remote_sfence_vma_asid:0000000000000034 .L0 
+     /tmp/ccNRiKf2.s:583    .text.sbi_remote_sfence_vma_asid:0000000000000038 .L0 
+     /tmp/ccNRiKf2.s:586    .text.sbi_remote_sfence_vma_asid:000000000000003c .L0 
+     /tmp/ccNRiKf2.s:588    .text.sbi_remote_sfence_vma_asid:0000000000000040 .L0 
+     /tmp/ccNRiKf2.s:82     .text.sbi_ecall:0000000000000048 .L0 
+     /tmp/ccNRiKf2.s:119    .text.sbi_set_timer:0000000000000040 .L0 
+     /tmp/ccNRiKf2.s:176    .text.sbi_get_spec_version:0000000000000060 .L0 
+     /tmp/ccNRiKf2.s:234    .text.sbi_get_impl_id:0000000000000060 .L0 
+     /tmp/ccNRiKf2.s:294    .text.sbi_probe_extension:0000000000000060 .L0 
+     /tmp/ccNRiKf2.s:330    .text.sbi_console_putchar:000000000000003c .L0 
+     /tmp/ccNRiKf2.s:370    .text.sbi_console_getchar:0000000000000048 .L0 
+     /tmp/ccNRiKf2.s:404    .text.sbi_clear_ipi:000000000000003c .L0 
+     /tmp/ccNRiKf2.s:438    .text.sbi_shutdown:000000000000003c .L0 
+     /tmp/ccNRiKf2.s:475    .text.sbi_send_ipi:0000000000000040 .L0 
+     /tmp/ccNRiKf2.s:512    .text.sbi_remote_fence_i:0000000000000040 .L0 
+     /tmp/ccNRiKf2.s:551    .text.sbi_remote_sfence_vma:0000000000000040 .L0 
+     /tmp/ccNRiKf2.s:591    .text.sbi_remote_sfence_vma_asid:0000000000000040 .L0 
+                     .debug_frame:0000000000000000 .L0 
+     /tmp/ccNRiKf2.s:170    .text.sbi_get_spec_version:0000000000000058 .L7
+     /tmp/ccNRiKf2.s:164    .text.sbi_get_spec_version:0000000000000050 .L9
+     /tmp/ccNRiKf2.s:155    .text.sbi_get_spec_version:0000000000000044 .L5
+     /tmp/ccNRiKf2.s:222    .text.sbi_get_impl_id:0000000000000050 .L12
+     /tmp/ccNRiKf2.s:228    .text.sbi_get_impl_id:0000000000000058 .L13
+     /tmp/ccNRiKf2.s:213    .text.sbi_get_impl_id:0000000000000044 .L11
+     /tmp/ccNRiKf2.s:282    .text.sbi_probe_extension:0000000000000050 .L17
+     /tmp/ccNRiKf2.s:288    .text.sbi_probe_extension:0000000000000058 .L18
+     /tmp/ccNRiKf2.s:273    .text.sbi_probe_extension:0000000000000044 .L16
+     /tmp/ccNRiKf2.s:1790   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+     /tmp/ccNRiKf2.s:2763   .debug_str:0000000000000136 .LASF68
+     /tmp/ccNRiKf2.s:2869   .debug_str:0000000000000580 .LASF69
+     /tmp/ccNRiKf2.s:2773   .debug_str:000000000000023d .LASF70
+GAS LISTING /tmp/ccNRiKf2.s 			page 20
+
+
+     /tmp/ccNRiKf2.s:2695   .debug_ranges:0000000000000000 .Ldebug_ranges0
+     /tmp/ccNRiKf2.s:2725   .debug_line:0000000000000000 .Ldebug_line0
+     /tmp/ccNRiKf2.s:2799   .debug_str:000000000000031f .LASF0
+     /tmp/ccNRiKf2.s:2795   .debug_str:0000000000000305 .LASF1
+     /tmp/ccNRiKf2.s:2741   .debug_str:0000000000000087 .LASF2
+     /tmp/ccNRiKf2.s:2811   .debug_str:000000000000037c .LASF3
+     /tmp/ccNRiKf2.s:2801   .debug_str:000000000000032b .LASF4
+     /tmp/ccNRiKf2.s:2785   .debug_str:0000000000000292 .LASF5
+     /tmp/ccNRiKf2.s:2823   .debug_str:00000000000003f5 .LASF7
+     /tmp/ccNRiKf2.s:2829   .debug_str:0000000000000438 .LASF6
+     /tmp/ccNRiKf2.s:2833   .debug_str:0000000000000457 .LASF8
+     /tmp/ccNRiKf2.s:2737   .debug_str:0000000000000067 .LASF9
+     /tmp/ccNRiKf2.s:2759   .debug_str:000000000000011e .LASF10
+     /tmp/ccNRiKf2.s:2867   .debug_str:0000000000000575 .LASF24
+     /tmp/ccNRiKf2.s:2837   .debug_str:0000000000000468 .LASF11
+     /tmp/ccNRiKf2.s:2817   .debug_str:00000000000003c0 .LASF12
+     /tmp/ccNRiKf2.s:2789   .debug_str:00000000000002b6 .LASF13
+     /tmp/ccNRiKf2.s:2731   .debug_str:0000000000000029 .LASF14
+     /tmp/ccNRiKf2.s:2767   .debug_str:000000000000021e .LASF15
+     /tmp/ccNRiKf2.s:2735   .debug_str:000000000000004c .LASF16
+     /tmp/ccNRiKf2.s:2859   .debug_str:000000000000052b .LASF17
+     /tmp/ccNRiKf2.s:2825   .debug_str:0000000000000400 .LASF18
+     /tmp/ccNRiKf2.s:2793   .debug_str:00000000000002f0 .LASF19
+     /tmp/ccNRiKf2.s:2821   .debug_str:00000000000003e8 .LASF20
+     /tmp/ccNRiKf2.s:2841   .debug_str:000000000000049b .LASF21
+     /tmp/ccNRiKf2.s:2797   .debug_str:0000000000000313 .LASF22
+     /tmp/ccNRiKf2.s:2757   .debug_str:000000000000010f .LASF23
+     /tmp/ccNRiKf2.s:2803   .debug_str:0000000000000338 .LASF25
+     /tmp/ccNRiKf2.s:2791   .debug_str:00000000000002d2 .LASF26
+     /tmp/ccNRiKf2.s:2813   .debug_str:000000000000038f .LASF27
+     /tmp/ccNRiKf2.s:2839   .debug_str:000000000000047e .LASF28
+     /tmp/ccNRiKf2.s:2805   .debug_str:0000000000000349 .LASF29
+     /tmp/ccNRiKf2.s:2729   .debug_str:000000000000000e .LASF30
+     /tmp/ccNRiKf2.s:2815   .debug_str:00000000000003a7 .LASF31
+     /tmp/ccNRiKf2.s:2765   .debug_str:0000000000000206 .LASF32
+     /tmp/ccNRiKf2.s:2745   .debug_str:00000000000000a1 .LASF33
+     /tmp/ccNRiKf2.s:2739   .debug_str:0000000000000070 .LASF34
+     /tmp/ccNRiKf2.s:2743   .debug_str:0000000000000091 .LASF35
+     /tmp/ccNRiKf2.s:2827   .debug_str:0000000000000423 .LASF36
+     /tmp/ccNRiKf2.s:2863   .debug_str:000000000000054e .LASF37
+     /tmp/ccNRiKf2.s:2847   .debug_str:00000000000004c7 .LASF38
+     /tmp/ccNRiKf2.s:2849   .debug_str:00000000000004e5 .LASF39
+     /tmp/ccNRiKf2.s:2753   .debug_str:00000000000000df .LASF40
+     /tmp/ccNRiKf2.s:2783   .debug_str:000000000000028b .LASF71
+     /tmp/ccNRiKf2.s:2851   .debug_str:0000000000000506 .LASF41
+     /tmp/ccNRiKf2.s:2751   .debug_str:00000000000000d9 .LASF42
+     /tmp/ccNRiKf2.s:2787   .debug_str:000000000000029b .LASF47
+     /tmp/ccNRiKf2.s:556    .text.sbi_remote_sfence_vma_asid:0000000000000000 .LFB12
+     /tmp/ccNRiKf2.s:589    .text.sbi_remote_sfence_vma_asid:0000000000000040 .LFE12
+     /tmp/ccNRiKf2.s:2093   .debug_loc:0000000000000000 .LLST28
+     /tmp/ccNRiKf2.s:2755   .debug_str:0000000000000105 .LASF43
+     /tmp/ccNRiKf2.s:2111   .debug_loc:000000000000004c .LLST29
+     /tmp/ccNRiKf2.s:2809   .debug_str:0000000000000376 .LASF44
+     /tmp/ccNRiKf2.s:2129   .debug_loc:0000000000000098 .LLST30
+     /tmp/ccNRiKf2.s:2835   .debug_str:0000000000000463 .LASF45
+     /tmp/ccNRiKf2.s:2147   .debug_loc:00000000000000e4 .LLST31
+     /tmp/ccNRiKf2.s:2861   .debug_str:0000000000000549 .LASF46
+GAS LISTING /tmp/ccNRiKf2.s 			page 21
+
+
+     /tmp/ccNRiKf2.s:2165   .debug_loc:0000000000000130 .LLST32
+     /tmp/ccNRiKf2.s:580    .text.sbi_remote_sfence_vma_asid:0000000000000034 .LVL40
+     /tmp/ccNRiKf2.s:2807   .debug_str:0000000000000360 .LASF48
+     /tmp/ccNRiKf2.s:517    .text.sbi_remote_sfence_vma:0000000000000000 .LFB11
+     /tmp/ccNRiKf2.s:549    .text.sbi_remote_sfence_vma:0000000000000040 .LFE11
+     /tmp/ccNRiKf2.s:2183   .debug_loc:000000000000017c .LLST24
+     /tmp/ccNRiKf2.s:2201   .debug_loc:00000000000001c8 .LLST25
+     /tmp/ccNRiKf2.s:2219   .debug_loc:0000000000000214 .LLST26
+     /tmp/ccNRiKf2.s:2237   .debug_loc:0000000000000260 .LLST27
+     /tmp/ccNRiKf2.s:540    .text.sbi_remote_sfence_vma:0000000000000034 .LVL34
+     /tmp/ccNRiKf2.s:2749   .debug_str:00000000000000c6 .LASF49
+     /tmp/ccNRiKf2.s:480    .text.sbi_remote_fence_i:0000000000000000 .LFB10
+     /tmp/ccNRiKf2.s:510    .text.sbi_remote_fence_i:0000000000000040 .LFE10
+     /tmp/ccNRiKf2.s:2255   .debug_loc:00000000000002ac .LLST22
+     /tmp/ccNRiKf2.s:2273   .debug_loc:00000000000002f8 .LLST23
+     /tmp/ccNRiKf2.s:501    .text.sbi_remote_fence_i:0000000000000034 .LVL29
+     /tmp/ccNRiKf2.s:2831   .debug_str:000000000000044a .LASF50
+     /tmp/ccNRiKf2.s:443    .text.sbi_send_ipi:0000000000000000 .LFB9
+     /tmp/ccNRiKf2.s:473    .text.sbi_send_ipi:0000000000000040 .LFE9
+     /tmp/ccNRiKf2.s:2291   .debug_loc:0000000000000344 .LLST20
+     /tmp/ccNRiKf2.s:2309   .debug_loc:0000000000000390 .LLST21
+     /tmp/ccNRiKf2.s:464    .text.sbi_send_ipi:0000000000000034 .LVL26
+     /tmp/ccNRiKf2.s:2733   .debug_str:000000000000003f .LASF51
+     /tmp/ccNRiKf2.s:409    .text.sbi_shutdown:0000000000000000 .LFB8
+     /tmp/ccNRiKf2.s:436    .text.sbi_shutdown:000000000000003c .LFE8
+     /tmp/ccNRiKf2.s:2327   .debug_loc:00000000000003dc .LLST19
+     /tmp/ccNRiKf2.s:427    .text.sbi_shutdown:0000000000000030 .LVL23
+     /tmp/ccNRiKf2.s:2761   .debug_str:0000000000000128 .LASF52
+     /tmp/ccNRiKf2.s:375    .text.sbi_clear_ipi:0000000000000000 .LFB7
+     /tmp/ccNRiKf2.s:402    .text.sbi_clear_ipi:000000000000003c .LFE7
+     /tmp/ccNRiKf2.s:2345   .debug_loc:0000000000000428 .LLST18
+     /tmp/ccNRiKf2.s:393    .text.sbi_clear_ipi:0000000000000030 .LVL22
+     /tmp/ccNRiKf2.s:2857   .debug_str:0000000000000517 .LASF54
+     /tmp/ccNRiKf2.s:335    .text.sbi_console_getchar:0000000000000000 .LFB6
+     /tmp/ccNRiKf2.s:368    .text.sbi_console_getchar:0000000000000048 .LFE6
+     /tmp/ccNRiKf2.s:2363   .debug_loc:0000000000000474 .LLST17
+     /tmp/ccNRiKf2.s:355    .text.sbi_console_getchar:0000000000000030 .LVL21
+     /tmp/ccNRiKf2.s:2747   .debug_str:00000000000000b2 .LASF53
+     /tmp/ccNRiKf2.s:299    .text.sbi_console_putchar:0000000000000000 .LFB5
+     /tmp/ccNRiKf2.s:328    .text.sbi_console_putchar:000000000000003c .LFE5
+     /tmp/ccNRiKf2.s:2381   .debug_loc:00000000000004c0 .LLST15
+     /tmp/ccNRiKf2.s:2399   .debug_loc:000000000000050c .LLST16
+     /tmp/ccNRiKf2.s:319    .text.sbi_console_putchar:0000000000000030 .LVL20
+     /tmp/ccNRiKf2.s:2865   .debug_str:0000000000000561 .LASF55
+     /tmp/ccNRiKf2.s:239    .text.sbi_probe_extension:0000000000000000 .LFB4
+     /tmp/ccNRiKf2.s:292    .text.sbi_probe_extension:0000000000000060 .LFE4
+     /tmp/ccNRiKf2.s:2413   .debug_loc:0000000000000545 .LLST13
+     /tmp/ccNRiKf2.s:2855   .debug_str:0000000000000511 .LASF56
+     /tmp/ccNRiKf2.s:2436   .debug_loc:00000000000005a5 .LLST14
+     /tmp/ccNRiKf2.s:261    .text.sbi_probe_extension:0000000000000030 .LVL17
+     /tmp/ccNRiKf2.s:2781   .debug_str:000000000000027b .LASF57
+     /tmp/ccNRiKf2.s:181    .text.sbi_get_impl_id:0000000000000000 .LFB3
+     /tmp/ccNRiKf2.s:232    .text.sbi_get_impl_id:0000000000000060 .LFE3
+     /tmp/ccNRiKf2.s:2450   .debug_loc:00000000000005de .LLST12
+     /tmp/ccNRiKf2.s:201    .text.sbi_get_impl_id:0000000000000030 .LVL14
+     /tmp/ccNRiKf2.s:2845   .debug_str:00000000000004b2 .LASF58
+     /tmp/ccNRiKf2.s:124    .text.sbi_get_spec_version:0000000000000000 .LFB2
+GAS LISTING /tmp/ccNRiKf2.s 			page 22
+
+
+     /tmp/ccNRiKf2.s:174    .text.sbi_get_spec_version:0000000000000060 .LFE2
+     /tmp/ccNRiKf2.s:2473   .debug_loc:000000000000063e .LLST11
+     /tmp/ccNRiKf2.s:144    .text.sbi_get_spec_version:0000000000000030 .LVL13
+     /tmp/ccNRiKf2.s:2727   .debug_str:0000000000000000 .LASF59
+     /tmp/ccNRiKf2.s:87     .text.sbi_set_timer:0000000000000000 .LFB1
+     /tmp/ccNRiKf2.s:117    .text.sbi_set_timer:0000000000000040 .LFE1
+     /tmp/ccNRiKf2.s:2496   .debug_loc:000000000000069e .LLST9
+     /tmp/ccNRiKf2.s:2819   .debug_str:00000000000003dc .LASF60
+     /tmp/ccNRiKf2.s:2514   .debug_loc:00000000000006ea .LLST10
+     /tmp/ccNRiKf2.s:108    .text.sbi_set_timer:0000000000000034 .LVL12
+     /tmp/ccNRiKf2.s:2843   .debug_str:00000000000004a8 .LASF61
+     /tmp/ccNRiKf2.s:15     .text.sbi_ecall:0000000000000000 .LFB0
+     /tmp/ccNRiKf2.s:80     .text.sbi_ecall:0000000000000048 .LFE0
+     /tmp/ccNRiKf2.s:2532   .debug_loc:0000000000000736 .LLST0
+     /tmp/ccNRiKf2.s:2550   .debug_loc:0000000000000782 .LLST1
+     /tmp/ccNRiKf2.s:2564   .debug_loc:00000000000007bb .LLST2
+     /tmp/ccNRiKf2.s:2769   .debug_str:0000000000000233 .LASF62
+     /tmp/ccNRiKf2.s:2578   .debug_loc:00000000000007f4 .LLST3
+     /tmp/ccNRiKf2.s:2771   .debug_str:0000000000000238 .LASF63
+     /tmp/ccNRiKf2.s:2596   .debug_loc:0000000000000840 .LLST4
+     /tmp/ccNRiKf2.s:2853   .debug_str:000000000000050c .LASF64
+     /tmp/ccNRiKf2.s:2614   .debug_loc:000000000000088c .LLST5
+     /tmp/ccNRiKf2.s:2775   .debug_str:000000000000026c .LASF65
+     /tmp/ccNRiKf2.s:2625   .debug_loc:00000000000008c2 .LLST6
+     /tmp/ccNRiKf2.s:2777   .debug_str:0000000000000271 .LASF66
+     /tmp/ccNRiKf2.s:2636   .debug_loc:00000000000008f8 .LLST7
+     /tmp/ccNRiKf2.s:2779   .debug_str:0000000000000276 .LASF67
+     /tmp/ccNRiKf2.s:2647   .debug_loc:000000000000092e .LLST8
+     /tmp/ccNRiKf2.s:561    .text.sbi_remote_sfence_vma_asid:0000000000000004 .LCFI27
+     /tmp/ccNRiKf2.s:585    .text.sbi_remote_sfence_vma_asid:000000000000003c .LCFI28
+     /tmp/ccNRiKf2.s:559    .text.sbi_remote_sfence_vma_asid:0000000000000000 .LVL35
+     /tmp/ccNRiKf2.s:577    .text.sbi_remote_sfence_vma_asid:0000000000000028 .LVL39
+     /tmp/ccNRiKf2.s:575    .text.sbi_remote_sfence_vma_asid:0000000000000024 .LVL38
+     /tmp/ccNRiKf2.s:573    .text.sbi_remote_sfence_vma_asid:0000000000000020 .LVL37
+     /tmp/ccNRiKf2.s:571    .text.sbi_remote_sfence_vma_asid:000000000000001c .LVL36
+     /tmp/ccNRiKf2.s:522    .text.sbi_remote_sfence_vma:0000000000000004 .LCFI25
+     /tmp/ccNRiKf2.s:545    .text.sbi_remote_sfence_vma:000000000000003c .LCFI26
+     /tmp/ccNRiKf2.s:520    .text.sbi_remote_sfence_vma:0000000000000000 .LVL30
+     /tmp/ccNRiKf2.s:537    .text.sbi_remote_sfence_vma:0000000000000028 .LVL33
+     /tmp/ccNRiKf2.s:535    .text.sbi_remote_sfence_vma:0000000000000024 .LVL32
+     /tmp/ccNRiKf2.s:533    .text.sbi_remote_sfence_vma:0000000000000020 .LVL31
+     /tmp/ccNRiKf2.s:485    .text.sbi_remote_fence_i:0000000000000004 .LCFI23
+     /tmp/ccNRiKf2.s:506    .text.sbi_remote_fence_i:000000000000003c .LCFI24
+     /tmp/ccNRiKf2.s:483    .text.sbi_remote_fence_i:0000000000000000 .LVL27
+     /tmp/ccNRiKf2.s:498    .text.sbi_remote_fence_i:0000000000000028 .LVL28
+     /tmp/ccNRiKf2.s:448    .text.sbi_send_ipi:0000000000000004 .LCFI21
+     /tmp/ccNRiKf2.s:469    .text.sbi_send_ipi:000000000000003c .LCFI22
+     /tmp/ccNRiKf2.s:446    .text.sbi_send_ipi:0000000000000000 .LVL24
+     /tmp/ccNRiKf2.s:461    .text.sbi_send_ipi:0000000000000028 .LVL25
+     /tmp/ccNRiKf2.s:413    .text.sbi_shutdown:0000000000000004 .LCFI19
+     /tmp/ccNRiKf2.s:432    .text.sbi_shutdown:0000000000000038 .LCFI20
+     /tmp/ccNRiKf2.s:379    .text.sbi_clear_ipi:0000000000000004 .LCFI17
+     /tmp/ccNRiKf2.s:398    .text.sbi_clear_ipi:0000000000000038 .LCFI18
+     /tmp/ccNRiKf2.s:339    .text.sbi_console_getchar:0000000000000004 .LCFI15
+     /tmp/ccNRiKf2.s:364    .text.sbi_console_getchar:0000000000000044 .LCFI16
+     /tmp/ccNRiKf2.s:304    .text.sbi_console_putchar:0000000000000004 .LCFI13
+     /tmp/ccNRiKf2.s:324    .text.sbi_console_putchar:0000000000000038 .LCFI14
+GAS LISTING /tmp/ccNRiKf2.s 			page 23
+
+
+     /tmp/ccNRiKf2.s:302    .text.sbi_console_putchar:0000000000000000 .LVL18
+     /tmp/ccNRiKf2.s:317    .text.sbi_console_putchar:0000000000000028 .LVL19
+     /tmp/ccNRiKf2.s:244    .text.sbi_probe_extension:0000000000000004 .LCFI10
+     /tmp/ccNRiKf2.s:279    .text.sbi_probe_extension:000000000000004c .LCFI11
+     /tmp/ccNRiKf2.s:283    .text.sbi_probe_extension:0000000000000050 .LCFI12
+     /tmp/ccNRiKf2.s:242    .text.sbi_probe_extension:0000000000000000 .LVL15
+     /tmp/ccNRiKf2.s:259    .text.sbi_probe_extension:0000000000000028 .LVL16
+     /tmp/ccNRiKf2.s:185    .text.sbi_get_impl_id:0000000000000004 .LCFI7
+     /tmp/ccNRiKf2.s:219    .text.sbi_get_impl_id:000000000000004c .LCFI8
+     /tmp/ccNRiKf2.s:223    .text.sbi_get_impl_id:0000000000000050 .LCFI9
+     /tmp/ccNRiKf2.s:128    .text.sbi_get_spec_version:0000000000000004 .LCFI4
+     /tmp/ccNRiKf2.s:161    .text.sbi_get_spec_version:000000000000004c .LCFI5
+     /tmp/ccNRiKf2.s:165    .text.sbi_get_spec_version:0000000000000050 .LCFI6
+     /tmp/ccNRiKf2.s:92     .text.sbi_set_timer:0000000000000004 .LCFI2
+     /tmp/ccNRiKf2.s:113    .text.sbi_set_timer:000000000000003c .LCFI3
+     /tmp/ccNRiKf2.s:90     .text.sbi_set_timer:0000000000000000 .LVL10
+     /tmp/ccNRiKf2.s:105    .text.sbi_set_timer:0000000000000028 .LVL11
+     /tmp/ccNRiKf2.s:20     .text.sbi_ecall:0000000000000004 .LCFI0
+     /tmp/ccNRiKf2.s:76     .text.sbi_ecall:0000000000000044 .LCFI1
+     /tmp/ccNRiKf2.s:18     .text.sbi_ecall:0000000000000000 .LVL0
+     /tmp/ccNRiKf2.s:28     .text.sbi_ecall:0000000000000010 .LVL1
+     /tmp/ccNRiKf2.s:32     .text.sbi_ecall:0000000000000014 .LVL2
+     /tmp/ccNRiKf2.s:36     .text.sbi_ecall:0000000000000018 .LVL3
+     /tmp/ccNRiKf2.s:62     .text.sbi_ecall:0000000000000030 .LVL9
+     /tmp/ccNRiKf2.s:40     .text.sbi_ecall:000000000000001c .LVL4
+     /tmp/ccNRiKf2.s:44     .text.sbi_ecall:0000000000000020 .LVL5
+     /tmp/ccNRiKf2.s:48     .text.sbi_ecall:0000000000000024 .LVL6
+     /tmp/ccNRiKf2.s:52     .text.sbi_ecall:0000000000000028 .LVL7
+     /tmp/ccNRiKf2.s:56     .text.sbi_ecall:000000000000002c .LVL8
+     /tmp/ccNRiKf2.s:597    .debug_info:0000000000000000 .Ldebug_info0
+
+NO UNDEFINED SYMBOLS

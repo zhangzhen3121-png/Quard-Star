@@ -1,0 +1,602 @@
+GAS LISTING /tmp/ccKiLaby.s 			page 1
+
+
+   1              		.file	"port.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.file 1 "/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c
+  10              		.section	.text.get_ticks,"ax",@progbits
+  11              		.align	2
+  13              	get_ticks:
+  14              	.LFB2:
+   1:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** /*
+   2:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****  * FreeRTOS Kernel V10.4.3 LTS Patch 3
+   3:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+   4:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****  *
+   5:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****  * Permission is hereby granted, free of charge, to any person obtaining a copy of
+   6:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****  * this software and associated documentation files (the "Software"), to deal in
+   7:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****  * the Software without restriction, including without limitation the rights to
+   8:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****  * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+   9:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****  * the Software, and to permit persons to whom the Software is furnished to do so,
+  10:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****  * subject to the following conditions:
+  11:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****  *
+  12:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****  * The above copyright notice and this permission notice shall be included in all
+  13:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****  * copies or substantial portions of the Software.
+  14:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****  *
+  15:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  16:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+  17:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****  * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+  18:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****  * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+  19:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+  20:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  21:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****  *
+  22:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****  * https://www.FreeRTOS.org
+  23:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****  * https://github.com/FreeRTOS
+  24:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****  *
+  25:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****  * 1 tab == 4 spaces!
+  26:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****  */
+  27:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 
+  28:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** /*-----------------------------------------------------------
+  29:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****  * Implementation of functions defined in portable.h for the RISC-V RV32 port.
+  30:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****  *----------------------------------------------------------*/
+  31:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 
+  32:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** /* Scheduler includes. */
+  33:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** #include "FreeRTOS.h"
+  34:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** #include "task.h"
+  35:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** #include "portmacro.h"
+  36:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** #include "sbi.h"
+  37:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** #include "ns16550.h"
+  38:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** #include "riscv_asm.h"
+  39:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** /* Standard includes. */
+  40:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** #include "string.h"
+  41:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 
+  42:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 
+  43:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** #ifdef configTASK_RETURN_ADDRESS	
+  44:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	#define portTASK_RETURN_ADDRESS	configTASK_RETURN_ADDRESS
+GAS LISTING /tmp/ccKiLaby.s 			page 2
+
+
+  45:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** #else
+  46:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	#define portTASK_RETURN_ADDRESS	prvTaskExitError
+  47:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** #endif
+  48:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 
+  49:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** /* The stack used by interrupt service routines.  Set configISR_STACK_SIZE_WORDS
+  50:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** to use a statically allocated array as the interrupt stack.  Alternative leave
+  51:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** configISR_STACK_SIZE_WORDS undefined and update the linker script so that a
+  52:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** linker variable names __freertos_irq_stack_top has the same value as the top
+  53:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** of the stack used by main.  Using the linker script method will repurpose the
+  54:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** stack that was used by main before the scheduler was started for use as the
+  55:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** interrupt stack after the scheduler has started. */
+  56:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** #ifdef configISR_STACK_SIZE_WORDS
+  57:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	static __attribute__ ((aligned(16))) StackType_t xISRStack[ configISR_STACK_SIZE_WORDS ] = { 0 };
+  58:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	const StackType_t xISRStackTop = ( StackType_t ) &( xISRStack[ configISR_STACK_SIZE_WORDS & ~portB
+  59:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 
+  60:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	/* Don't use 0xa5 as the stack fill bytes as that is used by the kernerl for
+  61:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	the task stacks, and so will legitimately appear in many positions within
+  62:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	the ISR stack. */
+  63:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	#define portISR_STACK_FILL_BYTE	0xee
+  64:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** #else
+  65:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	extern const uint32_t __freertos_irq_stack_top[];
+  66:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	const StackType_t xISRStackTop = ( StackType_t ) __freertos_irq_stack_top;
+  67:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** #endif
+  68:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 
+  69:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** /*
+  70:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****  * Setup the timer to generate the tick interrupts.  The implementation in this
+  71:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****  * file is weak to allow application writers to change the timer used to
+  72:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****  * generate the tick interrupt.
+  73:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****  */
+  74:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** void vPortSetupTimerInterrupt( void ) __attribute__(( weak ));
+  75:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 
+  76:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** /*-----------------------------------------------------------*/
+  77:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 
+  78:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** /* Used to program the machine timer compare register. */
+  79:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 
+  80:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** const size_t uxTimerIncrementsForOneTick = ( size_t ) ( ( configCPU_CLOCK_HZ ) / ( configTICK_RATE_
+  81:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 
+  82:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 
+  83:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** /* Set configCHECK_FOR_STACK_OVERFLOW to 3 to add ISR stack checking to task
+  84:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** stack checking.  A problem in the ISR stack will trigger an assert, not call the
+  85:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** stack overflow hook function (because the stack overflow hook is specific to a
+  86:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** task stack, not the ISR stack). */
+  87:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** #if defined( configISR_STACK_SIZE_WORDS ) && ( configCHECK_FOR_STACK_OVERFLOW > 2 )
+  88:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	#warning This path not tested, or even compiled yet.
+  89:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 
+  90:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	static const uint8_t ucExpectedStackBytes[] = {
+  91:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 									portISR_STACK_FILL_BYTE, portISR_STACK_FILL_BYTE, portISR_STACK_FILL_BYTE, portISR_STACK_F
+  92:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 									portISR_STACK_FILL_BYTE, portISR_STACK_FILL_BYTE, portISR_STACK_FILL_BYTE, portISR_STACK_F
+  93:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 									portISR_STACK_FILL_BYTE, portISR_STACK_FILL_BYTE, portISR_STACK_FILL_BYTE, portISR_STACK_F
+  94:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 									portISR_STACK_FILL_BYTE, portISR_STACK_FILL_BYTE, portISR_STACK_FILL_BYTE, portISR_STACK_F
+  95:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 									portISR_STACK_FILL_BYTE, portISR_STACK_FILL_BYTE, portISR_STACK_FILL_BYTE, portISR_STACK_F
+  96:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 
+  97:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	#define portCHECK_ISR_STACK() configASSERT( ( memcmp( ( void * ) xISRStack, ( void * ) ucExpectedS
+  98:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** #else
+  99:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	/* Define the function away. */
+ 100:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	#define portCHECK_ISR_STACK()
+ 101:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** #endif /* configCHECK_FOR_STACK_OVERFLOW > 2 */
+GAS LISTING /tmp/ccKiLaby.s 			page 3
+
+
+ 102:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 
+ 103:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** /*-----------------------------------------------------------*/
+ 104:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 
+ 105:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** static uint64_t get_ticks()
+ 106:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** {
+  15              		.loc 1 106 1
+  16              		.cfi_startproc
+ 107:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****     static volatile uint64_t time_elapsed = 0;
+  17              		.loc 1 107 5
+ 108:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****     __asm__ __volatile__(
+  18              		.loc 1 108 5
+  19              	 #APP
+  20              	# 108 "/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c" 1
+ 109              	        "rdtime %0"
+  21              		rdtime a4
+  22              	# 0 "" 2
+  23              	 #NO_APP
+  24 0004 97070000 		lla	a5,time_elapsed.0
+  24      93870700 
+  25 000c 23B0E700 		sd	a4,0(a5)
+ 110:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****         : "=r"(time_elapsed));
+ 111:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****     return time_elapsed;
+  26              		.loc 1 111 5
+  27              		.loc 1 111 12 is_stmt 0
+  28 0010 03B50700 		ld	a0,0(a5)
+ 112:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** }
+  29              		.loc 1 112 1
+  30 0014 67800000 		ret
+  31              		.cfi_endproc
+  32              	.LFE2:
+  34              		.section	.text.vPortSetupTimerInterrupt,"ax",@progbits
+  35              		.align	2
+  36              		.weak	vPortSetupTimerInterrupt
+  38              	vPortSetupTimerInterrupt:
+  39              	.LFB3:
+ 113:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 
+ 114:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** /*-----------------------------------------------------------*/
+ 115:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 
+ 116:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** /*-----------------------------------------------------------*/
+ 117:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** void vPortSetupTimerInterrupt( void )
+ 118:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** {
+  40              		.loc 1 118 1 is_stmt 1
+  41              		.cfi_startproc
+  42 0000 130101FF 		addi	sp,sp,-16
+  43              	.LCFI0:
+  44              		.cfi_def_cfa_offset 16
+  45 0004 23341100 		sd	ra,8(sp)
+  46              		.cfi_offset 1, -8
+ 119:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	/* 通过sbi设置下次tick中断 */
+ 120:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	sbi_set_timer(get_ticks() + uxTimerIncrementsForOneTick);
+  47              		.loc 1 120 2
+  48              		.loc 1 120 16 is_stmt 0
+  49 0008 97000000 		call	get_ticks
+  49      E7800000 
+  50              	.LVL0:
+  51              		.loc 1 120 2
+  52 0010 B7870100 		li	a5,98304
+GAS LISTING /tmp/ccKiLaby.s 			page 4
+
+
+  53 0014 9387076A 		addi	a5,a5,1696
+  54 0018 3305F500 		add	a0,a0,a5
+  55 001c 97000000 		call	sbi_set_timer
+  55      E7800000 
+  56              	.LVL1:
+ 121:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** }
+  57              		.loc 1 121 1
+  58 0024 83308100 		ld	ra,8(sp)
+  59              		.cfi_restore 1
+  60 0028 13010101 		addi	sp,sp,16
+  61              	.LCFI1:
+  62              		.cfi_def_cfa_offset 0
+  63 002c 67800000 		jr	ra
+  64              		.cfi_endproc
+  65              	.LFE3:
+  67              		.section	.text.vPortClearIpiInterrupt,"ax",@progbits
+  68              		.align	2
+  69              		.globl	vPortClearIpiInterrupt
+  71              	vPortClearIpiInterrupt:
+  72              	.LFB4:
+ 122:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** /*-------------------------------------------------------*/
+ 123:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 
+ 124:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** /*-----------------------------------------------------------*/
+ 125:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 
+ 126:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** void vPortClearIpiInterrupt( void )
+ 127:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** {
+  73              		.loc 1 127 1 is_stmt 1
+  74              		.cfi_startproc
+  75 0000 130101FF 		addi	sp,sp,-16
+  76              	.LCFI2:
+  77              		.cfi_def_cfa_offset 16
+  78 0004 23341100 		sd	ra,8(sp)
+  79              		.cfi_offset 1, -8
+ 128:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	/* 通过sbi清除软中断，在软中断服务函数中调用 */
+ 129:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	extern void sbi_clear_ipi(void);
+  80              		.loc 1 129 2
+ 130:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	sbi_clear_ipi();
+  81              		.loc 1 130 2
+  82 0008 97000000 		call	sbi_clear_ipi
+  82      E7800000 
+  83              	.LVL2:
+ 131:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** }
+  84              		.loc 1 131 1 is_stmt 0
+  85 0010 83308100 		ld	ra,8(sp)
+  86              		.cfi_restore 1
+  87 0014 13010101 		addi	sp,sp,16
+  88              	.LCFI3:
+  89              		.cfi_def_cfa_offset 0
+  90 0018 67800000 		jr	ra
+  91              		.cfi_endproc
+  92              	.LFE4:
+  94              		.section	.text.xPortStartScheduler,"ax",@progbits
+  95              		.align	2
+  96              		.globl	xPortStartScheduler
+  98              	xPortStartScheduler:
+  99              	.LFB5:
+ 132:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 
+GAS LISTING /tmp/ccKiLaby.s 			page 5
+
+
+ 133:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** /*-----------------------------------------------------------*/
+ 134:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** BaseType_t xPortStartScheduler( void )
+ 135:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** {
+ 100              		.loc 1 135 1 is_stmt 1
+ 101              		.cfi_startproc
+ 102 0000 130101FF 		addi	sp,sp,-16
+ 103              	.LCFI4:
+ 104              		.cfi_def_cfa_offset 16
+ 105 0004 23341100 		sd	ra,8(sp)
+ 106              		.cfi_offset 1, -8
+ 136:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** extern void xPortStartFirstTask( void );
+ 107              		.loc 1 136 1
+ 137:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 
+ 138:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	#if( configASSERT_DEFINED == 1 )
+ 139:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	{
+ 140:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 		volatile uint32_t stvec = 0;
+ 141:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 
+ 142:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 		/* Check the least significant two bits of mtvec are 00 - indicating
+ 143:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 		single vector mode. */
+ 144:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 		__asm volatile( "csrr %0, stvec" : "=r"( stvec ) );
+ 145:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 		//检查 stvec 设置的是直接访问还是向量访问
+ 146:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 		configASSERT( ( stvec & 0x03UL ) == 0 );
+ 147:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 
+ 148:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 		/* Check alignment of the interrupt stack - which is the same as the
+ 149:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 		stack that was being used by main() prior to the scheduler being
+ 150:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 		started. */
+ 151:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 		//检查栈顶的地址是否是对齐了
+ 152:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 		configASSERT( ( xISRStackTop & portBYTE_ALIGNMENT_MASK ) == 0 );
+ 153:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 
+ 154:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 		//初始化栈中的数据为 0
+ 155:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 		#ifdef configISR_STACK_SIZE_WORDS
+ 156:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 		{
+ 157:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 			memset( ( void * ) xISRStack, portISR_STACK_FILL_BYTE, sizeof( xISRStack ) );
+ 158:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 		}
+ 159:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 		#endif	 /* configISR_STACK_SIZE_WORDS */
+ 160:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	}
+ 161:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	#endif /* configASSERT_DEFINED */
+ 162:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 
+ 163:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	 /* 通过sbi设置Timer为滴答时钟 */
+ 164:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	vPortSetupTimerInterrupt();
+ 108              		.loc 1 164 2
+ 109 0008 97000000 		call	vPortSetupTimerInterrupt
+ 109      E7800000 
+ 110              	.LVL3:
+ 165:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****    	/* 使能SIE中S模式Timer中断和Soft中断，注意此处使能并不会立即响应
+ 166:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	xPortStartFirstTask中将打开全局使能 */
+ 167:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c ****     csr_set(CSR_SIE, SIP_STIP);
+ 111              		.loc 1 167 5
+ 112              	.LBB2:
+ 113              		.loc 1 167 5
+ 114              		.loc 1 167 5
+ 115 0010 93070002 		li	a5,32
+ 116              	 #APP
+ 117              	# 167 "/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c" 1
+ 168              	    csr_set(CSR_SIE, SIP_SSIP);
+ 118              		csrs 0x104, a5
+ 119              	# 0 "" 2
+GAS LISTING /tmp/ccKiLaby.s 			page 6
+
+
+ 120              	 #NO_APP
+ 121              	.LBE2:
+ 122              		.loc 1 168 5
+ 123              	.LBB3:
+ 124              		.loc 1 168 5
+ 125              	.LVL4:
+ 126              		.loc 1 168 5
+ 127              	 #APP
+ 128              	# 168 "/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c" 1
+ 169              		
+ 129              		csrs 0x104, 2
+ 130              	# 0 "" 2
+ 131              	 #NO_APP
+ 132              	.LBE3:
+ 170:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	//启动第一个任务
+ 171:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	xPortStartFirstTask();
+ 133              		.loc 1 171 2
+ 134 001c 97000000 		call	xPortStartFirstTask
+ 134      E7800000 
+ 135              	.LVL5:
+ 172:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 
+ 173:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	/* Should not get here as after calling xPortStartFirstTask() only tasks
+ 174:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	should be executing. */
+ 175:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	return pdFAIL;
+ 136              		.loc 1 175 2
+ 176:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** }
+ 137              		.loc 1 176 1 is_stmt 0
+ 138 0024 13050000 		li	a0,0
+ 139 0028 83308100 		ld	ra,8(sp)
+ 140              		.cfi_restore 1
+ 141 002c 13010101 		addi	sp,sp,16
+ 142              	.LCFI5:
+ 143              		.cfi_def_cfa_offset 0
+ 144 0030 67800000 		jr	ra
+ 145              		.cfi_endproc
+ 146              	.LFE5:
+ 148              		.section	.text.prvTaskExitError,"ax",@progbits
+ 149              		.align	2
+ 150              		.globl	prvTaskExitError
+ 152              	prvTaskExitError:
+ 153              	.LFB6:
+ 177:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** /*-----------------------------------------------------------*/
+ 178:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 
+ 179:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 
+ 180:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** void prvTaskExitError( void )
+ 181:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** {
+ 154              		.loc 1 181 1 is_stmt 1
+ 155              		.cfi_startproc
+ 182:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	/* A function that implements a task must not exit or attempt to return to
+ 183:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	its caller as there is nothing to return to.  If a task wants to exit it
+ 184:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	should instead call vTaskDelete( NULL ).
+ 185:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 
+ 186:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	Artificially force an assert() to be triggered if configASSERT() is
+ 187:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	defined, then stop here so application writers can catch the error. */
+ 188:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	configASSERT( ulPortInterruptNesting == ~0UL );
+ 156              		.loc 1 188 48
+ 189:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	//关闭中断
+GAS LISTING /tmp/ccKiLaby.s 			page 7
+
+
+ 190:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	portDISABLE_INTERRUPTS();
+ 157              		.loc 1 190 2
+ 158              	 #APP
+ 159              	# 190 "/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c" 1
+ 191              		for( ;; );
+ 160              		csrc sstatus, 2
+ 161              	# 0 "" 2
+ 162              	 #NO_APP
+ 163              	.L9:
+ 164              		.loc 1 191 2 discriminator 1
+ 165              		.loc 1 191 2 discriminator 1
+ 166 0004 6F000000 		j	.L9
+ 167              		.cfi_endproc
+ 168              	.LFE6:
+ 170              		.section	.text.vPortEndScheduler,"ax",@progbits
+ 171              		.align	2
+ 172              		.globl	vPortEndScheduler
+ 174              	vPortEndScheduler:
+ 175              	.LFB7:
+ 192:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** }
+ 193:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 
+ 194:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 
+ 195:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** void vPortEndScheduler( void )
+ 196:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** {
+ 176              		.loc 1 196 1
+ 177              		.cfi_startproc
+ 178              	.L11:
+ 197:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	/* Not implemented. */
+ 198:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c **** 	for( ;; );
+ 179              		.loc 1 198 2 discriminator 1
+ 180              		.loc 1 198 2 discriminator 1
+ 181 0000 6F000000 		j	.L11
+ 182              		.cfi_endproc
+ 183              	.LFE7:
+ 185              		.section	.sbss.time_elapsed.0,"aw",@nobits
+ 186              		.align	3
+ 189              	time_elapsed.0:
+ 190 0000 00000000 		.zero	8
+ 190      00000000 
+ 191              		.globl	uxTimerIncrementsForOneTick
+ 192              		.section	.srodata.uxTimerIncrementsForOneTick,"a"
+ 193              		.align	3
+ 196              	uxTimerIncrementsForOneTick:
+ 197 0000 A0860100 		.dword	100000
+ 197      00000000 
+ 198              		.globl	xISRStackTop
+ 199              		.section	.srodata.xISRStackTop,"a"
+ 200              		.align	3
+ 203              	xISRStackTop:
+ 204 0000 00000000 		.dword	xISRStack+16384
+ 204      00000000 
+ 205              		.section	.bss.xISRStack,"aw",@nobits
+ 206              		.align	4
+ 209              	xISRStack:
+ 210 0000 00000000 		.zero	16384
+ 210      00000000 
+ 210      00000000 
+GAS LISTING /tmp/ccKiLaby.s 			page 8
+
+
+ 210      00000000 
+ 210      00000000 
+ 211              		.text
+ 212              	.Letext0:
+ 213              		.file 2 "/home/zz/riscv/riscv/lib/gcc/riscv64-unknown-elf/12.2.0/include/stddef.h"
+ 214              		.file 3 "/home/zz/riscv/riscv/riscv64-unknown-elf/include/machine/_default_types.h"
+ 215              		.file 4 "/home/zz/riscv/riscv/riscv64-unknown-elf/include/sys/_stdint.h"
+ 216              		.file 5 "/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/portma
+ 217              		.file 6 "/home/zz/quard-start/Quard-Star/trusted_domain/riscv/sbi.h"
+GAS LISTING /tmp/ccKiLaby.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 port.c
+     /tmp/ccKiLaby.s:13     .text.get_ticks:0000000000000000 get_ticks
+     /tmp/ccKiLaby.s:16     .text.get_ticks:0000000000000000 .L0 
+     /tmp/ccKiLaby.s:17     .text.get_ticks:0000000000000000 .L0 
+     /tmp/ccKiLaby.s:18     .text.get_ticks:0000000000000000 .L0 
+/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c:108    .text.get_ticks:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c:108    .text.get_ticks:0000000000000000 .L0 
+     /tmp/ccKiLaby.s:189    .sbss.time_elapsed.0:0000000000000000 time_elapsed.0
+     /tmp/ccKiLaby.s:27     .text.get_ticks:0000000000000010 .L0 
+     /tmp/ccKiLaby.s:28     .text.get_ticks:0000000000000010 .L0 
+     /tmp/ccKiLaby.s:30     .text.get_ticks:0000000000000014 .L0 
+     /tmp/ccKiLaby.s:31     .text.get_ticks:0000000000000018 .L0 
+     /tmp/ccKiLaby.s:38     .text.vPortSetupTimerInterrupt:0000000000000000 vPortSetupTimerInterrupt
+     /tmp/ccKiLaby.s:41     .text.vPortSetupTimerInterrupt:0000000000000000 .L0 
+     /tmp/ccKiLaby.s:42     .text.vPortSetupTimerInterrupt:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/ccKiLaby.s:42     .text.vPortSetupTimerInterrupt:0000000000000000 .L0 
+     /tmp/ccKiLaby.s:44     .text.vPortSetupTimerInterrupt:0000000000000004 .L0 
+     /tmp/ccKiLaby.s:46     .text.vPortSetupTimerInterrupt:0000000000000008 .L0 
+     /tmp/ccKiLaby.s:48     .text.vPortSetupTimerInterrupt:0000000000000008 .L0 
+     /tmp/ccKiLaby.s:49     .text.vPortSetupTimerInterrupt:0000000000000008 .L0 
+     /tmp/ccKiLaby.s:52     .text.vPortSetupTimerInterrupt:0000000000000010 .L0 
+     /tmp/ccKiLaby.s:58     .text.vPortSetupTimerInterrupt:0000000000000024 .L0 
+     /tmp/ccKiLaby.s:59     .text.vPortSetupTimerInterrupt:0000000000000028 .L0 
+     /tmp/ccKiLaby.s:62     .text.vPortSetupTimerInterrupt:000000000000002c .L0 
+     /tmp/ccKiLaby.s:64     .text.vPortSetupTimerInterrupt:0000000000000030 .L0 
+     /tmp/ccKiLaby.s:71     .text.vPortClearIpiInterrupt:0000000000000000 vPortClearIpiInterrupt
+     /tmp/ccKiLaby.s:74     .text.vPortClearIpiInterrupt:0000000000000000 .L0 
+     /tmp/ccKiLaby.s:75     .text.vPortClearIpiInterrupt:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/ccKiLaby.s:75     .text.vPortClearIpiInterrupt:0000000000000000 .L0 
+     /tmp/ccKiLaby.s:77     .text.vPortClearIpiInterrupt:0000000000000004 .L0 
+     /tmp/ccKiLaby.s:79     .text.vPortClearIpiInterrupt:0000000000000008 .L0 
+     /tmp/ccKiLaby.s:81     .text.vPortClearIpiInterrupt:0000000000000008 .L0 
+     /tmp/ccKiLaby.s:82     .text.vPortClearIpiInterrupt:0000000000000008 .L0 
+     /tmp/ccKiLaby.s:85     .text.vPortClearIpiInterrupt:0000000000000010 .L0 
+     /tmp/ccKiLaby.s:86     .text.vPortClearIpiInterrupt:0000000000000014 .L0 
+     /tmp/ccKiLaby.s:89     .text.vPortClearIpiInterrupt:0000000000000018 .L0 
+     /tmp/ccKiLaby.s:91     .text.vPortClearIpiInterrupt:000000000000001c .L0 
+     /tmp/ccKiLaby.s:98     .text.xPortStartScheduler:0000000000000000 xPortStartScheduler
+     /tmp/ccKiLaby.s:101    .text.xPortStartScheduler:0000000000000000 .L0 
+     /tmp/ccKiLaby.s:102    .text.xPortStartScheduler:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/ccKiLaby.s:102    .text.xPortStartScheduler:0000000000000000 .L0 
+     /tmp/ccKiLaby.s:104    .text.xPortStartScheduler:0000000000000004 .L0 
+     /tmp/ccKiLaby.s:106    .text.xPortStartScheduler:0000000000000008 .L0 
+     /tmp/ccKiLaby.s:108    .text.xPortStartScheduler:0000000000000008 .L0 
+     /tmp/ccKiLaby.s:109    .text.xPortStartScheduler:0000000000000008 .L0 
+     /tmp/ccKiLaby.s:113    .text.xPortStartScheduler:0000000000000010 .L0 
+     /tmp/ccKiLaby.s:114    .text.xPortStartScheduler:0000000000000010 .L0 
+     /tmp/ccKiLaby.s:115    .text.xPortStartScheduler:0000000000000010 .L0 
+     /tmp/ccKiLaby.s:124    .text.xPortStartScheduler:0000000000000018 .L0 
+     /tmp/ccKiLaby.s:126    .text.xPortStartScheduler:0000000000000018 .L0 
+/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c:168    .text.xPortStartScheduler:0000000000000018 .L0 
+     /tmp/ccKiLaby.s:134    .text.xPortStartScheduler:000000000000001c .L0 
+     /tmp/ccKiLaby.s:137    .text.xPortStartScheduler:0000000000000024 .L0 
+     /tmp/ccKiLaby.s:138    .text.xPortStartScheduler:0000000000000024 .L0 
+     /tmp/ccKiLaby.s:140    .text.xPortStartScheduler:000000000000002c .L0 
+     /tmp/ccKiLaby.s:143    .text.xPortStartScheduler:0000000000000030 .L0 
+GAS LISTING /tmp/ccKiLaby.s 			page 10
+
+
+     /tmp/ccKiLaby.s:145    .text.xPortStartScheduler:0000000000000034 .L0 
+     /tmp/ccKiLaby.s:152    .text.prvTaskExitError:0000000000000000 prvTaskExitError
+     /tmp/ccKiLaby.s:155    .text.prvTaskExitError:0000000000000000 .L0 
+     /tmp/ccKiLaby.s:156    .text.prvTaskExitError:0000000000000000 .L0 
+     /tmp/ccKiLaby.s:157    .text.prvTaskExitError:0000000000000000 .L0 
+/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c:190    .text.prvTaskExitError:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/port.c:190    .text.prvTaskExitError:0000000000000000 .L0 
+     /tmp/ccKiLaby.s:165    .text.prvTaskExitError:0000000000000004 .L0 
+     /tmp/ccKiLaby.s:166    .text.prvTaskExitError:0000000000000004 .L0 
+     /tmp/ccKiLaby.s:167    .text.prvTaskExitError:0000000000000008 .L0 
+     /tmp/ccKiLaby.s:174    .text.vPortEndScheduler:0000000000000000 vPortEndScheduler
+     /tmp/ccKiLaby.s:177    .text.vPortEndScheduler:0000000000000000 .L0 
+     /tmp/ccKiLaby.s:179    .text.vPortEndScheduler:0000000000000000 .L0 
+     /tmp/ccKiLaby.s:180    .text.vPortEndScheduler:0000000000000000 .L0 
+     /tmp/ccKiLaby.s:181    .text.vPortEndScheduler:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/ccKiLaby.s:181    .text.vPortEndScheduler:0000000000000000 .L0 
+     /tmp/ccKiLaby.s:182    .text.vPortEndScheduler:0000000000000004 .L0 
+     /tmp/ccKiLaby.s:196    .srodata.uxTimerIncrementsForOneTick:0000000000000000 uxTimerIncrementsForOneTick
+     /tmp/ccKiLaby.s:203    .srodata.xISRStackTop:0000000000000000 xISRStackTop
+     /tmp/ccKiLaby.s:209    .bss.xISRStack:0000000000000000 xISRStack
+     /tmp/ccKiLaby.s:34     .text.get_ticks:0000000000000018 .L0 
+     /tmp/ccKiLaby.s:67     .text.vPortSetupTimerInterrupt:0000000000000030 .L0 
+     /tmp/ccKiLaby.s:94     .text.vPortClearIpiInterrupt:000000000000001c .L0 
+     /tmp/ccKiLaby.s:148    .text.xPortStartScheduler:0000000000000034 .L0 
+     /tmp/ccKiLaby.s:170    .text.prvTaskExitError:0000000000000008 .L0 
+     /tmp/ccKiLaby.s:185    .text.vPortEndScheduler:0000000000000004 .L0 
+                     .debug_frame:0000000000000000 .L0 
+     /tmp/ccKiLaby.s:24     .text.get_ticks:0000000000000004 .L0 
+     /tmp/ccKiLaby.s:163    .text.prvTaskExitError:0000000000000004 .L9
+     /tmp/ccKiLaby.s:178    .text.vPortEndScheduler:0000000000000000 .L11
+     /tmp/ccKiLaby.s:545    .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+     /tmp/ccKiLaby.s:1021   .debug_str:00000000000001c1 .LASF29
+     /tmp/ccKiLaby.s:985    .debug_str:0000000000000023 .LASF30
+     /tmp/ccKiLaby.s:991    .debug_str:0000000000000095 .LASF31
+     /tmp/ccKiLaby.s:959    .debug_ranges:0000000000000000 .Ldebug_ranges0
+     /tmp/ccKiLaby.s:975    .debug_line:0000000000000000 .Ldebug_line0
+     /tmp/ccKiLaby.s:1035   .debug_str:00000000000002d3 .LASF0
+     /tmp/ccKiLaby.s:979    .debug_str:0000000000000008 .LASF9
+     /tmp/ccKiLaby.s:997    .debug_str:00000000000000ed .LASF1
+     /tmp/ccKiLaby.s:1019   .debug_str:00000000000001b3 .LASF2
+     /tmp/ccKiLaby.s:1003   .debug_str:000000000000011c .LASF3
+     /tmp/ccKiLaby.s:1041   .debug_str:00000000000002f3 .LASF4
+     /tmp/ccKiLaby.s:1031   .debug_str:00000000000002ba .LASF5
+     /tmp/ccKiLaby.s:1029   .debug_str:00000000000002b0 .LASF6
+     /tmp/ccKiLaby.s:999    .debug_str:00000000000000ff .LASF7
+     /tmp/ccKiLaby.s:1009   .debug_str:000000000000014e .LASF8
+     /tmp/ccKiLaby.s:1001   .debug_str:0000000000000112 .LASF10
+     /tmp/ccKiLaby.s:1033   .debug_str:00000000000002c8 .LASF11
+     /tmp/ccKiLaby.s:977    .debug_str:0000000000000000 .LASF12
+     /tmp/ccKiLaby.s:983    .debug_str:000000000000001a .LASF13
+     /tmp/ccKiLaby.s:1027   .debug_str:00000000000002a4 .LASF14
+     /tmp/ccKiLaby.s:1045   .debug_str:0000000000000313 .LASF15
+     /tmp/ccKiLaby.s:981    .debug_str:000000000000000f .LASF16
+     /tmp/ccKiLaby.s:1025   .debug_str:000000000000029f .LASF17
+     /tmp/ccKiLaby.s:1011   .debug_str:000000000000015b .LASF18
+     /tmp/ccKiLaby.s:989    .debug_str:000000000000008b .LASF19
+     /tmp/ccKiLaby.s:1037   .debug_str:00000000000002dc .LASF20
+GAS LISTING /tmp/ccKiLaby.s 			page 11
+
+
+     /tmp/ccKiLaby.s:993    .debug_str:00000000000000c4 .LASF21
+     /tmp/ccKiLaby.s:1007   .debug_str:000000000000013a .LASF22
+     /tmp/ccKiLaby.s:987    .debug_str:000000000000007d .LASF23
+     /tmp/ccKiLaby.s:1023   .debug_str:0000000000000291 .LASF32
+     /tmp/ccKiLaby.s:1005   .debug_str:0000000000000128 .LASF24
+     /tmp/ccKiLaby.s:175    .text.vPortEndScheduler:0000000000000000 .LFB7
+     /tmp/ccKiLaby.s:183    .text.vPortEndScheduler:0000000000000004 .LFE7
+     /tmp/ccKiLaby.s:1013   .debug_str:0000000000000172 .LASF25
+     /tmp/ccKiLaby.s:153    .text.prvTaskExitError:0000000000000000 .LFB6
+     /tmp/ccKiLaby.s:168    .text.prvTaskExitError:0000000000000008 .LFE6
+     /tmp/ccKiLaby.s:1043   .debug_str:00000000000002ff .LASF33
+     /tmp/ccKiLaby.s:99     .text.xPortStartScheduler:0000000000000000 .LFB5
+     /tmp/ccKiLaby.s:146    .text.xPortStartScheduler:0000000000000034 .LFE5
+     /tmp/ccKiLaby.s:882    .debug_loc:0000000000000000 .LLST2
+     /tmp/ccKiLaby.s:112    .text.xPortStartScheduler:0000000000000010 .LBB2
+     /tmp/ccKiLaby.s:121    .text.xPortStartScheduler:0000000000000018 .LBE2
+     /tmp/ccKiLaby.s:123    .text.xPortStartScheduler:0000000000000018 .LBB3
+     /tmp/ccKiLaby.s:132    .text.xPortStartScheduler:000000000000001c .LBE3
+     /tmp/ccKiLaby.s:110    .text.xPortStartScheduler:0000000000000010 .LVL3
+     /tmp/ccKiLaby.s:135    .text.xPortStartScheduler:0000000000000024 .LVL5
+     /tmp/ccKiLaby.s:1017   .debug_str:000000000000019c .LASF26
+     /tmp/ccKiLaby.s:72     .text.vPortClearIpiInterrupt:0000000000000000 .LFB4
+     /tmp/ccKiLaby.s:92     .text.vPortClearIpiInterrupt:000000000000001c .LFE4
+     /tmp/ccKiLaby.s:900    .debug_loc:000000000000004c .LLST1
+     /tmp/ccKiLaby.s:83     .text.vPortClearIpiInterrupt:0000000000000010 .LVL2
+     /tmp/ccKiLaby.s:1015   .debug_str:0000000000000183 .LASF27
+     /tmp/ccKiLaby.s:39     .text.vPortSetupTimerInterrupt:0000000000000000 .LFB3
+     /tmp/ccKiLaby.s:65     .text.vPortSetupTimerInterrupt:0000000000000030 .LFE3
+     /tmp/ccKiLaby.s:918    .debug_loc:0000000000000098 .LLST0
+     /tmp/ccKiLaby.s:50     .text.vPortSetupTimerInterrupt:0000000000000010 .LVL0
+     /tmp/ccKiLaby.s:56     .text.vPortSetupTimerInterrupt:0000000000000024 .LVL1
+     /tmp/ccKiLaby.s:1039   .debug_str:00000000000002e9 .LASF34
+     /tmp/ccKiLaby.s:14     .text.get_ticks:0000000000000000 .LFB2
+     /tmp/ccKiLaby.s:32     .text.get_ticks:0000000000000018 .LFE2
+     /tmp/ccKiLaby.s:995    .debug_str:00000000000000e0 .LASF28
+     /tmp/ccKiLaby.s:103    .text.xPortStartScheduler:0000000000000004 .LCFI4
+     /tmp/ccKiLaby.s:142    .text.xPortStartScheduler:0000000000000030 .LCFI5
+     /tmp/ccKiLaby.s:76     .text.vPortClearIpiInterrupt:0000000000000004 .LCFI2
+     /tmp/ccKiLaby.s:88     .text.vPortClearIpiInterrupt:0000000000000018 .LCFI3
+     /tmp/ccKiLaby.s:43     .text.vPortSetupTimerInterrupt:0000000000000004 .LCFI0
+     /tmp/ccKiLaby.s:61     .text.vPortSetupTimerInterrupt:000000000000002c .LCFI1
+     /tmp/ccKiLaby.s:219    .debug_info:0000000000000000 .Ldebug_info0
+
+UNDEFINED SYMBOLS
+sbi_set_timer
+sbi_clear_ipi
+xPortStartFirstTask

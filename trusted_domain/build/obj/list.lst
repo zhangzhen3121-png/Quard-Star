@@ -1,0 +1,685 @@
+GAS LISTING /tmp/ccCx3UqK.s 			page 1
+
+
+   1              		.file	"list.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.file 1 "/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c"
+  10              		.section	.text.vListInitialise,"ax",@progbits
+  11              		.align	2
+  12              		.globl	vListInitialise
+  14              	vListInitialise:
+  15              	.LFB1:
+   1:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** /*
+   2:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****  * FreeRTOS Kernel V10.4.3 LTS Patch 3
+   3:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+   4:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****  *
+   5:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****  * Permission is hereby granted, free of charge, to any person obtaining a copy of
+   6:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****  * this software and associated documentation files (the "Software"), to deal in
+   7:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****  * the Software without restriction, including without limitation the rights to
+   8:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****  * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+   9:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****  * the Software, and to permit persons to whom the Software is furnished to do so,
+  10:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****  * subject to the following conditions:
+  11:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****  *
+  12:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****  * The above copyright notice and this permission notice shall be included in all
+  13:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****  * copies or substantial portions of the Software.
+  14:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****  *
+  15:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  16:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+  17:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****  * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+  18:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****  * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+  19:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+  20:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  21:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****  *
+  22:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****  * https://www.FreeRTOS.org
+  23:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****  * https://github.com/FreeRTOS
+  24:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****  *
+  25:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****  */
+  26:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** 
+  27:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** 
+  28:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** #include <stdlib.h>
+  29:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** 
+  30:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** /* Defining MPU_WRAPPERS_INCLUDED_FROM_API_FILE prevents task.h from redefining
+  31:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****  * all the API functions to use the MPU wrappers.  That should only be done when
+  32:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****  * task.h is included from an application file. */
+  33:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** #define MPU_WRAPPERS_INCLUDED_FROM_API_FILE
+  34:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** 
+  35:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** #include "FreeRTOS.h"
+  36:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** #include "list.h"
+  37:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** 
+  38:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** /* Lint e9021, e961 and e750 are suppressed as a MISRA exception justified
+  39:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****  * because the MPU ports require MPU_WRAPPERS_INCLUDED_FROM_API_FILE to be
+  40:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****  * defined for the header files above, but not in this file, in order to
+  41:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****  * generate the correct privileged Vs unprivileged linkage and placement. */
+  42:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** #undef MPU_WRAPPERS_INCLUDED_FROM_API_FILE /*lint !e961 !e750 !e9021. */
+  43:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** 
+GAS LISTING /tmp/ccCx3UqK.s 			page 2
+
+
+  44:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** /*-----------------------------------------------------------
+  45:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** * PUBLIC LIST API documented in list.h
+  46:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** *----------------------------------------------------------*/
+  47:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** 
+  48:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** void vListInitialise( List_t * const pxList )
+  49:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** {
+  16              		.loc 1 49 1
+  17              		.cfi_startproc
+  18              	.LVL0:
+  50:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     /* The list structure contains a list item which is used to mark the
+  51:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****      * end of the list.  To initialise the list the list end is inserted
+  52:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****      * as the only list entry. */
+  53:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     pxList->pxIndex = ( ListItem_t * ) &( pxList->xListEnd ); /*lint !e826 !e740 !e9087 The mini li
+  19              		.loc 1 53 5
+  20              		.loc 1 53 40 is_stmt 0
+  21 0000 93070501 		addi	a5,a0,16
+  22              		.loc 1 53 21
+  23 0004 2334F500 		sd	a5,8(a0)
+  54:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** 
+  55:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     /* The list end value is the highest possible value in the list to
+  56:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****      * ensure it remains at the end of the list. */
+  57:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     pxList->xListEnd.xItemValue = portMAX_DELAY;
+  24              		.loc 1 57 5 is_stmt 1
+  25              		.loc 1 57 33 is_stmt 0
+  26 0008 1307F0FF 		li	a4,-1
+  27 000c 2338E500 		sd	a4,16(a0)
+  58:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** 
+  59:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     /* The list end next and previous pointers point to itself so we know
+  60:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****      * when the list is empty. */
+  61:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     pxList->xListEnd.pxNext = ( ListItem_t * ) &( pxList->xListEnd );     /*lint !e826 !e740 !e9087
+  28              		.loc 1 61 5 is_stmt 1
+  29              		.loc 1 61 29 is_stmt 0
+  30 0010 233CF500 		sd	a5,24(a0)
+  62:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     pxList->xListEnd.pxPrevious = ( ListItem_t * ) &( pxList->xListEnd ); /*lint !e826 !e740 !e9087
+  31              		.loc 1 62 5 is_stmt 1
+  32              		.loc 1 62 33 is_stmt 0
+  33 0014 2330F502 		sd	a5,32(a0)
+  63:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** 
+  64:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     pxList->uxNumberOfItems = ( UBaseType_t ) 0U;
+  34              		.loc 1 64 5 is_stmt 1
+  35              		.loc 1 64 29 is_stmt 0
+  36 0018 23300500 		sd	zero,0(a0)
+  65:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** 
+  66:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     /* Write known values into the list if
+  67:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****      * configUSE_LIST_DATA_INTEGRITY_CHECK_BYTES is set to 1. */
+  68:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     listSET_LIST_INTEGRITY_CHECK_1_VALUE( pxList );
+  37              		.loc 1 68 51 is_stmt 1
+  69:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     listSET_LIST_INTEGRITY_CHECK_2_VALUE( pxList );
+  38              		.loc 1 69 51
+  70:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** }
+  39              		.loc 1 70 1 is_stmt 0
+  40 001c 67800000 		ret
+  41              		.cfi_endproc
+  42              	.LFE1:
+  44              		.section	.text.vListInitialiseItem,"ax",@progbits
+  45              		.align	2
+  46              		.globl	vListInitialiseItem
+GAS LISTING /tmp/ccCx3UqK.s 			page 3
+
+
+  48              	vListInitialiseItem:
+  49              	.LFB2:
+  71:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** /*-----------------------------------------------------------*/
+  72:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** 
+  73:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** void vListInitialiseItem( ListItem_t * const pxItem )
+  74:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** {
+  50              		.loc 1 74 1 is_stmt 1
+  51              		.cfi_startproc
+  52              	.LVL1:
+  75:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     /* Make sure the list item is not recorded as being on a list. */
+  76:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     pxItem->pxContainer = NULL;
+  53              		.loc 1 76 5
+  54              		.loc 1 76 25 is_stmt 0
+  55 0000 23300502 		sd	zero,32(a0)
+  77:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** 
+  78:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     /* Write known values into the list item if
+  79:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****      * configUSE_LIST_DATA_INTEGRITY_CHECK_BYTES is set to 1. */
+  80:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     listSET_FIRST_LIST_ITEM_INTEGRITY_CHECK_VALUE( pxItem );
+  56              		.loc 1 80 60 is_stmt 1
+  81:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     listSET_SECOND_LIST_ITEM_INTEGRITY_CHECK_VALUE( pxItem );
+  57              		.loc 1 81 61
+  82:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** }
+  58              		.loc 1 82 1 is_stmt 0
+  59 0004 67800000 		ret
+  60              		.cfi_endproc
+  61              	.LFE2:
+  63              		.section	.text.vListInsertEnd,"ax",@progbits
+  64              		.align	2
+  65              		.globl	vListInsertEnd
+  67              	vListInsertEnd:
+  68              	.LFB3:
+  83:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** /*-----------------------------------------------------------*/
+  84:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** 
+  85:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** void vListInsertEnd( List_t * const pxList,
+  86:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****                      ListItem_t * const pxNewListItem )
+  87:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** {
+  69              		.loc 1 87 1 is_stmt 1
+  70              		.cfi_startproc
+  71              	.LVL2:
+  88:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     ListItem_t * const pxIndex = pxList->pxIndex;
+  72              		.loc 1 88 5
+  73              		.loc 1 88 24 is_stmt 0
+  74 0000 83378500 		ld	a5,8(a0)
+  75              	.LVL3:
+  89:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** 
+  90:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     /* Only effective when configASSERT() is also defined, these tests may catch
+  91:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****      * the list data structures being overwritten in memory.  They will not catch
+  92:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****      * data errors caused by incorrect configuration or use of FreeRTOS. */
+  93:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     listTEST_LIST_INTEGRITY( pxList );
+  76              		.loc 1 93 38 is_stmt 1
+  94:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     listTEST_LIST_ITEM_INTEGRITY( pxNewListItem );
+  77              		.loc 1 94 50
+  95:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** 
+  96:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     /* Insert a new list item into pxList, but rather than sort the list,
+  97:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****      * makes the new list item the last item to be removed by a call to
+  98:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****      * listGET_OWNER_OF_NEXT_ENTRY(). */
+  99:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     pxNewListItem->pxNext = pxIndex;
+GAS LISTING /tmp/ccCx3UqK.s 			page 4
+
+
+  78              		.loc 1 99 5
+  79              		.loc 1 99 27 is_stmt 0
+  80 0004 23B4F500 		sd	a5,8(a1)
+ 100:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     pxNewListItem->pxPrevious = pxIndex->pxPrevious;
+  81              		.loc 1 100 5 is_stmt 1
+  82              		.loc 1 100 40 is_stmt 0
+  83 0008 03B70701 		ld	a4,16(a5)
+  84              		.loc 1 100 31
+  85 000c 23B8E500 		sd	a4,16(a1)
+ 101:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** 
+ 102:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     /* Only used during decision coverage testing. */
+ 103:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     mtCOVERAGE_TEST_DELAY();
+  86              		.loc 1 103 28 is_stmt 1
+ 104:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** 
+ 105:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     pxIndex->pxPrevious->pxNext = pxNewListItem;
+  87              		.loc 1 105 5
+  88              		.loc 1 105 33 is_stmt 0
+  89 0010 2334B700 		sd	a1,8(a4)
+ 106:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     pxIndex->pxPrevious = pxNewListItem;
+  90              		.loc 1 106 5 is_stmt 1
+  91              		.loc 1 106 25 is_stmt 0
+  92 0014 23B8B700 		sd	a1,16(a5)
+ 107:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** 
+ 108:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     /* Remember which list the item is in. */
+ 109:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     pxNewListItem->pxContainer = pxList;
+  93              		.loc 1 109 5 is_stmt 1
+  94              		.loc 1 109 32 is_stmt 0
+  95 0018 23B0A502 		sd	a0,32(a1)
+ 110:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** 
+ 111:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     ( pxList->uxNumberOfItems )++;
+  96              		.loc 1 111 5 is_stmt 1
+  97              		.loc 1 111 13 is_stmt 0
+  98 001c 83370500 		ld	a5,0(a0)
+  99              	.LVL4:
+ 100              		.loc 1 111 32
+ 101 0020 93871700 		addi	a5,a5,1
+ 102 0024 2330F500 		sd	a5,0(a0)
+ 112:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** }
+ 103              		.loc 1 112 1
+ 104 0028 67800000 		ret
+ 105              		.cfi_endproc
+ 106              	.LFE3:
+ 108              		.section	.text.vListInsert,"ax",@progbits
+ 109              		.align	2
+ 110              		.globl	vListInsert
+ 112              	vListInsert:
+ 113              	.LFB4:
+ 113:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** /*-----------------------------------------------------------*/
+ 114:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** 
+ 115:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** void vListInsert( List_t * const pxList,
+ 116:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****                   ListItem_t * const pxNewListItem )
+ 117:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** {
+ 114              		.loc 1 117 1 is_stmt 1
+ 115              		.cfi_startproc
+ 116              	.LVL5:
+ 118:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     ListItem_t * pxIterator;
+ 117              		.loc 1 118 5
+GAS LISTING /tmp/ccCx3UqK.s 			page 5
+
+
+ 119:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     const TickType_t xValueOfInsertion = pxNewListItem->xItemValue;
+ 118              		.loc 1 119 5
+ 119              		.loc 1 119 22 is_stmt 0
+ 120 0000 03B60500 		ld	a2,0(a1)
+ 121              	.LVL6:
+ 120:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** 
+ 121:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     /* Only effective when configASSERT() is also defined, these tests may catch
+ 122:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****      * the list data structures being overwritten in memory.  They will not catch
+ 123:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****      * data errors caused by incorrect configuration or use of FreeRTOS. */
+ 124:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     listTEST_LIST_INTEGRITY( pxList );
+ 122              		.loc 1 124 38 is_stmt 1
+ 125:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     listTEST_LIST_ITEM_INTEGRITY( pxNewListItem );
+ 123              		.loc 1 125 50
+ 126:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** 
+ 127:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     /* Insert the new list item into the list, sorted in xItemValue order.
+ 128:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****      *
+ 129:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****      * If the list already contains a list item with the same item value then the
+ 130:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****      * new list item should be placed after it.  This ensures that TCBs which are
+ 131:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****      * stored in ready lists (all of which have the same xItemValue value) get a
+ 132:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****      * share of the CPU.  However, if the xItemValue is the same as the back marker
+ 133:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****      * the iteration loop below will not end.  Therefore the value is checked
+ 134:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****      * first, and the algorithm slightly modified if necessary. */
+ 135:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     if( xValueOfInsertion == portMAX_DELAY )
+ 124              		.loc 1 135 5
+ 125              		.loc 1 135 7 is_stmt 0
+ 126 0004 9307F0FF 		li	a5,-1
+ 127 0008 6300F604 		beq	a2,a5,.L8
+ 136:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     {
+ 137:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****         pxIterator = pxList->xListEnd.pxPrevious;
+ 138:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     }
+ 139:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     else
+ 140:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     {
+ 141:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****         /* *** NOTE ***********************************************************
+ 142:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****         *  If you find your application is crashing here then likely causes are
+ 143:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****         *  listed below.  In addition see https://www.FreeRTOS.org/FAQHelp.html for
+ 144:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****         *  more tips, and ensure configASSERT() is defined!
+ 145:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****         *  https://www.FreeRTOS.org/a00110.html#configASSERT
+ 146:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****         *
+ 147:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****         *   1) Stack overflow -
+ 148:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****         *      see https://www.FreeRTOS.org/Stacks-and-stack-overflow-checking.html
+ 149:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****         *   2) Incorrect interrupt priority assignment, especially on Cortex-M
+ 150:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****         *      parts where numerically high priority values denote low actual
+ 151:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****         *      interrupt priorities, which can seem counter intuitive.  See
+ 152:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****         *      https://www.FreeRTOS.org/RTOS-Cortex-M3-M4.html and the definition
+ 153:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****         *      of configMAX_SYSCALL_INTERRUPT_PRIORITY on
+ 154:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****         *      https://www.FreeRTOS.org/a00110.html
+ 155:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****         *   3) Calling an API function from within a critical section or when
+ 156:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****         *      the scheduler is suspended, or calling an API function that does
+ 157:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****         *      not end in "FromISR" from an interrupt.
+ 158:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****         *   4) Using a queue or semaphore before it has been initialised or
+ 159:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****         *      before the scheduler has been started (are interrupts firing
+ 160:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****         *      before vTaskStartScheduler() has been called?).
+ 161:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****         **********************************************************************/
+ 162:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** 
+ 163:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****         for( pxIterator = ( ListItem_t * ) &( pxList->xListEnd ); pxIterator->pxNext->xItemValue <=
+ 128              		.loc 1 163 9 is_stmt 1
+ 129              		.loc 1 163 25 is_stmt 0
+GAS LISTING /tmp/ccCx3UqK.s 			page 6
+
+
+ 130 000c 93070501 		addi	a5,a0,16
+ 131              	.LVL7:
+ 132              	.L7:
+ 133              		.loc 1 163 98 is_stmt 1 discriminator 1
+ 134 0010 93860700 		mv	a3,a5
+ 135              		.loc 1 163 77 is_stmt 0 discriminator 1
+ 136 0014 83B78700 		ld	a5,8(a5)
+ 137              	.LVL8:
+ 138              		.loc 1 163 85 discriminator 1
+ 139 0018 03B70700 		ld	a4,0(a5)
+ 140              		.loc 1 163 98 discriminator 1
+ 141 001c E37AE6FE 		bleu	a4,a2,.L7
+ 142              	.L6:
+ 164:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****         {
+ 165:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****             /* There is nothing to do here, just iterating to the wanted
+ 166:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****              * insertion position. */
+ 167:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****         }
+ 168:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     }
+ 169:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** 
+ 170:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     pxNewListItem->pxNext = pxIterator->pxNext;
+ 143              		.loc 1 170 5 is_stmt 1
+ 144              		.loc 1 170 39 is_stmt 0
+ 145 0020 83B78600 		ld	a5,8(a3)
+ 146              		.loc 1 170 27
+ 147 0024 23B4F500 		sd	a5,8(a1)
+ 171:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     pxNewListItem->pxNext->pxPrevious = pxNewListItem;
+ 148              		.loc 1 171 5 is_stmt 1
+ 149              		.loc 1 171 39 is_stmt 0
+ 150 0028 23B8B700 		sd	a1,16(a5)
+ 172:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     pxNewListItem->pxPrevious = pxIterator;
+ 151              		.loc 1 172 5 is_stmt 1
+ 152              		.loc 1 172 31 is_stmt 0
+ 153 002c 23B8D500 		sd	a3,16(a1)
+ 173:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     pxIterator->pxNext = pxNewListItem;
+ 154              		.loc 1 173 5 is_stmt 1
+ 155              		.loc 1 173 24 is_stmt 0
+ 156 0030 23B4B600 		sd	a1,8(a3)
+ 174:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** 
+ 175:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     /* Remember which list the item is in.  This allows fast removal of the
+ 176:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****      * item later. */
+ 177:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     pxNewListItem->pxContainer = pxList;
+ 157              		.loc 1 177 5 is_stmt 1
+ 158              		.loc 1 177 32 is_stmt 0
+ 159 0034 23B0A502 		sd	a0,32(a1)
+ 178:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** 
+ 179:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     ( pxList->uxNumberOfItems )++;
+ 160              		.loc 1 179 5 is_stmt 1
+ 161              		.loc 1 179 13 is_stmt 0
+ 162 0038 83370500 		ld	a5,0(a0)
+ 163              		.loc 1 179 32
+ 164 003c 93871700 		addi	a5,a5,1
+ 165 0040 2330F500 		sd	a5,0(a0)
+ 180:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** }
+ 166              		.loc 1 180 1
+ 167 0044 67800000 		ret
+ 168              	.LVL9:
+ 169              	.L8:
+GAS LISTING /tmp/ccCx3UqK.s 			page 7
+
+
+ 137:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     }
+ 170              		.loc 1 137 9 is_stmt 1
+ 137:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     }
+ 171              		.loc 1 137 20 is_stmt 0
+ 172 0048 83360502 		ld	a3,32(a0)
+ 173              	.LVL10:
+ 174 004c 6FF05FFD 		j	.L6
+ 175              		.cfi_endproc
+ 176              	.LFE4:
+ 178              		.section	.text.uxListRemove,"ax",@progbits
+ 179              		.align	2
+ 180              		.globl	uxListRemove
+ 182              	uxListRemove:
+ 183              	.LFB5:
+ 181:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** /*-----------------------------------------------------------*/
+ 182:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** 
+ 183:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** UBaseType_t uxListRemove( ListItem_t * const pxItemToRemove )
+ 184:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** {
+ 184              		.loc 1 184 1 is_stmt 1
+ 185              		.cfi_startproc
+ 186              	.LVL11:
+ 185:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** /* The list item knows which list it is in.  Obtain the list from the list
+ 186:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****  * item. */
+ 187:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     List_t * const pxList = pxItemToRemove->pxContainer;
+ 187              		.loc 1 187 5
+ 188              		.loc 1 187 20 is_stmt 0
+ 189 0000 83370502 		ld	a5,32(a0)
+ 190              	.LVL12:
+ 188:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** 
+ 189:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     pxItemToRemove->pxNext->pxPrevious = pxItemToRemove->pxPrevious;
+ 191              		.loc 1 189 5 is_stmt 1
+ 192              		.loc 1 189 19 is_stmt 0
+ 193 0004 83368500 		ld	a3,8(a0)
+ 194              		.loc 1 189 56
+ 195 0008 03370501 		ld	a4,16(a0)
+ 196              		.loc 1 189 40
+ 197 000c 23B8E600 		sd	a4,16(a3)
+ 190:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     pxItemToRemove->pxPrevious->pxNext = pxItemToRemove->pxNext;
+ 198              		.loc 1 190 5 is_stmt 1
+ 199              		.loc 1 190 56 is_stmt 0
+ 200 0010 83368500 		ld	a3,8(a0)
+ 201              		.loc 1 190 40
+ 202 0014 2334D700 		sd	a3,8(a4)
+ 191:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** 
+ 192:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     /* Only used during decision coverage testing. */
+ 193:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     mtCOVERAGE_TEST_DELAY();
+ 203              		.loc 1 193 28 is_stmt 1
+ 194:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** 
+ 195:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     /* Make sure the index is left pointing to a valid item. */
+ 196:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     if( pxList->pxIndex == pxItemToRemove )
+ 204              		.loc 1 196 5
+ 205              		.loc 1 196 15 is_stmt 0
+ 206 0018 03B78700 		ld	a4,8(a5)
+ 207              		.loc 1 196 7
+ 208 001c 630EA700 		beq	a4,a0,.L11
+ 209              	.L10:
+ 197:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     {
+GAS LISTING /tmp/ccCx3UqK.s 			page 8
+
+
+ 198:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****         pxList->pxIndex = pxItemToRemove->pxPrevious;
+ 199:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     }
+ 200:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     else
+ 201:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     {
+ 202:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****         mtCOVERAGE_TEST_MARKER();
+ 210              		.loc 1 202 33 is_stmt 1
+ 203:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     }
+ 204:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** 
+ 205:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     pxItemToRemove->pxContainer = NULL;
+ 211              		.loc 1 205 5
+ 212              		.loc 1 205 33 is_stmt 0
+ 213 0020 23300502 		sd	zero,32(a0)
+ 206:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     ( pxList->uxNumberOfItems )--;
+ 214              		.loc 1 206 5 is_stmt 1
+ 215              		.loc 1 206 13 is_stmt 0
+ 216 0024 03B70700 		ld	a4,0(a5)
+ 217              		.loc 1 206 32
+ 218 0028 1307F7FF 		addi	a4,a4,-1
+ 219 002c 23B0E700 		sd	a4,0(a5)
+ 207:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** 
+ 208:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     return pxList->uxNumberOfItems;
+ 220              		.loc 1 208 5 is_stmt 1
+ 221              		.loc 1 208 18 is_stmt 0
+ 222 0030 03B50700 		ld	a0,0(a5)
+ 223              	.LVL13:
+ 209:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c **** }
+ 224              		.loc 1 209 1
+ 225 0034 67800000 		ret
+ 226              	.LVL14:
+ 227              	.L11:
+ 198:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     }
+ 228              		.loc 1 198 9 is_stmt 1
+ 198:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     }
+ 229              		.loc 1 198 41 is_stmt 0
+ 230 0038 03370501 		ld	a4,16(a0)
+ 198:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/list.c ****     }
+ 231              		.loc 1 198 25
+ 232 003c 23B4E700 		sd	a4,8(a5)
+ 233 0040 6FF01FFE 		j	.L10
+ 234              		.cfi_endproc
+ 235              	.LFE5:
+ 237              		.text
+ 238              	.Letext0:
+ 239              		.file 2 "/home/zz/riscv/riscv/riscv64-unknown-elf/include/machine/_default_types.h"
+ 240              		.file 3 "/home/zz/riscv/riscv/riscv64-unknown-elf/include/sys/_stdint.h"
+ 241              		.file 4 "/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/portma
+ 242              		.file 5 "/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/include/list.h"
+GAS LISTING /tmp/ccCx3UqK.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 list.c
+     /tmp/ccCx3UqK.s:14     .text.vListInitialise:0000000000000000 vListInitialise
+     /tmp/ccCx3UqK.s:17     .text.vListInitialise:0000000000000000 .L0 
+     /tmp/ccCx3UqK.s:19     .text.vListInitialise:0000000000000000 .L0 
+     /tmp/ccCx3UqK.s:20     .text.vListInitialise:0000000000000000 .L0 
+     /tmp/ccCx3UqK.s:21     .text.vListInitialise:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/ccCx3UqK.s:21     .text.vListInitialise:0000000000000000 .L0 
+     /tmp/ccCx3UqK.s:23     .text.vListInitialise:0000000000000004 .L0 
+     /tmp/ccCx3UqK.s:25     .text.vListInitialise:0000000000000008 .L0 
+     /tmp/ccCx3UqK.s:26     .text.vListInitialise:0000000000000008 .L0 
+     /tmp/ccCx3UqK.s:29     .text.vListInitialise:0000000000000010 .L0 
+     /tmp/ccCx3UqK.s:30     .text.vListInitialise:0000000000000010 .L0 
+     /tmp/ccCx3UqK.s:32     .text.vListInitialise:0000000000000014 .L0 
+     /tmp/ccCx3UqK.s:33     .text.vListInitialise:0000000000000014 .L0 
+     /tmp/ccCx3UqK.s:35     .text.vListInitialise:0000000000000018 .L0 
+     /tmp/ccCx3UqK.s:36     .text.vListInitialise:0000000000000018 .L0 
+     /tmp/ccCx3UqK.s:38     .text.vListInitialise:000000000000001c .L0 
+     /tmp/ccCx3UqK.s:39     .text.vListInitialise:000000000000001c .L0 
+     /tmp/ccCx3UqK.s:40     .text.vListInitialise:000000000000001c .L0 
+     /tmp/ccCx3UqK.s:41     .text.vListInitialise:0000000000000020 .L0 
+     /tmp/ccCx3UqK.s:48     .text.vListInitialiseItem:0000000000000000 vListInitialiseItem
+     /tmp/ccCx3UqK.s:51     .text.vListInitialiseItem:0000000000000000 .L0 
+     /tmp/ccCx3UqK.s:53     .text.vListInitialiseItem:0000000000000000 .L0 
+     /tmp/ccCx3UqK.s:54     .text.vListInitialiseItem:0000000000000000 .L0 
+     /tmp/ccCx3UqK.s:55     .text.vListInitialiseItem:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/ccCx3UqK.s:55     .text.vListInitialiseItem:0000000000000000 .L0 
+     /tmp/ccCx3UqK.s:57     .text.vListInitialiseItem:0000000000000004 .L0 
+     /tmp/ccCx3UqK.s:58     .text.vListInitialiseItem:0000000000000004 .L0 
+     /tmp/ccCx3UqK.s:59     .text.vListInitialiseItem:0000000000000004 .L0 
+     /tmp/ccCx3UqK.s:60     .text.vListInitialiseItem:0000000000000008 .L0 
+     /tmp/ccCx3UqK.s:67     .text.vListInsertEnd:0000000000000000 vListInsertEnd
+     /tmp/ccCx3UqK.s:70     .text.vListInsertEnd:0000000000000000 .L0 
+     /tmp/ccCx3UqK.s:72     .text.vListInsertEnd:0000000000000000 .L0 
+     /tmp/ccCx3UqK.s:73     .text.vListInsertEnd:0000000000000000 .L0 
+     /tmp/ccCx3UqK.s:74     .text.vListInsertEnd:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/ccCx3UqK.s:74     .text.vListInsertEnd:0000000000000000 .L0 
+     /tmp/ccCx3UqK.s:77     .text.vListInsertEnd:0000000000000004 .L0 
+     /tmp/ccCx3UqK.s:78     .text.vListInsertEnd:0000000000000004 .L0 
+     /tmp/ccCx3UqK.s:79     .text.vListInsertEnd:0000000000000004 .L0 
+     /tmp/ccCx3UqK.s:80     .text.vListInsertEnd:0000000000000004 .L0 
+     /tmp/ccCx3UqK.s:82     .text.vListInsertEnd:0000000000000008 .L0 
+     /tmp/ccCx3UqK.s:83     .text.vListInsertEnd:0000000000000008 .L0 
+     /tmp/ccCx3UqK.s:85     .text.vListInsertEnd:000000000000000c .L0 
+     /tmp/ccCx3UqK.s:87     .text.vListInsertEnd:0000000000000010 .L0 
+     /tmp/ccCx3UqK.s:88     .text.vListInsertEnd:0000000000000010 .L0 
+     /tmp/ccCx3UqK.s:89     .text.vListInsertEnd:0000000000000010 .L0 
+     /tmp/ccCx3UqK.s:91     .text.vListInsertEnd:0000000000000014 .L0 
+     /tmp/ccCx3UqK.s:92     .text.vListInsertEnd:0000000000000014 .L0 
+     /tmp/ccCx3UqK.s:94     .text.vListInsertEnd:0000000000000018 .L0 
+     /tmp/ccCx3UqK.s:95     .text.vListInsertEnd:0000000000000018 .L0 
+     /tmp/ccCx3UqK.s:97     .text.vListInsertEnd:000000000000001c .L0 
+     /tmp/ccCx3UqK.s:98     .text.vListInsertEnd:000000000000001c .L0 
+     /tmp/ccCx3UqK.s:101    .text.vListInsertEnd:0000000000000020 .L0 
+     /tmp/ccCx3UqK.s:104    .text.vListInsertEnd:0000000000000028 .L0 
+     /tmp/ccCx3UqK.s:105    .text.vListInsertEnd:000000000000002c .L0 
+     /tmp/ccCx3UqK.s:112    .text.vListInsert:0000000000000000 vListInsert
+GAS LISTING /tmp/ccCx3UqK.s 			page 10
+
+
+     /tmp/ccCx3UqK.s:115    .text.vListInsert:0000000000000000 .L0 
+     /tmp/ccCx3UqK.s:117    .text.vListInsert:0000000000000000 .L0 
+     /tmp/ccCx3UqK.s:118    .text.vListInsert:0000000000000000 .L0 
+     /tmp/ccCx3UqK.s:119    .text.vListInsert:0000000000000000 .L0 
+     /tmp/ccCx3UqK.s:120    .text.vListInsert:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/ccCx3UqK.s:120    .text.vListInsert:0000000000000000 .L0 
+     /tmp/ccCx3UqK.s:123    .text.vListInsert:0000000000000004 .L0 
+     /tmp/ccCx3UqK.s:124    .text.vListInsert:0000000000000004 .L0 
+     /tmp/ccCx3UqK.s:125    .text.vListInsert:0000000000000004 .L0 
+     /tmp/ccCx3UqK.s:126    .text.vListInsert:0000000000000004 .L0 
+     /tmp/ccCx3UqK.s:129    .text.vListInsert:000000000000000c .L0 
+     /tmp/ccCx3UqK.s:130    .text.vListInsert:000000000000000c .L0 
+     /tmp/ccCx3UqK.s:134    .text.vListInsert:0000000000000010 .L0 
+     /tmp/ccCx3UqK.s:136    .text.vListInsert:0000000000000014 .L0 
+     /tmp/ccCx3UqK.s:139    .text.vListInsert:0000000000000018 .L0 
+     /tmp/ccCx3UqK.s:141    .text.vListInsert:000000000000001c .L0 
+     /tmp/ccCx3UqK.s:144    .text.vListInsert:0000000000000020 .L0 
+     /tmp/ccCx3UqK.s:145    .text.vListInsert:0000000000000020 .L0 
+     /tmp/ccCx3UqK.s:147    .text.vListInsert:0000000000000024 .L0 
+     /tmp/ccCx3UqK.s:149    .text.vListInsert:0000000000000028 .L0 
+     /tmp/ccCx3UqK.s:150    .text.vListInsert:0000000000000028 .L0 
+     /tmp/ccCx3UqK.s:152    .text.vListInsert:000000000000002c .L0 
+     /tmp/ccCx3UqK.s:153    .text.vListInsert:000000000000002c .L0 
+     /tmp/ccCx3UqK.s:155    .text.vListInsert:0000000000000030 .L0 
+     /tmp/ccCx3UqK.s:156    .text.vListInsert:0000000000000030 .L0 
+     /tmp/ccCx3UqK.s:158    .text.vListInsert:0000000000000034 .L0 
+     /tmp/ccCx3UqK.s:159    .text.vListInsert:0000000000000034 .L0 
+     /tmp/ccCx3UqK.s:161    .text.vListInsert:0000000000000038 .L0 
+     /tmp/ccCx3UqK.s:162    .text.vListInsert:0000000000000038 .L0 
+     /tmp/ccCx3UqK.s:164    .text.vListInsert:000000000000003c .L0 
+     /tmp/ccCx3UqK.s:167    .text.vListInsert:0000000000000044 .L0 
+     /tmp/ccCx3UqK.s:171    .text.vListInsert:0000000000000048 .L0 
+     /tmp/ccCx3UqK.s:172    .text.vListInsert:0000000000000048 .L0 
+     /tmp/ccCx3UqK.s:175    .text.vListInsert:0000000000000050 .L0 
+     /tmp/ccCx3UqK.s:182    .text.uxListRemove:0000000000000000 uxListRemove
+     /tmp/ccCx3UqK.s:185    .text.uxListRemove:0000000000000000 .L0 
+     /tmp/ccCx3UqK.s:187    .text.uxListRemove:0000000000000000 .L0 
+     /tmp/ccCx3UqK.s:188    .text.uxListRemove:0000000000000000 .L0 
+     /tmp/ccCx3UqK.s:189    .text.uxListRemove:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/ccCx3UqK.s:189    .text.uxListRemove:0000000000000000 .L0 
+     /tmp/ccCx3UqK.s:192    .text.uxListRemove:0000000000000004 .L0 
+     /tmp/ccCx3UqK.s:193    .text.uxListRemove:0000000000000004 .L0 
+     /tmp/ccCx3UqK.s:195    .text.uxListRemove:0000000000000008 .L0 
+     /tmp/ccCx3UqK.s:197    .text.uxListRemove:000000000000000c .L0 
+     /tmp/ccCx3UqK.s:199    .text.uxListRemove:0000000000000010 .L0 
+     /tmp/ccCx3UqK.s:200    .text.uxListRemove:0000000000000010 .L0 
+     /tmp/ccCx3UqK.s:202    .text.uxListRemove:0000000000000014 .L0 
+     /tmp/ccCx3UqK.s:204    .text.uxListRemove:0000000000000018 .L0 
+     /tmp/ccCx3UqK.s:205    .text.uxListRemove:0000000000000018 .L0 
+     /tmp/ccCx3UqK.s:206    .text.uxListRemove:0000000000000018 .L0 
+     /tmp/ccCx3UqK.s:208    .text.uxListRemove:000000000000001c .L0 
+     /tmp/ccCx3UqK.s:211    .text.uxListRemove:0000000000000020 .L0 
+     /tmp/ccCx3UqK.s:212    .text.uxListRemove:0000000000000020 .L0 
+     /tmp/ccCx3UqK.s:213    .text.uxListRemove:0000000000000020 .L0 
+     /tmp/ccCx3UqK.s:215    .text.uxListRemove:0000000000000024 .L0 
+     /tmp/ccCx3UqK.s:216    .text.uxListRemove:0000000000000024 .L0 
+     /tmp/ccCx3UqK.s:218    .text.uxListRemove:0000000000000028 .L0 
+GAS LISTING /tmp/ccCx3UqK.s 			page 11
+
+
+     /tmp/ccCx3UqK.s:221    .text.uxListRemove:0000000000000030 .L0 
+     /tmp/ccCx3UqK.s:222    .text.uxListRemove:0000000000000030 .L0 
+     /tmp/ccCx3UqK.s:225    .text.uxListRemove:0000000000000034 .L0 
+     /tmp/ccCx3UqK.s:229    .text.uxListRemove:0000000000000038 .L0 
+     /tmp/ccCx3UqK.s:230    .text.uxListRemove:0000000000000038 .L0 
+     /tmp/ccCx3UqK.s:232    .text.uxListRemove:000000000000003c .L0 
+     /tmp/ccCx3UqK.s:234    .text.uxListRemove:0000000000000044 .L0 
+     /tmp/ccCx3UqK.s:44     .text.vListInitialise:0000000000000020 .L0 
+     /tmp/ccCx3UqK.s:63     .text.vListInitialiseItem:0000000000000008 .L0 
+     /tmp/ccCx3UqK.s:108    .text.vListInsertEnd:000000000000002c .L0 
+     /tmp/ccCx3UqK.s:178    .text.vListInsert:0000000000000050 .L0 
+     /tmp/ccCx3UqK.s:237    .text.uxListRemove:0000000000000044 .L0 
+                     .debug_frame:0000000000000000 .L0 
+     /tmp/ccCx3UqK.s:169    .text.vListInsert:0000000000000048 .L8
+     /tmp/ccCx3UqK.s:132    .text.vListInsert:0000000000000010 .L7
+     /tmp/ccCx3UqK.s:142    .text.vListInsert:0000000000000020 .L6
+     /tmp/ccCx3UqK.s:227    .text.uxListRemove:0000000000000038 .L11
+     /tmp/ccCx3UqK.s:209    .text.uxListRemove:0000000000000020 .L10
+     /tmp/ccCx3UqK.s:655    .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+     /tmp/ccCx3UqK.s:1059   .debug_str:00000000000001b5 .LASF38
+     /tmp/ccCx3UqK.s:1031   .debug_str:00000000000000bc .LASF39
+     /tmp/ccCx3UqK.s:1021   .debug_str:000000000000004b .LASF40
+     /tmp/ccCx3UqK.s:991    .debug_ranges:0000000000000000 .Ldebug_ranges0
+     /tmp/ccCx3UqK.s:1005   .debug_line:0000000000000000 .Ldebug_line0
+     /tmp/ccCx3UqK.s:1025   .debug_str:0000000000000088 .LASF0
+     /tmp/ccCx3UqK.s:1073   .debug_str:00000000000002bd .LASF1
+     /tmp/ccCx3UqK.s:1057   .debug_str:00000000000001a7 .LASF2
+     /tmp/ccCx3UqK.s:1075   .debug_str:00000000000002c6 .LASF3
+     /tmp/ccCx3UqK.s:1043   .debug_str:0000000000000143 .LASF4
+     /tmp/ccCx3UqK.s:1079   .debug_str:00000000000002e2 .LASF5
+     /tmp/ccCx3UqK.s:1023   .debug_str:000000000000007a .LASF6
+     /tmp/ccCx3UqK.s:1065   .debug_str:0000000000000295 .LASF7
+     /tmp/ccCx3UqK.s:1029   .debug_str:00000000000000a9 .LASF8
+     /tmp/ccCx3UqK.s:1069   .debug_str:00000000000002a7 .LASF11
+     /tmp/ccCx3UqK.s:1061   .debug_str:0000000000000285 .LASF9
+     /tmp/ccCx3UqK.s:1049   .debug_str:0000000000000172 .LASF10
+     /tmp/ccCx3UqK.s:1019   .debug_str:0000000000000042 .LASF12
+     /tmp/ccCx3UqK.s:1053   .debug_str:0000000000000190 .LASF13
+     /tmp/ccCx3UqK.s:1009   .debug_str:000000000000000c .LASF14
+     /tmp/ccCx3UqK.s:1085   .debug_str:00000000000002fb .LASF20
+     /tmp/ccCx3UqK.s:1013   .debug_str:0000000000000026 .LASF15
+     /tmp/ccCx3UqK.s:1041   .debug_str:000000000000013c .LASF16
+     /tmp/ccCx3UqK.s:1071   .debug_str:00000000000002b2 .LASF17
+     /tmp/ccCx3UqK.s:1017   .debug_str:000000000000003a .LASF18
+     /tmp/ccCx3UqK.s:1007   .debug_str:0000000000000000 .LASF19
+     /tmp/ccCx3UqK.s:1083   .debug_str:00000000000002f5 .LASF21
+     /tmp/ccCx3UqK.s:1037   .debug_str:000000000000011d .LASF22
+     /tmp/ccCx3UqK.s:1067   .debug_str:000000000000029f .LASF23
+     /tmp/ccCx3UqK.s:1015   .debug_str:0000000000000031 .LASF24
+     /tmp/ccCx3UqK.s:1055   .debug_str:000000000000019c .LASF25
+     /tmp/ccCx3UqK.s:1077   .debug_str:00000000000002d2 .LASF26
+     /tmp/ccCx3UqK.s:1011   .debug_str:0000000000000017 .LASF27
+     /tmp/ccCx3UqK.s:1035   .debug_str:0000000000000116 .LASF28
+     /tmp/ccCx3UqK.s:1087   .debug_str:0000000000000306 .LASF41
+     /tmp/ccCx3UqK.s:183    .text.uxListRemove:0000000000000000 .LFB5
+     /tmp/ccCx3UqK.s:235    .text.uxListRemove:0000000000000044 .LFE5
+     /tmp/ccCx3UqK.s:1027   .debug_str:000000000000009a .LASF29
+GAS LISTING /tmp/ccCx3UqK.s 			page 12
+
+
+     /tmp/ccCx3UqK.s:930    .debug_loc:0000000000000000 .LLST2
+     /tmp/ccCx3UqK.s:1081   .debug_str:00000000000002ee .LASF30
+     /tmp/ccCx3UqK.s:1091   .debug_str:0000000000000321 .LASF34
+     /tmp/ccCx3UqK.s:113    .text.vListInsert:0000000000000000 .LFB4
+     /tmp/ccCx3UqK.s:176    .text.vListInsert:0000000000000050 .LFE4
+     /tmp/ccCx3UqK.s:1089   .debug_str:0000000000000313 .LASF31
+     /tmp/ccCx3UqK.s:1063   .debug_str:000000000000028a .LASF32
+     /tmp/ccCx3UqK.s:948    .debug_loc:000000000000004c .LLST1
+     /tmp/ccCx3UqK.s:1047   .debug_str:0000000000000160 .LASF33
+     /tmp/ccCx3UqK.s:1039   .debug_str:000000000000012d .LASF35
+     /tmp/ccCx3UqK.s:68     .text.vListInsertEnd:0000000000000000 .LFB3
+     /tmp/ccCx3UqK.s:106    .text.vListInsertEnd:000000000000002c .LFE3
+     /tmp/ccCx3UqK.s:963    .debug_loc:0000000000000095 .LLST0
+     /tmp/ccCx3UqK.s:1033   .debug_str:0000000000000102 .LASF36
+     /tmp/ccCx3UqK.s:49     .text.vListInitialiseItem:0000000000000000 .LFB2
+     /tmp/ccCx3UqK.s:61     .text.vListInitialiseItem:0000000000000008 .LFE2
+     /tmp/ccCx3UqK.s:1051   .debug_str:0000000000000189 .LASF37
+     /tmp/ccCx3UqK.s:1045   .debug_str:0000000000000150 .LASF42
+     /tmp/ccCx3UqK.s:15     .text.vListInitialise:0000000000000000 .LFB1
+     /tmp/ccCx3UqK.s:42     .text.vListInitialise:0000000000000020 .LFE1
+     /tmp/ccCx3UqK.s:186    .text.uxListRemove:0000000000000000 .LVL11
+     /tmp/ccCx3UqK.s:223    .text.uxListRemove:0000000000000034 .LVL13
+     /tmp/ccCx3UqK.s:226    .text.uxListRemove:0000000000000038 .LVL14
+     /tmp/ccCx3UqK.s:131    .text.vListInsert:0000000000000010 .LVL7
+     /tmp/ccCx3UqK.s:137    .text.vListInsert:0000000000000018 .LVL8
+     /tmp/ccCx3UqK.s:168    .text.vListInsert:0000000000000048 .LVL9
+     /tmp/ccCx3UqK.s:173    .text.vListInsert:000000000000004c .LVL10
+     /tmp/ccCx3UqK.s:75     .text.vListInsertEnd:0000000000000004 .LVL3
+     /tmp/ccCx3UqK.s:99     .text.vListInsertEnd:0000000000000020 .LVL4
+     /tmp/ccCx3UqK.s:244    .debug_info:0000000000000000 .Ldebug_info0
+
+NO UNDEFINED SYMBOLS

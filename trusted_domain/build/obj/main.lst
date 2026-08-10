@@ -1,0 +1,671 @@
+GAS LISTING /tmp/ccnKYfPv.s 			page 1
+
+
+   1              		.file	"main.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.file 1 "main.c"
+  10              		.section	.rodata.task1.str1.8,"aMS",@progbits,1
+  11              		.align	3
+  12              	.LC0:
+  13 0000 7461736B 		.string	"task1 send\n"
+  13      31207365 
+  13      6E640A00 
+  14              		.section	.text.task1,"ax",@progbits
+  15              		.align	2
+  16              		.globl	task1
+  18              	task1:
+  19              	.LFB1:
+   1:main.c        **** #include <FreeRTOS.h>
+   2:main.c        **** #include <task.h>
+   3:main.c        **** #include "debug_log.h"
+   4:main.c        **** #include "sbi.h"
+   5:main.c        **** #include "riscv_asm.h"
+   6:main.c        **** #include "queue.h"
+   7:main.c        **** //消息队列控制权柄
+   8:main.c        **** QueueHandle_t xMyQueueHandle;
+   9:main.c        **** 
+  10:main.c        **** void task1(void *p_arg)
+  11:main.c        **** { 
+  20              		.loc 1 11 1
+  21              		.cfi_startproc
+  22              	.LVL0:
+  23 0000 130101FE 		addi	sp,sp,-32
+  24              	.LCFI0:
+  25              		.cfi_def_cfa_offset 32
+  26 0004 233C1100 		sd	ra,24(sp)
+  27              		.cfi_offset 1, -8
+  12:main.c        ****     int time = 1;
+  28              		.loc 1 12 5
+  29              		.loc 1 12 9 is_stmt 0
+  30 0008 93071000 		li	a5,1
+  31 000c 2326F100 		sw	a5,12(sp)
+  13:main.c        ****     const char* message = "task1\n";
+  32              		.loc 1 13 5 is_stmt 1
+  33              	.LVL1:
+  34              	.L2:
+  14:main.c        ****     for(;;)
+  35              		.loc 1 14 5 discriminator 1
+  15:main.c        ****     {
+  16:main.c        ****         _puts("task1 send\n");
+  36              		.loc 1 16 9 discriminator 1
+  37 0010 17050000 		lla	a0,.LC0
+  37      13050500 
+  38 0018 97000000 		call	_puts
+  38      E7800000 
+GAS LISTING /tmp/ccnKYfPv.s 			page 2
+
+
+  39              	.LVL2:
+  17:main.c        ****         xQueueSend(xMyQueueHandle,&time,0);
+  40              		.loc 1 17 9 discriminator 1
+  41 0020 93060000 		li	a3,0
+  42 0024 13060000 		li	a2,0
+  43 0028 9305C100 		addi	a1,sp,12
+  44 002c 17050000 		ld	a0,xMyQueueHandle
+  44      03350500 
+  45 0034 97000000 		call	xQueueGenericSend
+  45      E7800000 
+  46              	.LVL3:
+  18:main.c        **** 
+  19:main.c        ****         vTaskDelay(pdMS_TO_TICKS(1000));
+  47              		.loc 1 19 9 discriminator 1
+  48 003c 13054006 		li	a0,100
+  49 0040 97000000 		call	vTaskDelay
+  49      E7800000 
+  50              	.LVL4:
+  14:main.c        ****     {
+  51              		.loc 1 14 5 discriminator 1
+  52 0048 6FF09FFC 		j	.L2
+  53              		.cfi_endproc
+  54              	.LFE1:
+  56              		.section	.rodata.task2.str1.8,"aMS",@progbits,1
+  57              		.align	3
+  58              	.LC1:
+  59 0000 7461736B 		.string	"task2 send\n"
+  59      32207365 
+  59      6E640A00 
+  60              		.section	.text.task2,"ax",@progbits
+  61              		.align	2
+  62              		.globl	task2
+  64              	task2:
+  65              	.LFB2:
+  20:main.c        ****     }
+  21:main.c        **** }
+  22:main.c        **** 
+  23:main.c        **** void task2(void *p_arg)
+  24:main.c        **** { 
+  66              		.loc 1 24 1
+  67              		.cfi_startproc
+  68              	.LVL5:
+  69 0000 130101FE 		addi	sp,sp,-32
+  70              	.LCFI1:
+  71              		.cfi_def_cfa_offset 32
+  72 0004 233C1100 		sd	ra,24(sp)
+  73              		.cfi_offset 1, -8
+  25:main.c        ****     int time = 2;
+  74              		.loc 1 25 5
+  75              		.loc 1 25 9 is_stmt 0
+  76 0008 93072000 		li	a5,2
+  77 000c 2326F100 		sw	a5,12(sp)
+  26:main.c        ****     const char* message = "task2\n";
+  78              		.loc 1 26 5 is_stmt 1
+  79              	.LVL6:
+  80              	.L5:
+  27:main.c        **** 
+GAS LISTING /tmp/ccnKYfPv.s 			page 3
+
+
+  28:main.c        ****     for(;;)
+  81              		.loc 1 28 5 discriminator 1
+  29:main.c        ****     {
+  30:main.c        ****         _puts("task2 send\n");
+  82              		.loc 1 30 9 discriminator 1
+  83 0010 17050000 		lla	a0,.LC1
+  83      13050500 
+  84 0018 97000000 		call	_puts
+  84      E7800000 
+  85              	.LVL7:
+  31:main.c        ****         xQueueSend(xMyQueueHandle,&time,0);
+  86              		.loc 1 31 9 discriminator 1
+  87 0020 93060000 		li	a3,0
+  88 0024 13060000 		li	a2,0
+  89 0028 9305C100 		addi	a1,sp,12
+  90 002c 17050000 		ld	a0,xMyQueueHandle
+  90      03350500 
+  91 0034 97000000 		call	xQueueGenericSend
+  91      E7800000 
+  92              	.LVL8:
+  32:main.c        ****         vTaskDelay(pdMS_TO_TICKS(1000));
+  93              		.loc 1 32 9 discriminator 1
+  94 003c 13054006 		li	a0,100
+  95 0040 97000000 		call	vTaskDelay
+  95      E7800000 
+  96              	.LVL9:
+  28:main.c        ****     {
+  97              		.loc 1 28 5 discriminator 1
+  98 0048 6FF09FFC 		j	.L5
+  99              		.cfi_endproc
+ 100              	.LFE2:
+ 102              		.section	.rodata.task3.str1.8,"aMS",@progbits,1
+ 103              		.align	3
+ 104              	.LC2:
+ 105 0000 7461736B 		.string	"task1 receive\n"
+ 105      31207265 
+ 105      63656976 
+ 105      650A00
+ 106 000f 00       		.align	3
+ 107              	.LC3:
+ 108 0010 7461736B 		.string	"task2 receive\n"
+ 108      32207265 
+ 108      63656976 
+ 108      650A00
+ 109              		.section	.text.task3,"ax",@progbits
+ 110              		.align	2
+ 111              		.globl	task3
+ 113              	task3:
+ 114              	.LFB3:
+  33:main.c        ****     }
+  34:main.c        **** }
+  35:main.c        **** 
+  36:main.c        **** void task3(void *p_arg)
+  37:main.c        **** { 
+ 115              		.loc 1 37 1
+ 116              		.cfi_startproc
+ 117              	.LVL10:
+GAS LISTING /tmp/ccnKYfPv.s 			page 4
+
+
+ 118 0000 130101FE 		addi	sp,sp,-32
+ 119              	.LCFI2:
+ 120              		.cfi_def_cfa_offset 32
+ 121 0004 233C1100 		sd	ra,24(sp)
+ 122              		.cfi_offset 1, -8
+  38:main.c        ****     int time = 0;
+ 123              		.loc 1 38 5
+ 124              		.loc 1 38 9 is_stmt 0
+ 125 0008 23260100 		sw	zero,12(sp)
+ 126 000c 6F004003 		j	.L10
+ 127              	.LVL11:
+ 128              	.L12:
+  39:main.c        ****     for(;;)
+  40:main.c        ****     {
+  41:main.c        ****       // _puts("task3\n");
+  42:main.c        ****     
+  43:main.c        ****         xQueueReceive(xMyQueueHandle,&time,portMAX_DELAY);
+  44:main.c        ****         if(time == 1){
+  45:main.c        ****             _puts("task1 receive\n");
+ 129              		.loc 1 45 13 is_stmt 1
+ 130 0010 17050000 		lla	a0,.LC2
+ 130      13050500 
+ 131 0018 97000000 		call	_puts
+ 131      E7800000 
+ 132              	.LVL12:
+ 133 0020 6F004004 		j	.L8
+ 134              	.L13:
+  46:main.c        ****         }
+  47:main.c        ****         if(time == 2){
+  48:main.c        ****             _puts("task2 receive\n");
+ 135              		.loc 1 48 13
+ 136 0024 17050000 		lla	a0,.LC3
+ 136      13050500 
+ 137 002c 97000000 		call	_puts
+ 137      E7800000 
+ 138              	.LVL13:
+ 139              	.L9:
+  49:main.c        ****         }
+  50:main.c        ****         vTaskDelay(pdMS_TO_TICKS(1000));
+ 140              		.loc 1 50 9
+ 141 0034 13054006 		li	a0,100
+ 142 0038 97000000 		call	vTaskDelay
+ 142      E7800000 
+ 143              	.LVL14:
+  39:main.c        ****     {
+ 144              		.loc 1 39 5
+ 145              	.L10:
+  39:main.c        ****     {
+ 146              		.loc 1 39 5
+  43:main.c        ****         if(time == 1){
+ 147              		.loc 1 43 9
+ 148 0040 1306F0FF 		li	a2,-1
+ 149 0044 9305C100 		addi	a1,sp,12
+ 150 0048 17050000 		ld	a0,xMyQueueHandle
+ 150      03350500 
+ 151 0050 97000000 		call	xQueueReceive
+ 151      E7800000 
+GAS LISTING /tmp/ccnKYfPv.s 			page 5
+
+
+ 152              	.LVL15:
+  44:main.c        ****             _puts("task1 receive\n");
+ 153              		.loc 1 44 9
+  44:main.c        ****             _puts("task1 receive\n");
+ 154              		.loc 1 44 17 is_stmt 0
+ 155 0058 0327C100 		lw	a4,12(sp)
+  44:main.c        ****             _puts("task1 receive\n");
+ 156              		.loc 1 44 11
+ 157 005c 93071000 		li	a5,1
+ 158 0060 E308F7FA 		beq	a4,a5,.L12
+ 159              	.L8:
+  47:main.c        ****             _puts("task2 receive\n");
+ 160              		.loc 1 47 9 is_stmt 1
+  47:main.c        ****             _puts("task2 receive\n");
+ 161              		.loc 1 47 17 is_stmt 0
+ 162 0064 0327C100 		lw	a4,12(sp)
+  47:main.c        ****             _puts("task2 receive\n");
+ 163              		.loc 1 47 11
+ 164 0068 93072000 		li	a5,2
+ 165 006c E30CF7FA 		beq	a4,a5,.L13
+ 166 0070 6FF05FFC 		j	.L9
+ 167              		.cfi_endproc
+ 168              	.LFE3:
+ 170              		.section	.rodata.vTaskCreate.str1.8,"aMS",@progbits,1
+ 171              		.align	3
+ 172              	.LC4:
+ 173 0000 7461736B 		.string	"task1"
+ 173      3100
+ 174 0006 0000     		.align	3
+ 175              	.LC5:
+ 176 0008 7461736B 		.string	"task2"
+ 176      3200
+ 177              		.section	.text.vTaskCreate,"ax",@progbits
+ 178              		.align	2
+ 180              	vTaskCreate:
+ 181              	.LFB4:
+  51:main.c        ****     }
+  52:main.c        **** }
+  53:main.c        **** 
+  54:main.c        **** static void vTaskCreate ()
+  55:main.c        **** { 
+ 182              		.loc 1 55 1 is_stmt 1
+ 183              		.cfi_startproc
+ 184 0000 130101FF 		addi	sp,sp,-16
+ 185              	.LCFI3:
+ 186              		.cfi_def_cfa_offset 16
+ 187 0004 23341100 		sd	ra,8(sp)
+ 188              		.cfi_offset 1, -8
+  56:main.c        **** 
+  57:main.c        ****     xTaskCreate(task1,"task1",1024,NULL,3,NULL);
+ 189              		.loc 1 57 5
+ 190 0008 93070000 		li	a5,0
+ 191 000c 13073000 		li	a4,3
+ 192 0010 93060000 		li	a3,0
+ 193 0014 13060040 		li	a2,1024
+ 194 0018 97050000 		lla	a1,.LC4
+ 194      93850500 
+GAS LISTING /tmp/ccnKYfPv.s 			page 6
+
+
+ 195 0020 17050000 		lla	a0,task1
+ 195      13050500 
+ 196 0028 97000000 		call	xTaskCreate
+ 196      E7800000 
+ 197              	.LVL16:
+  58:main.c        ****     xTaskCreate(task2,"task2",1024,NULL,4,NULL);
+ 198              		.loc 1 58 5
+ 199 0030 93070000 		li	a5,0
+ 200 0034 13074000 		li	a4,4
+ 201 0038 93060000 		li	a3,0
+ 202 003c 13060040 		li	a2,1024
+ 203 0040 97050000 		lla	a1,.LC5
+ 203      93850500 
+ 204 0048 17050000 		lla	a0,task2
+ 204      13050500 
+ 205 0050 97000000 		call	xTaskCreate
+ 205      E7800000 
+ 206              	.LVL17:
+  59:main.c        ****     xTaskCreate(task3,"task2",1024,NULL,5,NULL);
+ 207              		.loc 1 59 5
+ 208 0058 93070000 		li	a5,0
+ 209 005c 13075000 		li	a4,5
+ 210 0060 93060000 		li	a3,0
+ 211 0064 13060040 		li	a2,1024
+ 212 0068 97050000 		lla	a1,.LC5
+ 212      93850500 
+ 213 0070 17050000 		lla	a0,task3
+ 213      13050500 
+ 214 0078 97000000 		call	xTaskCreate
+ 214      E7800000 
+ 215              	.LVL18:
+  60:main.c        **** }
+ 216              		.loc 1 60 1 is_stmt 0
+ 217 0080 83308100 		ld	ra,8(sp)
+ 218              		.cfi_restore 1
+ 219 0084 13010101 		addi	sp,sp,16
+ 220              	.LCFI4:
+ 221              		.cfi_def_cfa_offset 0
+ 222 0088 67800000 		jr	ra
+ 223              		.cfi_endproc
+ 224              	.LFE4:
+ 226              		.section	.rodata.main.str1.8,"aMS",@progbits,1
+ 227              		.align	3
+ 228              	.LC6:
+ 229 0000 48656C6C 		.string	"Hello FreeRTOS!\n"
+ 229      6F204672 
+ 229      65655254 
+ 229      4F53210A 
+ 229      00
+ 230              		.section	.text.main,"ax",@progbits
+ 231              		.align	2
+ 232              		.globl	main
+ 234              	main:
+ 235              	.LFB5:
+  61:main.c        **** 
+  62:main.c        **** int main( void )
+  63:main.c        **** {
+GAS LISTING /tmp/ccnKYfPv.s 			page 7
+
+
+ 236              		.loc 1 63 1 is_stmt 1
+ 237              		.cfi_startproc
+ 238 0000 130101FF 		addi	sp,sp,-16
+ 239              	.LCFI5:
+ 240              		.cfi_def_cfa_offset 16
+ 241 0004 23341100 		sd	ra,8(sp)
+ 242              		.cfi_offset 1, -8
+  64:main.c        **** 	_puts( "Hello FreeRTOS!\n");
+ 243              		.loc 1 64 2
+ 244 0008 17050000 		lla	a0,.LC6
+ 244      13050500 
+ 245 0010 97000000 		call	_puts
+ 245      E7800000 
+ 246              	.LVL19:
+  65:main.c        ****     const char * str = "taskn\n";
+ 247              		.loc 1 65 5
+  66:main.c        ****     xMyQueueHandle = xQueueCreate(20,sizeof(int32_t));
+ 248              		.loc 1 66 5
+ 249              		.loc 1 66 22 is_stmt 0
+ 250 0018 13060000 		li	a2,0
+ 251 001c 93054000 		li	a1,4
+ 252 0020 13054001 		li	a0,20
+ 253 0024 97000000 		call	xQueueGenericCreate
+ 253      E7800000 
+ 254              	.LVL20:
+ 255              		.loc 1 66 20
+ 256 002c 97070000 		sd	a0,xMyQueueHandle,a5
+ 256      23B0A700 
+  67:main.c        **** 
+  68:main.c        ****     vTaskCreate();
+ 257              		.loc 1 68 5 is_stmt 1
+ 258 0034 97000000 		call	vTaskCreate
+ 258      E7800000 
+ 259              	.LVL21:
+  69:main.c        **** 	vTaskStartScheduler();
+ 260              		.loc 1 69 2
+ 261 003c 97000000 		call	vTaskStartScheduler
+ 261      E7800000 
+ 262              	.LVL22:
+  70:main.c        **** 	return 0;
+ 263              		.loc 1 70 2
+  71:main.c        **** }
+ 264              		.loc 1 71 1 is_stmt 0
+ 265 0044 13050000 		li	a0,0
+ 266 0048 83308100 		ld	ra,8(sp)
+ 267              		.cfi_restore 1
+ 268 004c 13010101 		addi	sp,sp,16
+ 269              	.LCFI6:
+ 270              		.cfi_def_cfa_offset 0
+ 271 0050 67800000 		jr	ra
+ 272              		.cfi_endproc
+ 273              	.LFE5:
+ 275              		.globl	xMyQueueHandle
+ 276              		.section	.sbss.xMyQueueHandle,"aw",@nobits
+ 277              		.align	3
+ 280              	xMyQueueHandle:
+ 281 0000 00000000 		.zero	8
+GAS LISTING /tmp/ccnKYfPv.s 			page 8
+
+
+ 281      00000000 
+ 282              		.text
+ 283              	.Letext0:
+ 284              		.file 2 "/home/zz/riscv/riscv/riscv64-unknown-elf/include/machine/_default_types.h"
+ 285              		.file 3 "/home/zz/riscv/riscv/riscv64-unknown-elf/include/sys/_stdint.h"
+ 286              		.file 4 "/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/include/projdefs.h"
+ 287              		.file 5 "/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/portma
+ 288              		.file 6 "/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/include/task.h"
+ 289              		.file 7 "/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/include/queue.h"
+ 290              		.file 8 "/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.h"
+GAS LISTING /tmp/ccnKYfPv.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 main.c
+     /tmp/ccnKYfPv.s:18     .text.task1:0000000000000000 task1
+     /tmp/ccnKYfPv.s:21     .text.task1:0000000000000000 .L0 
+     /tmp/ccnKYfPv.s:23     .text.task1:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/ccnKYfPv.s:23     .text.task1:0000000000000000 .L0 
+     /tmp/ccnKYfPv.s:25     .text.task1:0000000000000004 .L0 
+     /tmp/ccnKYfPv.s:27     .text.task1:0000000000000008 .L0 
+     /tmp/ccnKYfPv.s:29     .text.task1:0000000000000008 .L0 
+     /tmp/ccnKYfPv.s:30     .text.task1:0000000000000008 .L0 
+     /tmp/ccnKYfPv.s:35     .text.task1:0000000000000010 .L0 
+     /tmp/ccnKYfPv.s:36     .text.task1:0000000000000010 .L0 
+     /tmp/ccnKYfPv.s:37     .text.task1:0000000000000010 .L0 
+     /tmp/ccnKYfPv.s:41     .text.task1:0000000000000020 .L0 
+     /tmp/ccnKYfPv.s:280    .sbss.xMyQueueHandle:0000000000000000 xMyQueueHandle
+     /tmp/ccnKYfPv.s:48     .text.task1:000000000000003c .L0 
+     /tmp/ccnKYfPv.s:52     .text.task1:0000000000000048 .L0 
+     /tmp/ccnKYfPv.s:53     .text.task1:000000000000004c .L0 
+     /tmp/ccnKYfPv.s:64     .text.task2:0000000000000000 task2
+     /tmp/ccnKYfPv.s:67     .text.task2:0000000000000000 .L0 
+     /tmp/ccnKYfPv.s:69     .text.task2:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/ccnKYfPv.s:69     .text.task2:0000000000000000 .L0 
+     /tmp/ccnKYfPv.s:71     .text.task2:0000000000000004 .L0 
+     /tmp/ccnKYfPv.s:73     .text.task2:0000000000000008 .L0 
+     /tmp/ccnKYfPv.s:75     .text.task2:0000000000000008 .L0 
+     /tmp/ccnKYfPv.s:76     .text.task2:0000000000000008 .L0 
+     /tmp/ccnKYfPv.s:81     .text.task2:0000000000000010 .L0 
+     /tmp/ccnKYfPv.s:82     .text.task2:0000000000000010 .L0 
+     /tmp/ccnKYfPv.s:83     .text.task2:0000000000000010 .L0 
+     /tmp/ccnKYfPv.s:87     .text.task2:0000000000000020 .L0 
+     /tmp/ccnKYfPv.s:94     .text.task2:000000000000003c .L0 
+     /tmp/ccnKYfPv.s:98     .text.task2:0000000000000048 .L0 
+     /tmp/ccnKYfPv.s:99     .text.task2:000000000000004c .L0 
+     /tmp/ccnKYfPv.s:113    .text.task3:0000000000000000 task3
+     /tmp/ccnKYfPv.s:116    .text.task3:0000000000000000 .L0 
+     /tmp/ccnKYfPv.s:118    .text.task3:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/ccnKYfPv.s:118    .text.task3:0000000000000000 .L0 
+     /tmp/ccnKYfPv.s:120    .text.task3:0000000000000004 .L0 
+     /tmp/ccnKYfPv.s:122    .text.task3:0000000000000008 .L0 
+     /tmp/ccnKYfPv.s:124    .text.task3:0000000000000008 .L0 
+     /tmp/ccnKYfPv.s:125    .text.task3:0000000000000008 .L0 
+     /tmp/ccnKYfPv.s:130    .text.task3:0000000000000010 .L0 
+     /tmp/ccnKYfPv.s:136    .text.task3:0000000000000024 .L0 
+     /tmp/ccnKYfPv.s:141    .text.task3:0000000000000034 .L0 
+     /tmp/ccnKYfPv.s:146    .text.task3:0000000000000040 .L0 
+     /tmp/ccnKYfPv.s:147    .text.task3:0000000000000040 .L0 
+     /tmp/ccnKYfPv.s:148    .text.task3:0000000000000040 .L0 
+     /tmp/ccnKYfPv.s:154    .text.task3:0000000000000058 .L0 
+     /tmp/ccnKYfPv.s:155    .text.task3:0000000000000058 .L0 
+     /tmp/ccnKYfPv.s:157    .text.task3:000000000000005c .L0 
+     /tmp/ccnKYfPv.s:161    .text.task3:0000000000000064 .L0 
+     /tmp/ccnKYfPv.s:162    .text.task3:0000000000000064 .L0 
+     /tmp/ccnKYfPv.s:164    .text.task3:0000000000000068 .L0 
+     /tmp/ccnKYfPv.s:167    .text.task3:0000000000000074 .L0 
+     /tmp/ccnKYfPv.s:180    .text.vTaskCreate:0000000000000000 vTaskCreate
+     /tmp/ccnKYfPv.s:183    .text.vTaskCreate:0000000000000000 .L0 
+     /tmp/ccnKYfPv.s:184    .text.vTaskCreate:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+GAS LISTING /tmp/ccnKYfPv.s 			page 10
+
+
+     /tmp/ccnKYfPv.s:184    .text.vTaskCreate:0000000000000000 .L0 
+     /tmp/ccnKYfPv.s:186    .text.vTaskCreate:0000000000000004 .L0 
+     /tmp/ccnKYfPv.s:188    .text.vTaskCreate:0000000000000008 .L0 
+     /tmp/ccnKYfPv.s:190    .text.vTaskCreate:0000000000000008 .L0 
+     /tmp/ccnKYfPv.s:199    .text.vTaskCreate:0000000000000030 .L0 
+     /tmp/ccnKYfPv.s:208    .text.vTaskCreate:0000000000000058 .L0 
+     /tmp/ccnKYfPv.s:217    .text.vTaskCreate:0000000000000080 .L0 
+     /tmp/ccnKYfPv.s:218    .text.vTaskCreate:0000000000000084 .L0 
+     /tmp/ccnKYfPv.s:221    .text.vTaskCreate:0000000000000088 .L0 
+     /tmp/ccnKYfPv.s:223    .text.vTaskCreate:000000000000008c .L0 
+     /tmp/ccnKYfPv.s:234    .text.main:0000000000000000 main
+     /tmp/ccnKYfPv.s:237    .text.main:0000000000000000 .L0 
+     /tmp/ccnKYfPv.s:238    .text.main:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/ccnKYfPv.s:238    .text.main:0000000000000000 .L0 
+     /tmp/ccnKYfPv.s:240    .text.main:0000000000000004 .L0 
+     /tmp/ccnKYfPv.s:242    .text.main:0000000000000008 .L0 
+     /tmp/ccnKYfPv.s:244    .text.main:0000000000000008 .L0 
+     /tmp/ccnKYfPv.s:248    .text.main:0000000000000018 .L0 
+     /tmp/ccnKYfPv.s:249    .text.main:0000000000000018 .L0 
+     /tmp/ccnKYfPv.s:250    .text.main:0000000000000018 .L0 
+     /tmp/ccnKYfPv.s:256    .text.main:000000000000002c .L0 
+     /tmp/ccnKYfPv.s:258    .text.main:0000000000000034 .L0 
+     /tmp/ccnKYfPv.s:261    .text.main:000000000000003c .L0 
+     /tmp/ccnKYfPv.s:264    .text.main:0000000000000044 .L0 
+     /tmp/ccnKYfPv.s:265    .text.main:0000000000000044 .L0 
+     /tmp/ccnKYfPv.s:267    .text.main:000000000000004c .L0 
+     /tmp/ccnKYfPv.s:270    .text.main:0000000000000050 .L0 
+     /tmp/ccnKYfPv.s:272    .text.main:0000000000000054 .L0 
+     /tmp/ccnKYfPv.s:56     .text.task1:000000000000004c .L0 
+     /tmp/ccnKYfPv.s:102    .text.task2:000000000000004c .L0 
+     /tmp/ccnKYfPv.s:170    .text.task3:0000000000000074 .L0 
+     /tmp/ccnKYfPv.s:226    .text.vTaskCreate:000000000000008c .L0 
+     /tmp/ccnKYfPv.s:276    .text.main:0000000000000054 .L0 
+                     .debug_frame:0000000000000000 .L0 
+     /tmp/ccnKYfPv.s:12     .rodata.task1.str1.8:0000000000000000 .LC0
+     /tmp/ccnKYfPv.s:37     .text.task1:0000000000000010 .L0 
+     /tmp/ccnKYfPv.s:44     .text.task1:000000000000002c .L0 
+     /tmp/ccnKYfPv.s:34     .text.task1:0000000000000010 .L2
+     /tmp/ccnKYfPv.s:58     .rodata.task2.str1.8:0000000000000000 .LC1
+     /tmp/ccnKYfPv.s:83     .text.task2:0000000000000010 .L0 
+     /tmp/ccnKYfPv.s:90     .text.task2:000000000000002c .L0 
+     /tmp/ccnKYfPv.s:80     .text.task2:0000000000000010 .L5
+     /tmp/ccnKYfPv.s:104    .rodata.task3.str1.8:0000000000000000 .LC2
+     /tmp/ccnKYfPv.s:130    .text.task3:0000000000000010 .L0 
+     /tmp/ccnKYfPv.s:107    .rodata.task3.str1.8:0000000000000010 .LC3
+     /tmp/ccnKYfPv.s:136    .text.task3:0000000000000024 .L0 
+     /tmp/ccnKYfPv.s:150    .text.task3:0000000000000048 .L0 
+     /tmp/ccnKYfPv.s:145    .text.task3:0000000000000040 .L10
+     /tmp/ccnKYfPv.s:159    .text.task3:0000000000000064 .L8
+     /tmp/ccnKYfPv.s:128    .text.task3:0000000000000010 .L12
+     /tmp/ccnKYfPv.s:134    .text.task3:0000000000000024 .L13
+     /tmp/ccnKYfPv.s:139    .text.task3:0000000000000034 .L9
+     /tmp/ccnKYfPv.s:172    .rodata.vTaskCreate.str1.8:0000000000000000 .LC4
+     /tmp/ccnKYfPv.s:194    .text.vTaskCreate:0000000000000018 .L0 
+     /tmp/ccnKYfPv.s:195    .text.vTaskCreate:0000000000000020 .L0 
+     /tmp/ccnKYfPv.s:175    .rodata.vTaskCreate.str1.8:0000000000000008 .LC5
+     /tmp/ccnKYfPv.s:203    .text.vTaskCreate:0000000000000040 .L0 
+GAS LISTING /tmp/ccnKYfPv.s 			page 11
+
+
+     /tmp/ccnKYfPv.s:204    .text.vTaskCreate:0000000000000048 .L0 
+     /tmp/ccnKYfPv.s:212    .text.vTaskCreate:0000000000000068 .L0 
+     /tmp/ccnKYfPv.s:213    .text.vTaskCreate:0000000000000070 .L0 
+     /tmp/ccnKYfPv.s:228    .rodata.main.str1.8:0000000000000000 .LC6
+     /tmp/ccnKYfPv.s:244    .text.main:0000000000000008 .L0 
+     /tmp/ccnKYfPv.s:256    .text.main:000000000000002c .L0 
+     /tmp/ccnKYfPv.s:1069   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+     /tmp/ccnKYfPv.s:1682   .debug_str:0000000000000198 .LASF37
+     /tmp/ccnKYfPv.s:1684   .debug_str:0000000000000268 .LASF38
+     /tmp/ccnKYfPv.s:1644   .debug_str:00000000000000ac .LASF39
+     /tmp/ccnKYfPv.s:1602   .debug_ranges:0000000000000000 .Ldebug_ranges0
+     /tmp/ccnKYfPv.s:1616   .debug_line:0000000000000000 .Ldebug_line0
+     /tmp/ccnKYfPv.s:1692   .debug_str:0000000000000295 .LASF0
+     /tmp/ccnKYfPv.s:1648   .debug_str:00000000000000e9 .LASF1
+     /tmp/ccnKYfPv.s:1680   .debug_str:000000000000018a .LASF2
+     /tmp/ccnKYfPv.s:1696   .debug_str:00000000000002a9 .LASF3
+     /tmp/ccnKYfPv.s:1698   .debug_str:00000000000002b5 .LASF4
+     /tmp/ccnKYfPv.s:1622   .debug_str:0000000000000010 .LASF7
+     /tmp/ccnKYfPv.s:1646   .debug_str:00000000000000db .LASF5
+     /tmp/ccnKYfPv.s:1660   .debug_str:0000000000000130 .LASF6
+     /tmp/ccnKYfPv.s:1656   .debug_str:0000000000000111 .LASF8
+     /tmp/ccnKYfPv.s:1630   .debug_str:0000000000000041 .LASF9
+     /tmp/ccnKYfPv.s:1668   .debug_str:0000000000000159 .LASF10
+     /tmp/ccnKYfPv.s:1654   .debug_str:0000000000000107 .LASF11
+     /tmp/ccnKYfPv.s:1688   .debug_str:0000000000000281 .LASF12
+     /tmp/ccnKYfPv.s:1672   .debug_str:000000000000016b .LASF13
+     /tmp/ccnKYfPv.s:1690   .debug_str:000000000000028c .LASF14
+     /tmp/ccnKYfPv.s:1620   .debug_str:0000000000000008 .LASF15
+     /tmp/ccnKYfPv.s:1638   .debug_str:0000000000000084 .LASF16
+     /tmp/ccnKYfPv.s:1640   .debug_str:000000000000008d .LASF17
+     /tmp/ccnKYfPv.s:1704   .debug_str:00000000000002d3 .LASF18
+     /tmp/ccnKYfPv.s:1700   .debug_str:00000000000002c1 .LASF19
+     /tmp/ccnKYfPv.s:1624   .debug_str:000000000000001a .LASF20
+     /tmp/ccnKYfPv.s:1628   .debug_str:0000000000000034 .LASF21
+     /tmp/ccnKYfPv.s:1664   .debug_str:0000000000000140 .LASF24
+     /tmp/ccnKYfPv.s:1670   .debug_str:0000000000000166 .LASF22
+     /tmp/ccnKYfPv.s:1632   .debug_str:0000000000000054 .LASF23
+     /tmp/ccnKYfPv.s:1642   .debug_str:000000000000009c .LASF25
+     /tmp/ccnKYfPv.s:1626   .debug_str:0000000000000025 .LASF40
+     /tmp/ccnKYfPv.s:1706   .debug_str:00000000000002de .LASF26
+     /tmp/ccnKYfPv.s:1634   .debug_str:0000000000000062 .LASF41
+     /tmp/ccnKYfPv.s:1658   .debug_str:000000000000011c .LASF27
+     /tmp/ccnKYfPv.s:1636   .debug_str:0000000000000076 .LASF28
+     /tmp/ccnKYfPv.s:1694   .debug_str:000000000000029e .LASF42
+     /tmp/ccnKYfPv.s:1686   .debug_str:000000000000026f .LASF29
+     /tmp/ccnKYfPv.s:1662   .debug_str:000000000000013a .LASF30
+     /tmp/ccnKYfPv.s:1666   .debug_str:0000000000000154 .LASF43
+     /tmp/ccnKYfPv.s:235    .text.main:0000000000000000 .LFB5
+     /tmp/ccnKYfPv.s:273    .text.main:0000000000000054 .LFE5
+     /tmp/ccnKYfPv.s:1464   .debug_loc:0000000000000000 .LLST7
+     /tmp/ccnKYfPv.s:292    .debug_info:0000000000000000 .Ldebug_info0
+     /tmp/ccnKYfPv.s:246    .text.main:0000000000000018 .LVL19
+     /tmp/ccnKYfPv.s:254    .text.main:000000000000002c .LVL20
+     /tmp/ccnKYfPv.s:259    .text.main:000000000000003c .LVL21
+     /tmp/ccnKYfPv.s:262    .text.main:0000000000000044 .LVL22
+     /tmp/ccnKYfPv.s:1674   .debug_str:0000000000000173 .LASF44
+     /tmp/ccnKYfPv.s:181    .text.vTaskCreate:0000000000000000 .LFB4
+GAS LISTING /tmp/ccnKYfPv.s 			page 12
+
+
+     /tmp/ccnKYfPv.s:224    .text.vTaskCreate:000000000000008c .LFE4
+     /tmp/ccnKYfPv.s:1482   .debug_loc:000000000000004c .LLST6
+     /tmp/ccnKYfPv.s:197    .text.vTaskCreate:0000000000000030 .LVL16
+     /tmp/ccnKYfPv.s:206    .text.vTaskCreate:0000000000000058 .LVL17
+     /tmp/ccnKYfPv.s:215    .text.vTaskCreate:0000000000000080 .LVL18
+     /tmp/ccnKYfPv.s:1652   .debug_str:0000000000000101 .LASF32
+     /tmp/ccnKYfPv.s:114    .text.task3:0000000000000000 .LFB3
+     /tmp/ccnKYfPv.s:168    .text.task3:0000000000000074 .LFE3
+     /tmp/ccnKYfPv.s:1500   .debug_loc:0000000000000098 .LLST4
+     /tmp/ccnKYfPv.s:1702   .debug_str:00000000000002cd .LASF34
+     /tmp/ccnKYfPv.s:1513   .debug_loc:00000000000000d0 .LLST5
+     /tmp/ccnKYfPv.s:1676   .debug_str:000000000000017f .LASF31
+     /tmp/ccnKYfPv.s:132    .text.task3:0000000000000020 .LVL12
+     /tmp/ccnKYfPv.s:138    .text.task3:0000000000000034 .LVL13
+     /tmp/ccnKYfPv.s:143    .text.task3:0000000000000040 .LVL14
+     /tmp/ccnKYfPv.s:152    .text.task3:0000000000000058 .LVL15
+     /tmp/ccnKYfPv.s:1650   .debug_str:00000000000000fb .LASF33
+     /tmp/ccnKYfPv.s:65     .text.task2:0000000000000000 .LFB2
+     /tmp/ccnKYfPv.s:100    .text.task2:000000000000004c .LFE2
+     /tmp/ccnKYfPv.s:1527   .debug_loc:0000000000000109 .LLST2
+     /tmp/ccnKYfPv.s:1540   .debug_loc:0000000000000141 .LLST3
+     /tmp/ccnKYfPv.s:1618   .debug_str:0000000000000000 .LASF35
+     /tmp/ccnKYfPv.s:85     .text.task2:0000000000000020 .LVL7
+     /tmp/ccnKYfPv.s:92     .text.task2:000000000000003c .LVL8
+     /tmp/ccnKYfPv.s:96     .text.task2:0000000000000048 .LVL9
+     /tmp/ccnKYfPv.s:1678   .debug_str:0000000000000184 .LASF36
+     /tmp/ccnKYfPv.s:19     .text.task1:0000000000000000 .LFB1
+     /tmp/ccnKYfPv.s:54     .text.task1:000000000000004c .LFE1
+     /tmp/ccnKYfPv.s:1554   .debug_loc:000000000000017a .LLST0
+     /tmp/ccnKYfPv.s:1567   .debug_loc:00000000000001b2 .LLST1
+     /tmp/ccnKYfPv.s:39     .text.task1:0000000000000020 .LVL2
+     /tmp/ccnKYfPv.s:46     .text.task1:000000000000003c .LVL3
+     /tmp/ccnKYfPv.s:50     .text.task1:0000000000000048 .LVL4
+     /tmp/ccnKYfPv.s:239    .text.main:0000000000000004 .LCFI5
+     /tmp/ccnKYfPv.s:269    .text.main:0000000000000050 .LCFI6
+     /tmp/ccnKYfPv.s:185    .text.vTaskCreate:0000000000000004 .LCFI3
+     /tmp/ccnKYfPv.s:220    .text.vTaskCreate:0000000000000088 .LCFI4
+     /tmp/ccnKYfPv.s:119    .text.task3:0000000000000004 .LCFI2
+     /tmp/ccnKYfPv.s:117    .text.task3:0000000000000000 .LVL10
+     /tmp/ccnKYfPv.s:127    .text.task3:0000000000000010 .LVL11
+     /tmp/ccnKYfPv.s:70     .text.task2:0000000000000004 .LCFI1
+     /tmp/ccnKYfPv.s:68     .text.task2:0000000000000000 .LVL5
+     /tmp/ccnKYfPv.s:79     .text.task2:0000000000000010 .LVL6
+     /tmp/ccnKYfPv.s:24     .text.task1:0000000000000004 .LCFI0
+     /tmp/ccnKYfPv.s:22     .text.task1:0000000000000000 .LVL0
+     /tmp/ccnKYfPv.s:33     .text.task1:0000000000000010 .LVL1
+
+UNDEFINED SYMBOLS
+_puts
+xQueueGenericSend
+vTaskDelay
+xQueueReceive
+xTaskCreate
+xQueueGenericCreate
+vTaskStartScheduler

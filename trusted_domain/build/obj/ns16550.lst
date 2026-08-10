@@ -1,0 +1,247 @@
+GAS LISTING /tmp/ccY1ukPO.s 			page 1
+
+
+   1              		.file	"ns16550.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.file 1 "/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c"
+  10              		.section	.text.readb,"ax",@progbits
+  11              		.align	2
+  13              	readb:
+  14              	.LFB0:
+   1:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** #include <stdint.h>
+   2:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** #include "ns16550.h"
+   3:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** 
+   4:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** 
+   5:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** 
+   6:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** /* 寄存器定义 */
+   7:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** #define REG_RHR		0x00 /* Receiver buffer reg. */
+   8:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** #define REG_THR		0x00 /* Transmitter holding reg. */
+   9:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** #define REG_IER		0x01 /* Interrupt enable reg. */
+  10:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** #define REG_IIR		0x02 /* Interrupt ID reg. */
+  11:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** #define REG_FCR		0x02 /* FIFO control reg. */
+  12:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** #define REG_LCR		0x03 /* Line control reg. */
+  13:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** #define REG_MCR		0x04 /* Modem control reg. */
+  14:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** #define REG_LSR		0x05 /* Line status reg. */
+  15:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** #define REG_MSR		0x06 /* Modem status reg. */
+  16:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** #define REG_SCR		0x07 /* Scratch reg. */
+  17:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** #define REG_BRDL	0x00 /* Divisor latch (LSB) */
+  18:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** #define REG_BRDH	0x01 /* Divisor latch (MSB) */
+  19:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** 
+  20:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** /* Line status */
+  21:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** #define LSR_DR 0x01	  /* Data ready */
+  22:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** #define LSR_OE 0x02	  /* Overrun error */
+  23:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** #define LSR_PE 0x04	  /* Parity error */
+  24:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** #define LSR_FE 0x08	  /* Framing error */
+  25:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** #define LSR_BI 0x10	  /* Break interrupt */
+  26:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** #define LSR_THRE 0x20 /* Transmitter holding register empty */
+  27:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** #define LSR_TEMT 0x40 /* Transmitter empty */
+  28:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** #define LSR_EIRF 0x80 /* Error in RCVR FIFO */
+  29:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** 
+  30:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** //从一个地址读入一个字节
+  31:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** static uint8_t readb( uintptr_t addr )
+  32:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** {
+  15              		.loc 1 32 1
+  16              		.cfi_startproc
+  17              	.LVL0:
+  33:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** 	return *( (uint8_t *) addr );
+  18              		.loc 1 33 2
+  34:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** }
+  19              		.loc 1 34 1 is_stmt 0
+  20 0000 03450500 		lbu	a0,0(a0)
+  21              	.LVL1:
+  22 0004 67800000 		ret
+  23              		.cfi_endproc
+  24              	.LFE0:
+GAS LISTING /tmp/ccY1ukPO.s 			page 2
+
+
+  26              		.section	.text.writeb,"ax",@progbits
+  27              		.align	2
+  29              	writeb:
+  30              	.LFB1:
+  35:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** 
+  36:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** //向一个地址写入一个字节
+  37:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** static void writeb( uint8_t b, uintptr_t addr )
+  38:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** {
+  31              		.loc 1 38 1 is_stmt 1
+  32              		.cfi_startproc
+  33              	.LVL2:
+  39:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** 	*( (uint8_t *) addr ) = b;
+  34              		.loc 1 39 2
+  35              		.loc 1 39 24 is_stmt 0
+  36 0000 2380A500 		sb	a0,0(a1)
+  40:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** }
+  37              		.loc 1 40 1
+  38 0004 67800000 		ret
+  39              		.cfi_endproc
+  40              	.LFE1:
+  42              		.section	.text.ns16550_tx,"ax",@progbits
+  43              		.align	2
+  44              		.globl	ns16550_tx
+  46              	ns16550_tx:
+  47              	.LFB2:
+  41:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** 
+  42:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** void ns16550_tx(uintptr_t addr, unsigned char c)
+  43:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** {
+  48              		.loc 1 43 1 is_stmt 1
+  49              		.cfi_startproc
+  50              	.LVL3:
+  51 0000 130101FE 		addi	sp,sp,-32
+  52              	.LCFI0:
+  53              		.cfi_def_cfa_offset 32
+  54 0004 233C1100 		sd	ra,24(sp)
+  55 0008 23388100 		sd	s0,16(sp)
+  56 000c 23349100 		sd	s1,8(sp)
+  57              		.cfi_offset 1, -8
+  58              		.cfi_offset 8, -16
+  59              		.cfi_offset 9, -24
+  60 0010 13040500 		mv	s0,a0
+  61 0014 93840500 		mv	s1,a1
+  44:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c ****     //读数据和写数据用的同一个寄存器
+  45:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c ****     while ((readb(addr + REG_LSR) & LSR_THRE) == 0){
+  62              		.loc 1 45 5
+  63              	.LVL4:
+  64              	.L4:
+  46:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c ****         //正在读，轮询等待
+  47:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c ****     }
+  65              		.loc 1 47 5 discriminator 1
+  45:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c ****         //正在读，轮询等待
+  66              		.loc 1 45 47 discriminator 1
+  45:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c ****         //正在读，轮询等待
+  67              		.loc 1 45 13 is_stmt 0 discriminator 1
+  68 0018 13055400 		addi	a0,s0,5
+  69 001c 97000000 		call	readb
+  69      E7800000 
+GAS LISTING /tmp/ccY1ukPO.s 			page 3
+
+
+  70              	.LVL5:
+  45:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c ****         //正在读，轮询等待
+  71              		.loc 1 45 47 discriminator 1
+  72 0024 13750502 		andi	a0,a0,32
+  73 0028 E30805FE 		beq	a0,zero,.L4
+  48:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c ****     
+  49:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c ****     writeb(c, addr + REG_THR);
+  74              		.loc 1 49 5 is_stmt 1
+  75 002c 93050400 		mv	a1,s0
+  76 0030 13850400 		mv	a0,s1
+  77 0034 97000000 		call	writeb
+  77      E7800000 
+  78              	.LVL6:
+  50:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c ****     
+  51:/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.c **** }
+  79              		.loc 1 51 1 is_stmt 0
+  80 003c 83308101 		ld	ra,24(sp)
+  81              		.cfi_restore 1
+  82 0040 03340101 		ld	s0,16(sp)
+  83              		.cfi_restore 8
+  84              	.LVL7:
+  85 0044 83348100 		ld	s1,8(sp)
+  86              		.cfi_restore 9
+  87 0048 13010102 		addi	sp,sp,32
+  88              	.LCFI1:
+  89              		.cfi_def_cfa_offset 0
+  90 004c 67800000 		jr	ra
+  91              		.cfi_endproc
+  92              	.LFE2:
+  94              		.text
+  95              	.Letext0:
+  96              		.file 2 "/home/zz/riscv/riscv/riscv64-unknown-elf/include/machine/_default_types.h"
+  97              		.file 3 "/home/zz/riscv/riscv/riscv64-unknown-elf/include/sys/_stdint.h"
+GAS LISTING /tmp/ccY1ukPO.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 ns16550.c
+     /tmp/ccY1ukPO.s:13     .text.readb:0000000000000000 readb
+     /tmp/ccY1ukPO.s:16     .text.readb:0000000000000000 .L0 
+     /tmp/ccY1ukPO.s:18     .text.readb:0000000000000000 .L0 
+     /tmp/ccY1ukPO.s:19     .text.readb:0000000000000000 .L0 
+     /tmp/ccY1ukPO.s:20     .text.readb:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/ccY1ukPO.s:20     .text.readb:0000000000000000 .L0 
+     /tmp/ccY1ukPO.s:23     .text.readb:0000000000000008 .L0 
+     /tmp/ccY1ukPO.s:29     .text.writeb:0000000000000000 writeb
+     /tmp/ccY1ukPO.s:32     .text.writeb:0000000000000000 .L0 
+     /tmp/ccY1ukPO.s:34     .text.writeb:0000000000000000 .L0 
+     /tmp/ccY1ukPO.s:35     .text.writeb:0000000000000000 .L0 
+     /tmp/ccY1ukPO.s:36     .text.writeb:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/ccY1ukPO.s:36     .text.writeb:0000000000000000 .L0 
+     /tmp/ccY1ukPO.s:38     .text.writeb:0000000000000004 .L0 
+     /tmp/ccY1ukPO.s:39     .text.writeb:0000000000000008 .L0 
+     /tmp/ccY1ukPO.s:46     .text.ns16550_tx:0000000000000000 ns16550_tx
+     /tmp/ccY1ukPO.s:49     .text.ns16550_tx:0000000000000000 .L0 
+     /tmp/ccY1ukPO.s:51     .text.ns16550_tx:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/ccY1ukPO.s:51     .text.ns16550_tx:0000000000000000 .L0 
+     /tmp/ccY1ukPO.s:53     .text.ns16550_tx:0000000000000004 .L0 
+     /tmp/ccY1ukPO.s:57     .text.ns16550_tx:0000000000000010 .L0 
+     /tmp/ccY1ukPO.s:58     .text.ns16550_tx:0000000000000010 .L0 
+     /tmp/ccY1ukPO.s:59     .text.ns16550_tx:0000000000000010 .L0 
+     /tmp/ccY1ukPO.s:65     .text.ns16550_tx:0000000000000018 .L0 
+     /tmp/ccY1ukPO.s:66     .text.ns16550_tx:0000000000000018 .L0 
+     /tmp/ccY1ukPO.s:67     .text.ns16550_tx:0000000000000018 .L0 
+     /tmp/ccY1ukPO.s:68     .text.ns16550_tx:0000000000000018 .L0 
+     /tmp/ccY1ukPO.s:72     .text.ns16550_tx:0000000000000024 .L0 
+     /tmp/ccY1ukPO.s:75     .text.ns16550_tx:000000000000002c .L0 
+     /tmp/ccY1ukPO.s:80     .text.ns16550_tx:000000000000003c .L0 
+     /tmp/ccY1ukPO.s:81     .text.ns16550_tx:0000000000000040 .L0 
+     /tmp/ccY1ukPO.s:83     .text.ns16550_tx:0000000000000044 .L0 
+     /tmp/ccY1ukPO.s:86     .text.ns16550_tx:0000000000000048 .L0 
+     /tmp/ccY1ukPO.s:89     .text.ns16550_tx:000000000000004c .L0 
+     /tmp/ccY1ukPO.s:91     .text.ns16550_tx:0000000000000050 .L0 
+     /tmp/ccY1ukPO.s:26     .text.readb:0000000000000008 .L0 
+     /tmp/ccY1ukPO.s:42     .text.writeb:0000000000000008 .L0 
+     /tmp/ccY1ukPO.s:94     .text.ns16550_tx:0000000000000050 .L0 
+                     .debug_frame:0000000000000000 .L0 
+     /tmp/ccY1ukPO.s:64     .text.ns16550_tx:0000000000000018 .L4
+     /tmp/ccY1ukPO.s:276    .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+     /tmp/ccY1ukPO.s:633    .debug_str:00000000000000f4 .LASF14
+     /tmp/ccY1ukPO.s:627    .debug_str:000000000000009f .LASF15
+     /tmp/ccY1ukPO.s:617    .debug_str:0000000000000032 .LASF16
+     /tmp/ccY1ukPO.s:593    .debug_ranges:0000000000000000 .Ldebug_ranges0
+     /tmp/ccY1ukPO.s:603    .debug_line:0000000000000000 .Ldebug_line0
+     /tmp/ccY1ukPO.s:639    .debug_str:00000000000001d7 .LASF0
+     /tmp/ccY1ukPO.s:605    .debug_str:0000000000000000 .LASF7
+     /tmp/ccY1ukPO.s:619    .debug_str:0000000000000061 .LASF1
+     /tmp/ccY1ukPO.s:635    .debug_str:00000000000001c4 .LASF2
+     /tmp/ccY1ukPO.s:625    .debug_str:000000000000008c .LASF3
+     /tmp/ccY1ukPO.s:629    .debug_str:00000000000000df .LASF4
+     /tmp/ccY1ukPO.s:637    .debug_str:00000000000001ce .LASF5
+     /tmp/ccY1ukPO.s:623    .debug_str:000000000000007a .LASF6
+     /tmp/ccY1ukPO.s:609    .debug_str:0000000000000014 .LASF8
+GAS LISTING /tmp/ccY1ukPO.s 			page 5
+
+
+     /tmp/ccY1ukPO.s:631    .debug_str:00000000000000ec .LASF9
+     /tmp/ccY1ukPO.s:607    .debug_str:000000000000000a .LASF10
+     /tmp/ccY1ukPO.s:621    .debug_str:000000000000006f .LASF17
+     /tmp/ccY1ukPO.s:47     .text.ns16550_tx:0000000000000000 .LFB2
+     /tmp/ccY1ukPO.s:92     .text.ns16550_tx:0000000000000050 .LFE2
+     /tmp/ccY1ukPO.s:512    .debug_loc:0000000000000000 .LLST1
+     /tmp/ccY1ukPO.s:615    .debug_str:000000000000002d .LASF11
+     /tmp/ccY1ukPO.s:530    .debug_loc:000000000000004c .LLST2
+     /tmp/ccY1ukPO.s:548    .debug_loc:0000000000000098 .LLST3
+     /tmp/ccY1ukPO.s:70     .text.ns16550_tx:0000000000000024 .LVL5
+     /tmp/ccY1ukPO.s:78     .text.ns16550_tx:000000000000003c .LVL6
+     /tmp/ccY1ukPO.s:611    .debug_str:0000000000000020 .LASF12
+     /tmp/ccY1ukPO.s:30     .text.writeb:0000000000000000 .LFB1
+     /tmp/ccY1ukPO.s:40     .text.writeb:0000000000000008 .LFE1
+     /tmp/ccY1ukPO.s:613    .debug_str:0000000000000027 .LASF13
+     /tmp/ccY1ukPO.s:14     .text.readb:0000000000000000 .LFB0
+     /tmp/ccY1ukPO.s:24     .text.readb:0000000000000008 .LFE0
+     /tmp/ccY1ukPO.s:562    .debug_loc:00000000000000d1 .LLST0
+     /tmp/ccY1ukPO.s:52     .text.ns16550_tx:0000000000000004 .LCFI0
+     /tmp/ccY1ukPO.s:88     .text.ns16550_tx:000000000000004c .LCFI1
+     /tmp/ccY1ukPO.s:50     .text.ns16550_tx:0000000000000000 .LVL3
+     /tmp/ccY1ukPO.s:63     .text.ns16550_tx:0000000000000018 .LVL4
+     /tmp/ccY1ukPO.s:84     .text.ns16550_tx:0000000000000044 .LVL7
+     /tmp/ccY1ukPO.s:17     .text.readb:0000000000000000 .LVL0
+     /tmp/ccY1ukPO.s:21     .text.readb:0000000000000004 .LVL1
+     /tmp/ccY1ukPO.s:99     .debug_info:0000000000000000 .Ldebug_info0
+
+NO UNDEFINED SYMBOLS

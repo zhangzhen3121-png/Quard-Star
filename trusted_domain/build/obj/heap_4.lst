@@ -1,0 +1,2209 @@
+GAS LISTING /tmp/cc3lBiZl.s 			page 1
+
+
+   1              		.file	"heap_4.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.file 1 "/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c"
+  10              		.section	.text.prvHeapInit,"ax",@progbits
+  11              		.align	2
+  13              	prvHeapInit:
+  14              	.LFB6:
+   1:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** /*
+   2:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * FreeRTOS Kernel V10.4.3 LTS Patch 3
+   3:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+   4:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  *
+   5:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * Permission is hereby granted, free of charge, to any person obtaining a copy of
+   6:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * this software and associated documentation files (the "Software"), to deal in
+   7:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * the Software without restriction, including without limitation the rights to
+   8:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+   9:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * the Software, and to permit persons to whom the Software is furnished to do so,
+  10:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * subject to the following conditions:
+  11:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  *
+  12:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * The above copyright notice and this permission notice shall be included in all
+  13:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * copies or substantial portions of the Software.
+  14:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  *
+  15:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  16:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+  17:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+  18:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+  19:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+  20:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  21:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  *
+  22:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * https://www.FreeRTOS.org
+  23:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * https://github.com/FreeRTOS
+  24:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  *
+  25:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  */
+  26:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+  27:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** /*
+  28:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * A sample implementation of pvPortMalloc() and vPortFree() that combines
+  29:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * (coalescences) adjacent memory blocks as they are freed, and in so doing
+  30:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * limits memory fragmentation.
+  31:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  *
+  32:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * See heap_1.c, heap_2.c and heap_3.c for alternative implementations, and the
+  33:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * memory management pages of https://www.FreeRTOS.org for more information.
+  34:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  */
+  35:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** #include <stdlib.h>
+  36:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+  37:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** /* Defining MPU_WRAPPERS_INCLUDED_FROM_API_FILE prevents task.h from redefining
+  38:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * all the API functions to use the MPU wrappers.  That should only be done when
+  39:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * task.h is included from an application file. */
+  40:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** #define MPU_WRAPPERS_INCLUDED_FROM_API_FILE
+  41:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+  42:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** #include "FreeRTOS.h"
+  43:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** #include "task.h"
+  44:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+GAS LISTING /tmp/cc3lBiZl.s 			page 2
+
+
+  45:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** #undef MPU_WRAPPERS_INCLUDED_FROM_API_FILE
+  46:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+  47:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** #if ( configSUPPORT_DYNAMIC_ALLOCATION == 0 )
+  48:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     #error This file must not be used if configSUPPORT_DYNAMIC_ALLOCATION is 0
+  49:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** #endif
+  50:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+  51:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** /* Block sizes must not get too small. */
+  52:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** #define heapMINIMUM_BLOCK_SIZE    ( ( size_t ) ( xHeapStructSize << 1 ) )
+  53:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+  54:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** /* Assumes 8bit bytes! */
+  55:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** #define heapBITS_PER_BYTE         ( ( size_t ) 8 )
+  56:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+  57:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** /* Allocate the memory for the heap. */
+  58:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** #if ( configAPPLICATION_ALLOCATED_HEAP == 1 )
+  59:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+  60:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** /* The application writer has already defined the array used for the RTOS
+  61:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** * heap - probably so it can be placed in a special segment or address. */
+  62:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     extern uint8_t ucHeap[ configTOTAL_HEAP_SIZE ];
+  63:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** #else
+  64:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     PRIVILEGED_DATA static uint8_t ucHeap[ configTOTAL_HEAP_SIZE ];
+  65:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** #endif /* configAPPLICATION_ALLOCATED_HEAP */
+  66:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+  67:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** /* Define the linked list structure.  This is used to link free blocks in order
+  68:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * of their memory address. */
+  69:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** typedef struct A_BLOCK_LINK
+  70:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** {
+  71:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     struct A_BLOCK_LINK * pxNextFreeBlock; /*<< The next free block in the list. */
+  72:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     size_t xBlockSize;                     /*<< The size of the free block. */
+  73:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** } BlockLink_t;
+  74:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+  75:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** /*-----------------------------------------------------------*/
+  76:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+  77:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** /*
+  78:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * Inserts a block of memory that is being freed into the correct position in
+  79:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * the list of free memory blocks.  The block being freed will be merged with
+  80:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * the block in front it and/or the block behind it if the memory blocks are
+  81:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * adjacent to each other.
+  82:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  */
+  83:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** static void prvInsertBlockIntoFreeList( BlockLink_t * pxBlockToInsert ) PRIVILEGED_FUNCTION;
+  84:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+  85:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** /*
+  86:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * Called automatically to setup the required heap structures the first time
+  87:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * pvPortMalloc() is called.
+  88:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  */
+  89:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** static void prvHeapInit( void ) PRIVILEGED_FUNCTION;
+  90:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+  91:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** /*-----------------------------------------------------------*/
+  92:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+  93:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** /* The size of the structure placed at the beginning of each allocated memory
+  94:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * block must by correctly byte aligned. */
+  95:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** static const size_t xHeapStructSize = ( sizeof( BlockLink_t ) + ( ( size_t ) ( portBYTE_ALIGNMENT -
+  96:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+  97:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** /* Create a couple of list links to mark the start and end of the list. */
+  98:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** PRIVILEGED_DATA static BlockLink_t xStart, * pxEnd = NULL;
+  99:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 100:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** /* Keeps track of the number of calls to allocate and free memory as well as the
+ 101:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * number of free bytes remaining, but says nothing about fragmentation. */
+GAS LISTING /tmp/cc3lBiZl.s 			page 3
+
+
+ 102:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** PRIVILEGED_DATA static size_t xFreeBytesRemaining = 0U;
+ 103:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** PRIVILEGED_DATA static size_t xMinimumEverFreeBytesRemaining = 0U;
+ 104:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** PRIVILEGED_DATA static size_t xNumberOfSuccessfulAllocations = 0;
+ 105:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** PRIVILEGED_DATA static size_t xNumberOfSuccessfulFrees = 0;
+ 106:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 107:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** /* Gets set to the top bit of an size_t type.  When this bit in the xBlockSize
+ 108:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * member of an BlockLink_t structure is set then the block belongs to the
+ 109:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * application.  When the bit is free the block is still part of the free heap
+ 110:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****  * space. */
+ 111:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** PRIVILEGED_DATA static size_t xBlockAllocatedBit = 0;
+ 112:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 113:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** /*-----------------------------------------------------------*/
+ 114:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 115:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** void * pvPortMalloc( size_t xWantedSize )
+ 116:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** {
+ 117:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     BlockLink_t * pxBlock, * pxPreviousBlock, * pxNewBlockLink;
+ 118:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     void * pvReturn = NULL;
+ 119:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 120:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     vTaskSuspendAll();
+ 121:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     {
+ 122:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         /* If this is the first call to malloc then the heap will require
+ 123:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****          * initialisation to setup the list of free blocks. */
+ 124:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         if( pxEnd == NULL )
+ 125:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         {
+ 126:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             prvHeapInit();
+ 127:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         }
+ 128:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         else
+ 129:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         {
+ 130:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             mtCOVERAGE_TEST_MARKER();
+ 131:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         }
+ 132:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 133:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         /* Check the requested block size is not so large that the top bit is
+ 134:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****          * set.  The top bit of the block size member of the BlockLink_t structure
+ 135:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****          * is used to determine who owns the block - the application or the
+ 136:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****          * kernel, so it must be free. */
+ 137:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         if( ( xWantedSize & xBlockAllocatedBit ) == 0 )
+ 138:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         {
+ 139:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             /* The wanted size must be increased so it can contain a BlockLink_t
+ 140:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****              * structure in addition to the requested amount of bytes. */
+ 141:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             if( ( xWantedSize > 0 ) && 
+ 142:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 ( ( xWantedSize + xHeapStructSize ) >  xWantedSize ) ) /* Overflow check */
+ 143:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             {
+ 144:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 xWantedSize += xHeapStructSize;
+ 145:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 146:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 /* Ensure that blocks are always aligned. */
+ 147:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 if( ( xWantedSize & portBYTE_ALIGNMENT_MASK ) != 0x00 )
+ 148:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 {
+ 149:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     /* Byte alignment required. Check for overflow. */
+ 150:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     if( ( xWantedSize + ( portBYTE_ALIGNMENT - ( xWantedSize & portBYTE_ALIGNMENT_M
+ 151:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                             > xWantedSize )
+ 152:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     {
+ 153:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                         xWantedSize += ( portBYTE_ALIGNMENT - ( xWantedSize & portBYTE_ALIGNMENT_MA
+ 154:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                         configASSERT( ( xWantedSize & portBYTE_ALIGNMENT_MASK ) == 0 );
+ 155:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     }
+ 156:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     else
+ 157:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     {
+ 158:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                         xWantedSize = 0;
+GAS LISTING /tmp/cc3lBiZl.s 			page 4
+
+
+ 159:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     }  
+ 160:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 }
+ 161:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 else
+ 162:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 {
+ 163:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     mtCOVERAGE_TEST_MARKER();
+ 164:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 }
+ 165:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             } 
+ 166:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             else 
+ 167:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             {
+ 168:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 xWantedSize = 0;
+ 169:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             }
+ 170:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 171:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             if( ( xWantedSize > 0 ) && ( xWantedSize <= xFreeBytesRemaining ) )
+ 172:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             {
+ 173:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 /* Traverse the list from the start	(lowest address) block until
+ 174:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                  * one of adequate size is found. */
+ 175:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 pxPreviousBlock = &xStart;
+ 176:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 pxBlock = xStart.pxNextFreeBlock;
+ 177:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 178:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 while( ( pxBlock->xBlockSize < xWantedSize ) && ( pxBlock->pxNextFreeBlock != NULL 
+ 179:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 {
+ 180:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     pxPreviousBlock = pxBlock;
+ 181:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     pxBlock = pxBlock->pxNextFreeBlock;
+ 182:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 }
+ 183:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 184:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 /* If the end marker was reached then a block of adequate size
+ 185:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                  * was not found. */
+ 186:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 if( pxBlock != pxEnd )
+ 187:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 {
+ 188:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     /* Return the memory space pointed to - jumping over the
+ 189:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                      * BlockLink_t structure at its start. */
+ 190:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     pvReturn = ( void * ) ( ( ( uint8_t * ) pxPreviousBlock->pxNextFreeBlock ) + xH
+ 191:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 192:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     /* This block is being returned for use so must be taken out
+ 193:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                      * of the list of free blocks. */
+ 194:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     pxPreviousBlock->pxNextFreeBlock = pxBlock->pxNextFreeBlock;
+ 195:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 196:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     /* If the block is larger than required it can be split into
+ 197:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                      * two. */
+ 198:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     if( ( pxBlock->xBlockSize - xWantedSize ) > heapMINIMUM_BLOCK_SIZE )
+ 199:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     {
+ 200:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                         /* This block is to be split into two.  Create a new
+ 201:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                          * block following the number of bytes requested. The void
+ 202:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                          * cast is used to prevent byte alignment warnings from the
+ 203:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                          * compiler. */
+ 204:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                         pxNewBlockLink = ( void * ) ( ( ( uint8_t * ) pxBlock ) + xWantedSize );
+ 205:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                         configASSERT( ( ( ( size_t ) pxNewBlockLink ) & portBYTE_ALIGNMENT_MASK ) =
+ 206:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 207:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                         /* Calculate the sizes of two blocks split from the
+ 208:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                          * single block. */
+ 209:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                         pxNewBlockLink->xBlockSize = pxBlock->xBlockSize - xWantedSize;
+ 210:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                         pxBlock->xBlockSize = xWantedSize;
+ 211:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 212:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                         /* Insert the new block into the list of free blocks. */
+ 213:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                         prvInsertBlockIntoFreeList( pxNewBlockLink );
+ 214:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     }
+ 215:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     else
+GAS LISTING /tmp/cc3lBiZl.s 			page 5
+
+
+ 216:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     {
+ 217:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                         mtCOVERAGE_TEST_MARKER();
+ 218:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     }
+ 219:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 220:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     xFreeBytesRemaining -= pxBlock->xBlockSize;
+ 221:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 222:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     if( xFreeBytesRemaining < xMinimumEverFreeBytesRemaining )
+ 223:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     {
+ 224:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                         xMinimumEverFreeBytesRemaining = xFreeBytesRemaining;
+ 225:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     }
+ 226:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     else
+ 227:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     {
+ 228:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                         mtCOVERAGE_TEST_MARKER();
+ 229:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     }
+ 230:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 231:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     /* The block is being returned - it is allocated and owned
+ 232:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                      * by the application and has no "next" block. */
+ 233:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     pxBlock->xBlockSize |= xBlockAllocatedBit;
+ 234:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     pxBlock->pxNextFreeBlock = NULL;
+ 235:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     xNumberOfSuccessfulAllocations++;
+ 236:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 }
+ 237:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 else
+ 238:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 {
+ 239:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     mtCOVERAGE_TEST_MARKER();
+ 240:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 }
+ 241:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             }
+ 242:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             else
+ 243:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             {
+ 244:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 mtCOVERAGE_TEST_MARKER();
+ 245:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             }
+ 246:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         }
+ 247:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         else
+ 248:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         {
+ 249:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             mtCOVERAGE_TEST_MARKER();
+ 250:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         }
+ 251:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 252:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         traceMALLOC( pvReturn, xWantedSize );
+ 253:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     }
+ 254:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     ( void ) xTaskResumeAll();
+ 255:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 256:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     #if ( configUSE_MALLOC_FAILED_HOOK == 1 )
+ 257:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         {
+ 258:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             if( pvReturn == NULL )
+ 259:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             {
+ 260:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 extern void vApplicationMallocFailedHook( void );
+ 261:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 vApplicationMallocFailedHook();
+ 262:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             }
+ 263:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             else
+ 264:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             {
+ 265:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 mtCOVERAGE_TEST_MARKER();
+ 266:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             }
+ 267:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         }
+ 268:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     #endif /* if ( configUSE_MALLOC_FAILED_HOOK == 1 ) */
+ 269:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 270:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     configASSERT( ( ( ( size_t ) pvReturn ) & ( size_t ) portBYTE_ALIGNMENT_MASK ) == 0 );
+ 271:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     return pvReturn;
+ 272:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** }
+GAS LISTING /tmp/cc3lBiZl.s 			page 6
+
+
+ 273:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** /*-----------------------------------------------------------*/
+ 274:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 275:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** void vPortFree( void * pv )
+ 276:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** {
+ 277:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     uint8_t * puc = ( uint8_t * ) pv;
+ 278:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     BlockLink_t * pxLink;
+ 279:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 280:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     if( pv != NULL )
+ 281:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     {
+ 282:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         /* The memory being freed will have an BlockLink_t structure immediately
+ 283:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****          * before it. */
+ 284:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         puc -= xHeapStructSize;
+ 285:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 286:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         /* This casting is to keep the compiler from issuing warnings. */
+ 287:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         pxLink = ( void * ) puc;
+ 288:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 289:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         /* Check the block is actually allocated. */
+ 290:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         configASSERT( ( pxLink->xBlockSize & xBlockAllocatedBit ) != 0 );
+ 291:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         configASSERT( pxLink->pxNextFreeBlock == NULL );
+ 292:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 293:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         if( ( pxLink->xBlockSize & xBlockAllocatedBit ) != 0 )
+ 294:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         {
+ 295:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             if( pxLink->pxNextFreeBlock == NULL )
+ 296:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             {
+ 297:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 /* The block is being returned to the heap - it is no longer
+ 298:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                  * allocated. */
+ 299:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 pxLink->xBlockSize &= ~xBlockAllocatedBit;
+ 300:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 301:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 vTaskSuspendAll();
+ 302:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 {
+ 303:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     /* Add this block to the list of free blocks. */
+ 304:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     xFreeBytesRemaining += pxLink->xBlockSize;
+ 305:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     traceFREE( pv, pxLink->xBlockSize );
+ 306:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     prvInsertBlockIntoFreeList( ( ( BlockLink_t * ) pxLink ) );
+ 307:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     xNumberOfSuccessfulFrees++;
+ 308:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 }
+ 309:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 ( void ) xTaskResumeAll();
+ 310:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             }
+ 311:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             else
+ 312:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             {
+ 313:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 mtCOVERAGE_TEST_MARKER();
+ 314:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             }
+ 315:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         }
+ 316:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         else
+ 317:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         {
+ 318:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             mtCOVERAGE_TEST_MARKER();
+ 319:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         }
+ 320:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     }
+ 321:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** }
+ 322:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** /*-----------------------------------------------------------*/
+ 323:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 324:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** size_t xPortGetFreeHeapSize( void )
+ 325:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** {
+ 326:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     return xFreeBytesRemaining;
+ 327:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** }
+ 328:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** /*-----------------------------------------------------------*/
+ 329:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+GAS LISTING /tmp/cc3lBiZl.s 			page 7
+
+
+ 330:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** size_t xPortGetMinimumEverFreeHeapSize( void )
+ 331:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** {
+ 332:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     return xMinimumEverFreeBytesRemaining;
+ 333:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** }
+ 334:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** /*-----------------------------------------------------------*/
+ 335:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 336:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** void vPortInitialiseBlocks( void )
+ 337:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** {
+ 338:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     /* This just exists to keep the linker quiet. */
+ 339:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** }
+ 340:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** /*-----------------------------------------------------------*/
+ 341:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 342:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** static void prvHeapInit( void ) /* PRIVILEGED_FUNCTION */
+ 343:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** {
+  15              		.loc 1 343 1
+  16              		.cfi_startproc
+ 344:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     BlockLink_t * pxFirstFreeBlock;
+  17              		.loc 1 344 5
+ 345:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     uint8_t * pucAlignedHeap;
+  18              		.loc 1 345 5
+ 346:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     size_t uxAddress;
+  19              		.loc 1 346 5
+ 347:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     size_t xTotalHeapSize = configTOTAL_HEAP_SIZE;
+  20              		.loc 1 347 5
+  21              	.LVL0:
+ 348:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 349:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     /* Ensure the heap starts on a correctly aligned boundary. */
+ 350:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     uxAddress = ( size_t ) ucHeap;
+  22              		.loc 1 350 5
+  23              		.loc 1 350 15 is_stmt 0
+  24 0000 17070000 		lla	a4,ucHeap
+  24      13070700 
+  25              	.LVL1:
+ 351:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 352:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     if( ( uxAddress & portBYTE_ALIGNMENT_MASK ) != 0 )
+  26              		.loc 1 352 5 is_stmt 1
+  27              		.loc 1 352 21 is_stmt 0
+  28 0008 9377F700 		andi	a5,a4,15
+  29              		.loc 1 352 7
+  30 000c 63800708 		beq	a5,zero,.L3
+ 353:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     {
+ 354:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         uxAddress += ( portBYTE_ALIGNMENT - 1 );
+  31              		.loc 1 354 9 is_stmt 1
+  32              		.loc 1 354 19 is_stmt 0
+  33 0010 97060000 		lla	a3,ucHeap+15
+  33      93860600 
+  34              	.LVL2:
+ 355:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         uxAddress &= ~( ( size_t ) portBYTE_ALIGNMENT_MASK );
+  35              		.loc 1 355 9 is_stmt 1
+  36              		.loc 1 355 19 is_stmt 0
+  37 0018 93F606FF 		andi	a3,a3,-16
+  38              	.LVL3:
+ 356:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         xTotalHeapSize -= uxAddress - ( size_t ) ucHeap;
+  39              		.loc 1 356 9 is_stmt 1
+  40              		.loc 1 356 24 is_stmt 0
+  41 001c B7070100 		li	a5,65536
+  42 0020 938747BF 		addi	a5,a5,-1036
+GAS LISTING /tmp/cc3lBiZl.s 			page 8
+
+
+  43 0024 B387D740 		sub	a5,a5,a3
+  44 0028 B387E700 		add	a5,a5,a4
+  45              	.LVL4:
+ 355:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         uxAddress &= ~( ( size_t ) portBYTE_ALIGNMENT_MASK );
+  46              		.loc 1 355 19
+  47 002c 13870600 		mv	a4,a3
+  48              	.LVL5:
+  49              	.L2:
+ 357:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     }
+ 358:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 359:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     pucAlignedHeap = ( uint8_t * ) uxAddress;
+  50              		.loc 1 359 5 is_stmt 1
+ 360:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 361:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     /* xStart is used to hold a pointer to the first item in the list of free
+ 362:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****      * blocks.  The void cast is used to prevent compiler warnings. */
+ 363:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     xStart.pxNextFreeBlock = ( void * ) pucAlignedHeap;
+  51              		.loc 1 363 5
+  52              		.loc 1 363 28 is_stmt 0
+  53 0030 97060000 		lla	a3,xStart
+  53      93860600 
+  54 0038 23B0E600 		sd	a4,0(a3)
+ 364:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     xStart.xBlockSize = ( size_t ) 0;
+  55              		.loc 1 364 5 is_stmt 1
+  56              		.loc 1 364 23 is_stmt 0
+  57 003c 23B40600 		sd	zero,8(a3)
+ 365:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 366:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     /* pxEnd is used to mark the end of the list of free blocks and is inserted
+ 367:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****      * at the end of the heap space. */
+ 368:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     uxAddress = ( ( size_t ) pucAlignedHeap ) + xTotalHeapSize;
+  58              		.loc 1 368 5 is_stmt 1
+  59              		.loc 1 368 15 is_stmt 0
+  60 0040 B307F700 		add	a5,a4,a5
+  61              	.LVL6:
+ 369:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     uxAddress -= xHeapStructSize;
+  62              		.loc 1 369 5 is_stmt 1
+  63              		.loc 1 369 15 is_stmt 0
+  64 0044 938707FF 		addi	a5,a5,-16
+  65              	.LVL7:
+ 370:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     uxAddress &= ~( ( size_t ) portBYTE_ALIGNMENT_MASK );
+  66              		.loc 1 370 5 is_stmt 1
+  67              		.loc 1 370 15 is_stmt 0
+  68 0048 93F707FF 		andi	a5,a5,-16
+  69              	.LVL8:
+ 371:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     pxEnd = ( void * ) uxAddress;
+  70              		.loc 1 371 5 is_stmt 1
+  71              		.loc 1 371 11 is_stmt 0
+  72 004c 97060000 		sd	a5,pxEnd,a3
+  72      23B0F600 
+ 372:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     pxEnd->xBlockSize = 0;
+  73              		.loc 1 372 5 is_stmt 1
+  74              		.loc 1 372 23 is_stmt 0
+  75 0054 23B40700 		sd	zero,8(a5)
+ 373:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     pxEnd->pxNextFreeBlock = NULL;
+  76              		.loc 1 373 5 is_stmt 1
+  77              		.loc 1 373 28 is_stmt 0
+  78 0058 23B00700 		sd	zero,0(a5)
+ 374:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+GAS LISTING /tmp/cc3lBiZl.s 			page 9
+
+
+ 375:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     /* To start with there is a single free block that is sized to take up the
+ 376:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****      * entire heap space, minus the space taken by pxEnd. */
+ 377:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     pxFirstFreeBlock = ( void * ) pucAlignedHeap;
+  79              		.loc 1 377 5 is_stmt 1
+  80              	.LVL9:
+ 378:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     pxFirstFreeBlock->xBlockSize = uxAddress - ( size_t ) pxFirstFreeBlock;
+  81              		.loc 1 378 5
+  82              		.loc 1 378 46 is_stmt 0
+  83 005c B386E740 		sub	a3,a5,a4
+  84              		.loc 1 378 34
+  85 0060 2334D700 		sd	a3,8(a4)
+ 379:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     pxFirstFreeBlock->pxNextFreeBlock = pxEnd;
+  86              		.loc 1 379 5 is_stmt 1
+  87              		.loc 1 379 39 is_stmt 0
+  88 0064 2330F700 		sd	a5,0(a4)
+ 380:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 381:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     /* Only one block exists - and it covers the entire usable heap space. */
+ 382:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     xMinimumEverFreeBytesRemaining = pxFirstFreeBlock->xBlockSize;
+  89              		.loc 1 382 5 is_stmt 1
+  90              		.loc 1 382 36 is_stmt 0
+  91 0068 97070000 		sd	a3,xMinimumEverFreeBytesRemaining,a5
+  91      23B0D700 
+  92              	.LVL10:
+ 383:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     xFreeBytesRemaining = pxFirstFreeBlock->xBlockSize;
+  93              		.loc 1 383 5 is_stmt 1
+  94              		.loc 1 383 25 is_stmt 0
+  95 0070 97070000 		sd	a3,xFreeBytesRemaining,a5
+  95      23B0D700 
+ 384:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 385:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     /* Work out the position of the top bit in a size_t variable. */
+ 386:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     xBlockAllocatedBit = ( ( size_t ) 1 ) << ( ( sizeof( size_t ) * heapBITS_PER_BYTE ) - 1 );
+  96              		.loc 1 386 5 is_stmt 1
+  97              		.loc 1 386 24 is_stmt 0
+  98 0078 9307F0FF 		li	a5,-1
+  99 007c 9397F703 		slli	a5,a5,63
+ 100 0080 17070000 		sd	a5,xBlockAllocatedBit,a4
+ 100      2330F700 
+ 101              	.LVL11:
+ 387:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** }
+ 102              		.loc 1 387 1
+ 103 0088 67800000 		ret
+ 104              	.LVL12:
+ 105              	.L3:
+ 347:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 106              		.loc 1 347 12
+ 107 008c B7070100 		li	a5,65536
+ 108 0090 938747BF 		addi	a5,a5,-1036
+ 109 0094 6FF0DFF9 		j	.L2
+ 110              		.cfi_endproc
+ 111              	.LFE6:
+ 113              		.section	.text.prvInsertBlockIntoFreeList,"ax",@progbits
+ 114              		.align	2
+ 116              	prvInsertBlockIntoFreeList:
+ 117              	.LFB7:
+ 388:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** /*-----------------------------------------------------------*/
+ 389:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 390:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** static void prvInsertBlockIntoFreeList( BlockLink_t * pxBlockToInsert ) /* PRIVILEGED_FUNCTION */
+GAS LISTING /tmp/cc3lBiZl.s 			page 10
+
+
+ 391:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** {
+ 118              		.loc 1 391 1 is_stmt 1
+ 119              		.cfi_startproc
+ 120              	.LVL13:
+ 392:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     BlockLink_t * pxIterator;
+ 121              		.loc 1 392 5
+ 393:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     uint8_t * puc;
+ 122              		.loc 1 393 5
+ 394:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 395:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     /* Iterate through the list until a block is found that has a higher address
+ 396:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****      * than the block being inserted. */
+ 397:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     for( pxIterator = &xStart; pxIterator->pxNextFreeBlock < pxBlockToInsert; pxIterator = pxIterat
+ 123              		.loc 1 397 5
+ 124              		.loc 1 397 21 is_stmt 0
+ 125 0000 97070000 		lla	a5,xStart
+ 125      93870700 
+ 126              	.LVL14:
+ 127              	.L5:
+ 128              		.loc 1 397 60 is_stmt 1 discriminator 1
+ 129 0008 13870700 		mv	a4,a5
+ 130              		.loc 1 397 42 is_stmt 0 discriminator 1
+ 131 000c 83B70700 		ld	a5,0(a5)
+ 132              	.LVL15:
+ 133              		.loc 1 397 60 discriminator 1
+ 134 0010 E3ECA7FE 		bltu	a5,a0,.L5
+ 398:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     {
+ 399:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         /* Nothing to do here, just iterate to the right position. */
+ 400:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     }
+ 401:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 402:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     /* Do the block being inserted, and the block it is being inserted after
+ 403:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****      * make a contiguous block of memory? */
+ 404:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     puc = ( uint8_t * ) pxIterator;
+ 135              		.loc 1 404 5 is_stmt 1
+ 136              	.LVL16:
+ 405:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 406:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     if( ( puc + pxIterator->xBlockSize ) == ( uint8_t * ) pxBlockToInsert )
+ 137              		.loc 1 406 5
+ 138              		.loc 1 406 27 is_stmt 0
+ 139 0014 83368700 		ld	a3,8(a4)
+ 140              		.loc 1 406 15
+ 141 0018 3306D700 		add	a2,a4,a3
+ 142              		.loc 1 406 7
+ 143 001c 6300A602 		beq	a2,a0,.L11
+ 144              	.L6:
+ 407:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     {
+ 408:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         pxIterator->xBlockSize += pxBlockToInsert->xBlockSize;
+ 409:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         pxBlockToInsert = pxIterator;
+ 410:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     }
+ 411:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     else
+ 412:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     {
+ 413:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         mtCOVERAGE_TEST_MARKER();
+ 145              		.loc 1 413 33 is_stmt 1
+ 414:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     }
+ 415:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 416:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     /* Do the block being inserted, and the block it is being inserted before
+ 417:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****      * make a contiguous block of memory? */
+ 418:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     puc = ( uint8_t * ) pxBlockToInsert;
+GAS LISTING /tmp/cc3lBiZl.s 			page 11
+
+
+ 146              		.loc 1 418 5
+ 147              	.LVL17:
+ 419:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 420:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     if( ( puc + pxBlockToInsert->xBlockSize ) == ( uint8_t * ) pxIterator->pxNextFreeBlock )
+ 148              		.loc 1 420 5
+ 149              		.loc 1 420 32 is_stmt 0
+ 150 0020 83368500 		ld	a3,8(a0)
+ 151              		.loc 1 420 15
+ 152 0024 3306D500 		add	a2,a0,a3
+ 153              		.loc 1 420 7
+ 154 0028 6384C702 		beq	a5,a2,.L12
+ 421:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     {
+ 422:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         if( pxIterator->pxNextFreeBlock != pxEnd )
+ 423:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         {
+ 424:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             /* Form one big block from the two blocks. */
+ 425:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             pxBlockToInsert->xBlockSize += pxIterator->pxNextFreeBlock->xBlockSize;
+ 426:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             pxBlockToInsert->pxNextFreeBlock = pxIterator->pxNextFreeBlock->pxNextFreeBlock;
+ 427:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         }
+ 428:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         else
+ 429:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         {
+ 430:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             pxBlockToInsert->pxNextFreeBlock = pxEnd;
+ 431:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         }
+ 432:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     }
+ 433:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     else
+ 434:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     {
+ 435:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         pxBlockToInsert->pxNextFreeBlock = pxIterator->pxNextFreeBlock;
+ 155              		.loc 1 435 9 is_stmt 1
+ 156              		.loc 1 435 42 is_stmt 0
+ 157 002c 2330F500 		sd	a5,0(a0)
+ 158              	.L9:
+ 436:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     }
+ 437:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 438:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     /* If the block being inserted plugged a gab, so was merged with the block
+ 439:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****      * before and the block after, then it's pxNextFreeBlock pointer will have
+ 440:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****      * already been set, and should not be set here as that would make it point
+ 441:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****      * to itself. */
+ 442:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     if( pxIterator != pxBlockToInsert )
+ 159              		.loc 1 442 5 is_stmt 1
+ 160              		.loc 1 442 7 is_stmt 0
+ 161 0030 6304E500 		beq	a0,a4,.L4
+ 443:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     {
+ 444:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         pxIterator->pxNextFreeBlock = pxBlockToInsert;
+ 162              		.loc 1 444 9 is_stmt 1
+ 163              		.loc 1 444 37 is_stmt 0
+ 164 0034 2330A700 		sd	a0,0(a4)
+ 445:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     }
+ 446:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     else
+ 447:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     {
+ 448:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         mtCOVERAGE_TEST_MARKER();
+ 165              		.loc 1 448 33 is_stmt 1
+ 166              	.L4:
+ 449:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     }
+ 450:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** }
+ 167              		.loc 1 450 1 is_stmt 0
+ 168 0038 67800000 		ret
+ 169              	.LVL18:
+ 170              	.L11:
+GAS LISTING /tmp/cc3lBiZl.s 			page 12
+
+
+ 408:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         pxBlockToInsert = pxIterator;
+ 171              		.loc 1 408 9 is_stmt 1
+ 408:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         pxBlockToInsert = pxIterator;
+ 172              		.loc 1 408 50 is_stmt 0
+ 173 003c 03368500 		ld	a2,8(a0)
+ 408:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         pxBlockToInsert = pxIterator;
+ 174              		.loc 1 408 32
+ 175 0040 B386C600 		add	a3,a3,a2
+ 176 0044 2334D700 		sd	a3,8(a4)
+ 409:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     }
+ 177              		.loc 1 409 9 is_stmt 1
+ 178              	.LVL19:
+ 409:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     }
+ 179              		.loc 1 409 25 is_stmt 0
+ 180 0048 13050700 		mv	a0,a4
+ 181 004c 6FF05FFD 		j	.L6
+ 182              	.LVL20:
+ 183              	.L12:
+ 422:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         {
+ 184              		.loc 1 422 9 is_stmt 1
+ 422:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         {
+ 185              		.loc 1 422 41 is_stmt 0
+ 186 0050 17060000 		ld	a2,pxEnd
+ 186      03360600 
+ 422:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         {
+ 187              		.loc 1 422 11
+ 188 0058 6380C702 		beq	a5,a2,.L8
+ 425:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             pxBlockToInsert->pxNextFreeBlock = pxIterator->pxNextFreeBlock->pxNextFreeBlock;
+ 189              		.loc 1 425 13 is_stmt 1
+ 425:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             pxBlockToInsert->pxNextFreeBlock = pxIterator->pxNextFreeBlock->pxNextFreeBlock;
+ 190              		.loc 1 425 71 is_stmt 0
+ 191 005c 83B78700 		ld	a5,8(a5)
+ 425:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             pxBlockToInsert->pxNextFreeBlock = pxIterator->pxNextFreeBlock->pxNextFreeBlock;
+ 192              		.loc 1 425 41
+ 193 0060 B386F600 		add	a3,a3,a5
+ 194 0064 2334D500 		sd	a3,8(a0)
+ 426:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         }
+ 195              		.loc 1 426 13 is_stmt 1
+ 426:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         }
+ 196              		.loc 1 426 58 is_stmt 0
+ 197 0068 83370700 		ld	a5,0(a4)
+ 426:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         }
+ 198              		.loc 1 426 75
+ 199 006c 83B70700 		ld	a5,0(a5)
+ 426:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         }
+ 200              		.loc 1 426 46
+ 201 0070 2330F500 		sd	a5,0(a0)
+ 202 0074 6FF0DFFB 		j	.L9
+ 203              	.L8:
+ 430:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         }
+ 204              		.loc 1 430 13 is_stmt 1
+ 430:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         }
+ 205              		.loc 1 430 46 is_stmt 0
+ 206 0078 2330C500 		sd	a2,0(a0)
+ 207 007c 6FF05FFB 		j	.L9
+ 208              		.cfi_endproc
+ 209              	.LFE7:
+GAS LISTING /tmp/cc3lBiZl.s 			page 13
+
+
+ 211              		.section	.text.pvPortMalloc,"ax",@progbits
+ 212              		.align	2
+ 213              		.globl	pvPortMalloc
+ 215              	pvPortMalloc:
+ 216              	.LFB1:
+ 116:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     BlockLink_t * pxBlock, * pxPreviousBlock, * pxNewBlockLink;
+ 217              		.loc 1 116 1 is_stmt 1
+ 218              		.cfi_startproc
+ 219              	.LVL21:
+ 220 0000 130101FE 		addi	sp,sp,-32
+ 221              	.LCFI0:
+ 222              		.cfi_def_cfa_offset 32
+ 223 0004 233C1100 		sd	ra,24(sp)
+ 224 0008 23388100 		sd	s0,16(sp)
+ 225 000c 23349100 		sd	s1,8(sp)
+ 226              		.cfi_offset 1, -8
+ 227              		.cfi_offset 8, -16
+ 228              		.cfi_offset 9, -24
+ 229 0010 13040500 		mv	s0,a0
+ 117:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     void * pvReturn = NULL;
+ 230              		.loc 1 117 5
+ 118:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 231              		.loc 1 118 5
+ 232              	.LVL22:
+ 120:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     {
+ 233              		.loc 1 120 5
+ 234 0014 97000000 		call	vTaskSuspendAll
+ 234      E7800000 
+ 235              	.LVL23:
+ 124:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         {
+ 236              		.loc 1 124 9
+ 124:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         {
+ 237              		.loc 1 124 19 is_stmt 0
+ 238 001c 97070000 		ld	a5,pxEnd
+ 238      83B70700 
+ 124:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         {
+ 239              		.loc 1 124 11
+ 240 0024 638E0704 		beq	a5,zero,.L29
+ 241              	.L14:
+ 130:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         }
+ 242              		.loc 1 130 37 is_stmt 1
+ 137:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         {
+ 243              		.loc 1 137 9
+ 137:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         {
+ 244              		.loc 1 137 27 is_stmt 0
+ 245 0028 97070000 		ld	a5,xBlockAllocatedBit
+ 245      83B70700 
+ 246 0030 B377F400 		and	a5,s0,a5
+ 137:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         {
+ 247              		.loc 1 137 11
+ 248 0034 63960710 		bne	a5,zero,.L21
+ 141:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 ( ( xWantedSize + xHeapStructSize ) >  xWantedSize ) ) /* Overflow check */
+ 249              		.loc 1 141 13 is_stmt 1
+ 141:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 ( ( xWantedSize + xHeapStructSize ) >  xWantedSize ) ) /* Overflow check */
+ 250              		.loc 1 141 37 is_stmt 0
+ 251 0038 9307F4FF 		addi	a5,s0,-1
+ 141:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 ( ( xWantedSize + xHeapStructSize ) >  xWantedSize ) ) /* Overflow check */
+GAS LISTING /tmp/cc3lBiZl.s 			page 14
+
+
+ 252              		.loc 1 141 15
+ 253 003c 1307E0FE 		li	a4,-18
+ 254 0040 6362F712 		bgtu	a5,a4,.L22
+ 144:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 255              		.loc 1 144 17 is_stmt 1
+ 144:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 256              		.loc 1 144 29 is_stmt 0
+ 257 0044 13070401 		addi	a4,s0,16
+ 258              	.LVL24:
+ 147:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 {
+ 259              		.loc 1 147 17 is_stmt 1
+ 147:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 {
+ 260              		.loc 1 147 35 is_stmt 0
+ 261 0048 1374F400 		andi	s0,s0,15
+ 147:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 {
+ 262              		.loc 1 147 19
+ 263 004c 630A0400 		beq	s0,zero,.L16
+ 150:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                             > xWantedSize )
+ 264              		.loc 1 150 21 is_stmt 1
+ 150:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                             > xWantedSize )
+ 265              		.loc 1 150 39 is_stmt 0
+ 266 0050 937707FF 		andi	a5,a4,-16
+ 267 0054 93870701 		addi	a5,a5,16
+ 150:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                             > xWantedSize )
+ 268              		.loc 1 150 23
+ 269 0058 637AF710 		bleu	a5,a4,.L23
+ 153:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                         configASSERT( ( xWantedSize & portBYTE_ALIGNMENT_MASK ) == 0 );
+ 270              		.loc 1 153 37
+ 271 005c 13870700 		mv	a4,a5
+ 272              	.LVL25:
+ 273              	.L16:
+ 171:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             {
+ 274              		.loc 1 171 13 is_stmt 1
+ 171:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             {
+ 275              		.loc 1 171 15 is_stmt 0
+ 276 0060 630A0710 		beq	a4,zero,.L24
+ 171:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             {
+ 277              		.loc 1 171 54 discriminator 1
+ 278 0064 97070000 		ld	a5,xFreeBytesRemaining
+ 278      83B70700 
+ 171:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             {
+ 279              		.loc 1 171 37 discriminator 1
+ 280 006c 63E8E710 		bltu	a5,a4,.L25
+ 175:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 pxBlock = xStart.pxNextFreeBlock;
+ 281              		.loc 1 175 17 is_stmt 1
+ 282              	.LVL26:
+ 176:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 283              		.loc 1 176 17
+ 176:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 284              		.loc 1 176 25 is_stmt 0
+ 285 0070 97060000 		lla	a3,xStart
+ 285      93860600 
+ 286 0078 03B40600 		ld	s0,0(a3)
+ 287              	.LVL27:
+ 178:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 {
+ 288              		.loc 1 178 17 is_stmt 1
+ 178:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 {
+GAS LISTING /tmp/cc3lBiZl.s 			page 15
+
+
+ 289              		.loc 1 178 22 is_stmt 0
+ 290 007c 6F008001 		j	.L18
+ 291              	.LVL28:
+ 292              	.L29:
+ 126:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         }
+ 293              		.loc 1 126 13 is_stmt 1
+ 294 0080 97000000 		call	prvHeapInit
+ 294      E7800000 
+ 295              	.LVL29:
+ 296 0088 6FF01FFA 		j	.L14
+ 297              	.LVL30:
+ 298              	.L26:
+ 180:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     pxBlock = pxBlock->pxNextFreeBlock;
+ 299              		.loc 1 180 37 is_stmt 0
+ 300 008c 93060400 		mv	a3,s0
+ 301              	.LVL31:
+ 181:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 }
+ 302              		.loc 1 181 29
+ 303 0090 13840700 		mv	s0,a5
+ 304              	.LVL32:
+ 305              	.L18:
+ 178:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 {
+ 306              		.loc 1 178 62 is_stmt 1
+ 178:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 {
+ 307              		.loc 1 178 33 is_stmt 0
+ 308 0094 83378400 		ld	a5,8(s0)
+ 178:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 {
+ 309              		.loc 1 178 62
+ 310 0098 63F6E700 		bgeu	a5,a4,.L17
+ 178:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 {
+ 311              		.loc 1 178 74 discriminator 1
+ 312 009c 83370400 		ld	a5,0(s0)
+ 178:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 {
+ 313              		.loc 1 178 62 discriminator 1
+ 314 00a0 E39607FE 		bne	a5,zero,.L26
+ 315              	.L17:
+ 186:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 {
+ 316              		.loc 1 186 17 is_stmt 1
+ 186:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 {
+ 317              		.loc 1 186 29 is_stmt 0
+ 318 00a4 97070000 		ld	a5,pxEnd
+ 318      83B70700 
+ 186:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 {
+ 319              		.loc 1 186 19
+ 320 00ac 638C870C 		beq	a5,s0,.L27
+ 190:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 321              		.loc 1 190 21 is_stmt 1
+ 190:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 322              		.loc 1 190 76 is_stmt 0
+ 323 00b0 83B40600 		ld	s1,0(a3)
+ 190:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 324              		.loc 1 190 30
+ 325 00b4 93840401 		addi	s1,s1,16
+ 326              	.LVL33:
+ 194:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 327              		.loc 1 194 21 is_stmt 1
+ 194:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+GAS LISTING /tmp/cc3lBiZl.s 			page 16
+
+
+ 328              		.loc 1 194 63 is_stmt 0
+ 329 00b8 83370400 		ld	a5,0(s0)
+ 194:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 330              		.loc 1 194 54
+ 331 00bc 23B0F600 		sd	a5,0(a3)
+ 198:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     {
+ 332              		.loc 1 198 21 is_stmt 1
+ 198:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     {
+ 333              		.loc 1 198 34 is_stmt 0
+ 334 00c0 83378400 		ld	a5,8(s0)
+ 198:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     {
+ 335              		.loc 1 198 47
+ 336 00c4 B387E740 		sub	a5,a5,a4
+ 198:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     {
+ 337              		.loc 1 198 23
+ 338 00c8 93060002 		li	a3,32
+ 339              	.LVL34:
+ 340 00cc 63EEF604 		bgtu	a5,a3,.L30
+ 341              	.LVL35:
+ 342              	.L19:
+ 217:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     }
+ 343              		.loc 1 217 49 is_stmt 1
+ 220:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 344              		.loc 1 220 21
+ 220:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 345              		.loc 1 220 51 is_stmt 0
+ 346 00d0 03378400 		ld	a4,8(s0)
+ 220:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 347              		.loc 1 220 41
+ 348 00d4 97060000 		lla	a3,xFreeBytesRemaining
+ 348      93860600 
+ 349 00dc 83B70600 		ld	a5,0(a3)
+ 350 00e0 B387E740 		sub	a5,a5,a4
+ 351 00e4 23B0F600 		sd	a5,0(a3)
+ 222:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     {
+ 352              		.loc 1 222 21 is_stmt 1
+ 222:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     {
+ 353              		.loc 1 222 45 is_stmt 0
+ 354 00e8 97060000 		ld	a3,xMinimumEverFreeBytesRemaining
+ 354      83B60600 
+ 222:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     {
+ 355              		.loc 1 222 23
+ 356 00f0 63F6D700 		bgeu	a5,a3,.L20
+ 224:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     }
+ 357              		.loc 1 224 25 is_stmt 1
+ 224:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     }
+ 358              		.loc 1 224 56 is_stmt 0
+ 359 00f4 97060000 		sd	a5,xMinimumEverFreeBytesRemaining,a3
+ 359      23B0F600 
+ 360              	.L20:
+ 228:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     }
+ 361              		.loc 1 228 49 is_stmt 1
+ 233:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     pxBlock->pxNextFreeBlock = NULL;
+ 362              		.loc 1 233 21
+ 233:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     pxBlock->pxNextFreeBlock = NULL;
+ 363              		.loc 1 233 41 is_stmt 0
+ 364 00fc 97070000 		ld	a5,xBlockAllocatedBit
+GAS LISTING /tmp/cc3lBiZl.s 			page 17
+
+
+ 364      83B70700 
+ 365 0104 B3E7E700 		or	a5,a5,a4
+ 366 0108 2334F400 		sd	a5,8(s0)
+ 234:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     xNumberOfSuccessfulAllocations++;
+ 367              		.loc 1 234 21 is_stmt 1
+ 234:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     xNumberOfSuccessfulAllocations++;
+ 368              		.loc 1 234 46 is_stmt 0
+ 369 010c 23300400 		sd	zero,0(s0)
+ 235:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 }
+ 370              		.loc 1 235 21 is_stmt 1
+ 235:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 }
+ 371              		.loc 1 235 51 is_stmt 0
+ 372 0110 17070000 		lla	a4,xNumberOfSuccessfulAllocations
+ 372      13070700 
+ 373 0118 83370700 		ld	a5,0(a4)
+ 374 011c 93871700 		addi	a5,a5,1
+ 375 0120 2330F700 		sd	a5,0(a4)
+ 376 0124 6F000002 		j	.L15
+ 377              	.LVL36:
+ 378              	.L30:
+ 204:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                         configASSERT( ( ( ( size_t ) pxNewBlockLink ) & portBYTE_ALIGNMENT_MASK ) =
+ 379              		.loc 1 204 25 is_stmt 1
+ 204:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                         configASSERT( ( ( ( size_t ) pxNewBlockLink ) & portBYTE_ALIGNMENT_MASK ) =
+ 380              		.loc 1 204 40 is_stmt 0
+ 381 0128 3305E400 		add	a0,s0,a4
+ 382              	.LVL37:
+ 205:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 383              		.loc 1 205 105 is_stmt 1
+ 209:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                         pxBlock->xBlockSize = xWantedSize;
+ 384              		.loc 1 209 25
+ 209:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                         pxBlock->xBlockSize = xWantedSize;
+ 385              		.loc 1 209 52 is_stmt 0
+ 386 012c 2334F500 		sd	a5,8(a0)
+ 210:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 387              		.loc 1 210 25 is_stmt 1
+ 210:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 388              		.loc 1 210 45 is_stmt 0
+ 389 0130 2334E400 		sd	a4,8(s0)
+ 213:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     }
+ 390              		.loc 1 213 25 is_stmt 1
+ 391 0134 97000000 		call	prvInsertBlockIntoFreeList
+ 391      E7800000 
+ 392              	.LVL38:
+ 393 013c 6FF05FF9 		j	.L19
+ 394              	.LVL39:
+ 395              	.L21:
+ 118:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 396              		.loc 1 118 12 is_stmt 0
+ 397 0140 93040000 		li	s1,0
+ 398              	.LVL40:
+ 399              	.L15:
+ 249:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         }
+ 400              		.loc 1 249 37 is_stmt 1
+ 252:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     }
+ 401              		.loc 1 252 45
+ 254:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 402              		.loc 1 254 5
+GAS LISTING /tmp/cc3lBiZl.s 			page 18
+
+
+ 254:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 403              		.loc 1 254 14 is_stmt 0
+ 404 0144 97000000 		call	xTaskResumeAll
+ 404      E7800000 
+ 405              	.LVL41:
+ 270:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     return pvReturn;
+ 406              		.loc 1 270 90 is_stmt 1
+ 271:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** }
+ 407              		.loc 1 271 5
+ 272:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** /*-----------------------------------------------------------*/
+ 408              		.loc 1 272 1 is_stmt 0
+ 409 014c 13850400 		mv	a0,s1
+ 410 0150 83308101 		ld	ra,24(sp)
+ 411              		.cfi_remember_state
+ 412              		.cfi_restore 1
+ 413 0154 03340101 		ld	s0,16(sp)
+ 414              		.cfi_restore 8
+ 415 0158 83348100 		ld	s1,8(sp)
+ 416              		.cfi_restore 9
+ 417              	.LVL42:
+ 418 015c 13010102 		addi	sp,sp,32
+ 419              	.LCFI1:
+ 420              		.cfi_def_cfa_offset 0
+ 421 0160 67800000 		jr	ra
+ 422              	.LVL43:
+ 423              	.L22:
+ 424              	.LCFI2:
+ 425              		.cfi_restore_state
+ 118:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 426              		.loc 1 118 12
+ 427 0164 93040000 		li	s1,0
+ 428 0168 6FF0DFFD 		j	.L15
+ 429              	.LVL44:
+ 430              	.L23:
+ 431 016c 93040000 		li	s1,0
+ 432 0170 6FF05FFD 		j	.L15
+ 433              	.L24:
+ 434 0174 93040000 		li	s1,0
+ 435 0178 6FF0DFFC 		j	.L15
+ 436              	.L25:
+ 437 017c 93040000 		li	s1,0
+ 438 0180 6FF05FFC 		j	.L15
+ 439              	.LVL45:
+ 440              	.L27:
+ 441 0184 93040000 		li	s1,0
+ 442 0188 6FF0DFFB 		j	.L15
+ 443              		.cfi_endproc
+ 444              	.LFE1:
+ 446              		.section	.text.vPortFree,"ax",@progbits
+ 447              		.align	2
+ 448              		.globl	vPortFree
+ 450              	vPortFree:
+ 451              	.LFB2:
+ 276:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     uint8_t * puc = ( uint8_t * ) pv;
+ 452              		.loc 1 276 1 is_stmt 1
+ 453              		.cfi_startproc
+ 454              	.LVL46:
+GAS LISTING /tmp/cc3lBiZl.s 			page 19
+
+
+ 277:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     BlockLink_t * pxLink;
+ 455              		.loc 1 277 5
+ 278:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 456              		.loc 1 278 5
+ 280:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     {
+ 457              		.loc 1 280 5
+ 280:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     {
+ 458              		.loc 1 280 7 is_stmt 0
+ 459 0000 6302050A 		beq	a0,zero,.L34
+ 276:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     uint8_t * puc = ( uint8_t * ) pv;
+ 460              		.loc 1 276 1
+ 461 0004 130101FE 		addi	sp,sp,-32
+ 462              	.LCFI3:
+ 463              		.cfi_def_cfa_offset 32
+ 464 0008 233C1100 		sd	ra,24(sp)
+ 465 000c 23388100 		sd	s0,16(sp)
+ 466 0010 23349100 		sd	s1,8(sp)
+ 467              		.cfi_offset 1, -8
+ 468              		.cfi_offset 8, -16
+ 469              		.cfi_offset 9, -24
+ 470 0014 13040500 		mv	s0,a0
+ 284:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 471              		.loc 1 284 9 is_stmt 1
+ 284:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 472              		.loc 1 284 13 is_stmt 0
+ 473 0018 930405FF 		addi	s1,a0,-16
+ 474              	.LVL47:
+ 287:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 475              		.loc 1 287 9 is_stmt 1
+ 290:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         configASSERT( pxLink->pxNextFreeBlock == NULL );
+ 476              		.loc 1 290 73
+ 291:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 477              		.loc 1 291 56
+ 293:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         {
+ 478              		.loc 1 293 9
+ 293:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         {
+ 479              		.loc 1 293 21 is_stmt 0
+ 480 001c 833785FF 		ld	a5,-8(a0)
+ 293:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         {
+ 481              		.loc 1 293 34
+ 482 0020 17070000 		ld	a4,xBlockAllocatedBit
+ 482      03370700 
+ 483 0028 B3F6E700 		and	a3,a5,a4
+ 293:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         {
+ 484              		.loc 1 293 11
+ 485 002c 63860600 		beq	a3,zero,.L31
+ 295:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             {
+ 486              		.loc 1 295 13 is_stmt 1
+ 295:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             {
+ 487              		.loc 1 295 23 is_stmt 0
+ 488 0030 833605FF 		ld	a3,-16(a0)
+ 295:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             {
+ 489              		.loc 1 295 15
+ 490 0034 638C0600 		beq	a3,zero,.L37
+ 491              	.LVL48:
+ 492              	.L31:
+ 321:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** /*-----------------------------------------------------------*/
+GAS LISTING /tmp/cc3lBiZl.s 			page 20
+
+
+ 493              		.loc 1 321 1
+ 494 0038 83308101 		ld	ra,24(sp)
+ 495              		.cfi_remember_state
+ 496              		.cfi_restore 1
+ 497 003c 03340101 		ld	s0,16(sp)
+ 498              		.cfi_restore 8
+ 499              	.LVL49:
+ 500 0040 83348100 		ld	s1,8(sp)
+ 501              		.cfi_restore 9
+ 502              	.LVL50:
+ 503 0044 13010102 		addi	sp,sp,32
+ 504              	.LCFI4:
+ 505              		.cfi_def_cfa_offset 0
+ 506 0048 67800000 		jr	ra
+ 507              	.LVL51:
+ 508              	.L37:
+ 509              	.LCFI5:
+ 510              		.cfi_restore_state
+ 299:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 511              		.loc 1 299 17 is_stmt 1
+ 299:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 512              		.loc 1 299 39 is_stmt 0
+ 513 004c 1347F7FF 		not	a4,a4
+ 299:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 514              		.loc 1 299 36
+ 515 0050 B3F7E700 		and	a5,a5,a4
+ 516 0054 233CF5FE 		sd	a5,-8(a0)
+ 301:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 {
+ 517              		.loc 1 301 17 is_stmt 1
+ 518 0058 97000000 		call	vTaskSuspendAll
+ 518      E7800000 
+ 519              	.LVL52:
+ 304:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     traceFREE( pv, pxLink->xBlockSize );
+ 520              		.loc 1 304 21
+ 304:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     traceFREE( pv, pxLink->xBlockSize );
+ 521              		.loc 1 304 50 is_stmt 0
+ 522 0060 833684FF 		ld	a3,-8(s0)
+ 304:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     traceFREE( pv, pxLink->xBlockSize );
+ 523              		.loc 1 304 41
+ 524 0064 17070000 		lla	a4,xFreeBytesRemaining
+ 524      13070700 
+ 525 006c 83370700 		ld	a5,0(a4)
+ 526 0070 B387D700 		add	a5,a5,a3
+ 527 0074 2330F700 		sd	a5,0(a4)
+ 305:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     prvInsertBlockIntoFreeList( ( ( BlockLink_t * ) pxLink ) );
+ 528              		.loc 1 305 56 is_stmt 1
+ 306:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     xNumberOfSuccessfulFrees++;
+ 529              		.loc 1 306 21
+ 530 0078 13850400 		mv	a0,s1
+ 531 007c 97000000 		call	prvInsertBlockIntoFreeList
+ 531      E7800000 
+ 532              	.LVL53:
+ 307:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 }
+ 533              		.loc 1 307 21
+ 307:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 }
+ 534              		.loc 1 307 45 is_stmt 0
+ 535 0084 17070000 		lla	a4,xNumberOfSuccessfulFrees
+GAS LISTING /tmp/cc3lBiZl.s 			page 21
+
+
+ 535      13070700 
+ 536 008c 83370700 		ld	a5,0(a4)
+ 537 0090 93871700 		addi	a5,a5,1
+ 538 0094 2330F700 		sd	a5,0(a4)
+ 309:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             }
+ 539              		.loc 1 309 17 is_stmt 1
+ 309:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             }
+ 540              		.loc 1 309 26 is_stmt 0
+ 541 0098 97000000 		call	xTaskResumeAll
+ 541      E7800000 
+ 542              	.LVL54:
+ 318:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         }
+ 543              		.loc 1 318 37 is_stmt 1
+ 321:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** /*-----------------------------------------------------------*/
+ 544              		.loc 1 321 1 is_stmt 0
+ 545 00a0 6FF09FF9 		j	.L31
+ 546              	.LVL55:
+ 547              	.L34:
+ 548              	.LCFI6:
+ 549              		.cfi_def_cfa_offset 0
+ 550              		.cfi_restore 1
+ 551              		.cfi_restore 8
+ 552              		.cfi_restore 9
+ 553 00a4 67800000 		ret
+ 554              		.cfi_endproc
+ 555              	.LFE2:
+ 557              		.section	.text.xPortGetFreeHeapSize,"ax",@progbits
+ 558              		.align	2
+ 559              		.globl	xPortGetFreeHeapSize
+ 561              	xPortGetFreeHeapSize:
+ 562              	.LFB3:
+ 325:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     return xFreeBytesRemaining;
+ 563              		.loc 1 325 1 is_stmt 1
+ 564              		.cfi_startproc
+ 326:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** }
+ 565              		.loc 1 326 5
+ 327:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** /*-----------------------------------------------------------*/
+ 566              		.loc 1 327 1 is_stmt 0
+ 567 0000 17050000 		ld	a0,xFreeBytesRemaining
+ 567      03350500 
+ 568 0008 67800000 		ret
+ 569              		.cfi_endproc
+ 570              	.LFE3:
+ 572              		.section	.text.xPortGetMinimumEverFreeHeapSize,"ax",@progbits
+ 573              		.align	2
+ 574              		.globl	xPortGetMinimumEverFreeHeapSize
+ 576              	xPortGetMinimumEverFreeHeapSize:
+ 577              	.LFB4:
+ 331:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     return xMinimumEverFreeBytesRemaining;
+ 578              		.loc 1 331 1 is_stmt 1
+ 579              		.cfi_startproc
+ 332:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** }
+ 580              		.loc 1 332 5
+ 333:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** /*-----------------------------------------------------------*/
+ 581              		.loc 1 333 1 is_stmt 0
+ 582 0000 17050000 		ld	a0,xMinimumEverFreeBytesRemaining
+ 582      03350500 
+GAS LISTING /tmp/cc3lBiZl.s 			page 22
+
+
+ 583 0008 67800000 		ret
+ 584              		.cfi_endproc
+ 585              	.LFE4:
+ 587              		.section	.text.vPortInitialiseBlocks,"ax",@progbits
+ 588              		.align	2
+ 589              		.globl	vPortInitialiseBlocks
+ 591              	vPortInitialiseBlocks:
+ 592              	.LFB5:
+ 337:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     /* This just exists to keep the linker quiet. */
+ 593              		.loc 1 337 1 is_stmt 1
+ 594              		.cfi_startproc
+ 339:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** /*-----------------------------------------------------------*/
+ 595              		.loc 1 339 1
+ 596 0000 67800000 		ret
+ 597              		.cfi_endproc
+ 598              	.LFE5:
+ 600              		.section	.text.vPortGetHeapStats,"ax",@progbits
+ 601              		.align	2
+ 602              		.globl	vPortGetHeapStats
+ 604              	vPortGetHeapStats:
+ 605              	.LFB8:
+ 451:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** /*-----------------------------------------------------------*/
+ 452:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 453:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** void vPortGetHeapStats( HeapStats_t * pxHeapStats )
+ 454:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** {
+ 606              		.loc 1 454 1
+ 607              		.cfi_startproc
+ 608              	.LVL56:
+ 609 0000 130101FD 		addi	sp,sp,-48
+ 610              	.LCFI7:
+ 611              		.cfi_def_cfa_offset 48
+ 612 0004 23341102 		sd	ra,40(sp)
+ 613 0008 23308102 		sd	s0,32(sp)
+ 614 000c 233C9100 		sd	s1,24(sp)
+ 615 0010 23382101 		sd	s2,16(sp)
+ 616 0014 23343101 		sd	s3,8(sp)
+ 617              		.cfi_offset 1, -8
+ 618              		.cfi_offset 8, -16
+ 619              		.cfi_offset 9, -24
+ 620              		.cfi_offset 18, -32
+ 621              		.cfi_offset 19, -40
+ 622 0018 93090500 		mv	s3,a0
+ 455:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     BlockLink_t * pxBlock;
+ 623              		.loc 1 455 5
+ 456:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     size_t xBlocks = 0, xMaxSize = 0, xMinSize = portMAX_DELAY; /* portMAX_DELAY used as a portable
+ 624              		.loc 1 456 5
+ 625              	.LVL57:
+ 457:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 458:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     vTaskSuspendAll();
+ 626              		.loc 1 458 5
+ 627 001c 97000000 		call	vTaskSuspendAll
+ 627      E7800000 
+ 628              	.LVL58:
+ 459:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     {
+ 460:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         pxBlock = xStart.pxNextFreeBlock;
+ 629              		.loc 1 460 9
+ 630              		.loc 1 460 17 is_stmt 0
+GAS LISTING /tmp/cc3lBiZl.s 			page 23
+
+
+ 631 0024 97070000 		ld	a5,xStart
+ 631      83B70700 
+ 632              	.LVL59:
+ 461:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 462:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         /* pxBlock will be NULL if the heap has not been initialised.  The heap
+ 463:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****          * is initialised automatically when the first allocation is made. */
+ 464:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         if( pxBlock != NULL )
+ 633              		.loc 1 464 9 is_stmt 1
+ 634              		.loc 1 464 11 is_stmt 0
+ 635 002c 63800704 		beq	a5,zero,.L46
+ 456:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 636              		.loc 1 456 39
+ 637 0030 9304F0FF 		li	s1,-1
+ 456:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 638              		.loc 1 456 25
+ 639 0034 13090000 		li	s2,0
+ 456:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 640              		.loc 1 456 12
+ 641 0038 13040000 		li	s0,0
+ 642 003c 6F004001 		j	.L45
+ 643              	.LVL60:
+ 644              	.L44:
+ 465:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         {
+ 466:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             do
+ 467:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             {
+ 468:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 /* Increment the number of blocks and record the largest block seen
+ 469:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                  * so far. */
+ 470:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 xBlocks++;
+ 471:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 472:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 if( pxBlock->xBlockSize > xMaxSize )
+ 473:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 {
+ 474:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     xMaxSize = pxBlock->xBlockSize;
+ 475:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 }
+ 476:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 477:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 if( pxBlock->xBlockSize < xMinSize )
+ 478:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 {
+ 479:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                     xMinSize = pxBlock->xBlockSize;
+ 480:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 }
+ 481:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 482:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 /* Move to the next block in the chain until the last block is
+ 483:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                  * reached. */
+ 484:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 pxBlock = pxBlock->pxNextFreeBlock;
+ 645              		.loc 1 484 17 is_stmt 1
+ 646              		.loc 1 484 25 is_stmt 0
+ 647 0040 83B70700 		ld	a5,0(a5)
+ 648              	.LVL61:
+ 485:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             } while( pxBlock != pxEnd );
+ 649              		.loc 1 485 30 is_stmt 1
+ 650 0044 17070000 		ld	a4,pxEnd
+ 650      03370700 
+ 651 004c 6306F702 		beq	a4,a5,.L42
+ 652              	.LVL62:
+ 653              	.L45:
+ 466:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****             {
+ 654              		.loc 1 466 13
+ 470:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 655              		.loc 1 470 17
+GAS LISTING /tmp/cc3lBiZl.s 			page 24
+
+
+ 470:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 656              		.loc 1 470 24 is_stmt 0
+ 657 0050 13041400 		addi	s0,s0,1
+ 658              	.LVL63:
+ 472:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 {
+ 659              		.loc 1 472 17 is_stmt 1
+ 472:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 {
+ 660              		.loc 1 472 28 is_stmt 0
+ 661 0054 03B78700 		ld	a4,8(a5)
+ 472:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 {
+ 662              		.loc 1 472 19
+ 663 0058 6374E900 		bleu	a4,s2,.L43
+ 474:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 }
+ 664              		.loc 1 474 30
+ 665 005c 13090700 		mv	s2,a4
+ 666              	.LVL64:
+ 667              	.L43:
+ 477:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 {
+ 668              		.loc 1 477 17 is_stmt 1
+ 477:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 {
+ 669              		.loc 1 477 19 is_stmt 0
+ 670 0060 E37097FE 		bgeu	a4,s1,.L44
+ 479:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****                 }
+ 671              		.loc 1 479 30
+ 672 0064 93040700 		mv	s1,a4
+ 673              	.LVL65:
+ 674 0068 6FF09FFD 		j	.L44
+ 675              	.LVL66:
+ 676              	.L46:
+ 456:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 677              		.loc 1 456 39
+ 678 006c 9304F0FF 		li	s1,-1
+ 456:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 679              		.loc 1 456 25
+ 680 0070 13090000 		li	s2,0
+ 456:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 681              		.loc 1 456 12
+ 682 0074 13040000 		li	s0,0
+ 683              	.LVL67:
+ 684              	.L42:
+ 486:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         }
+ 487:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     }
+ 488:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     ( void ) xTaskResumeAll();
+ 685              		.loc 1 488 5 is_stmt 1
+ 686              		.loc 1 488 14 is_stmt 0
+ 687 0078 97000000 		call	xTaskResumeAll
+ 687      E7800000 
+ 688              	.LVL68:
+ 489:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 490:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     pxHeapStats->xSizeOfLargestFreeBlockInBytes = xMaxSize;
+ 689              		.loc 1 490 5 is_stmt 1
+ 690              		.loc 1 490 49 is_stmt 0
+ 691 0080 23B42901 		sd	s2,8(s3)
+ 491:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     pxHeapStats->xSizeOfSmallestFreeBlockInBytes = xMinSize;
+ 692              		.loc 1 491 5 is_stmt 1
+ 693              		.loc 1 491 50 is_stmt 0
+ 694 0084 23B89900 		sd	s1,16(s3)
+GAS LISTING /tmp/cc3lBiZl.s 			page 25
+
+
+ 492:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     pxHeapStats->xNumberOfFreeBlocks = xBlocks;
+ 695              		.loc 1 492 5 is_stmt 1
+ 696              		.loc 1 492 38 is_stmt 0
+ 697 0088 23BC8900 		sd	s0,24(s3)
+ 493:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** 
+ 494:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     taskENTER_CRITICAL();
+ 698              		.loc 1 494 5 is_stmt 1
+ 699 008c 97000000 		call	vTaskEnterCritical
+ 699      E7800000 
+ 700              	.LVL69:
+ 495:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     {
+ 496:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         pxHeapStats->xAvailableHeapSpaceInBytes = xFreeBytesRemaining;
+ 701              		.loc 1 496 9
+ 702              		.loc 1 496 49 is_stmt 0
+ 703 0094 97070000 		ld	a5,xFreeBytesRemaining
+ 703      83B70700 
+ 704 009c 23B0F900 		sd	a5,0(s3)
+ 497:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         pxHeapStats->xNumberOfSuccessfulAllocations = xNumberOfSuccessfulAllocations;
+ 705              		.loc 1 497 9 is_stmt 1
+ 706              		.loc 1 497 53 is_stmt 0
+ 707 00a0 97070000 		ld	a5,xNumberOfSuccessfulAllocations
+ 707      83B70700 
+ 708 00a8 23B4F902 		sd	a5,40(s3)
+ 498:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         pxHeapStats->xNumberOfSuccessfulFrees = xNumberOfSuccessfulFrees;
+ 709              		.loc 1 498 9 is_stmt 1
+ 710              		.loc 1 498 47 is_stmt 0
+ 711 00ac 97070000 		ld	a5,xNumberOfSuccessfulFrees
+ 711      83B70700 
+ 712 00b4 23B8F902 		sd	a5,48(s3)
+ 499:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****         pxHeapStats->xMinimumEverFreeBytesRemaining = xMinimumEverFreeBytesRemaining;
+ 713              		.loc 1 499 9 is_stmt 1
+ 714              		.loc 1 499 53 is_stmt 0
+ 715 00b8 97070000 		ld	a5,xMinimumEverFreeBytesRemaining
+ 715      83B70700 
+ 716 00c0 23B0F902 		sd	a5,32(s3)
+ 500:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     }
+ 501:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c ****     taskEXIT_CRITICAL();
+ 717              		.loc 1 501 5 is_stmt 1
+ 718 00c4 97000000 		call	vTaskExitCritical
+ 718      E7800000 
+ 719              	.LVL70:
+ 502:/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/MemMang/heap_4.c **** }
+ 720              		.loc 1 502 1 is_stmt 0
+ 721 00cc 83308102 		ld	ra,40(sp)
+ 722              		.cfi_restore 1
+ 723 00d0 03340102 		ld	s0,32(sp)
+ 724              		.cfi_restore 8
+ 725              	.LVL71:
+ 726 00d4 83348101 		ld	s1,24(sp)
+ 727              		.cfi_restore 9
+ 728              	.LVL72:
+ 729 00d8 03390101 		ld	s2,16(sp)
+ 730              		.cfi_restore 18
+ 731              	.LVL73:
+ 732 00dc 83398100 		ld	s3,8(sp)
+ 733              		.cfi_restore 19
+ 734              	.LVL74:
+GAS LISTING /tmp/cc3lBiZl.s 			page 26
+
+
+ 735 00e0 13010103 		addi	sp,sp,48
+ 736              	.LCFI8:
+ 737              		.cfi_def_cfa_offset 0
+ 738 00e4 67800000 		jr	ra
+ 739              		.cfi_endproc
+ 740              	.LFE8:
+ 742              		.section	.sbss.xBlockAllocatedBit,"aw",@nobits
+ 743              		.align	3
+ 746              	xBlockAllocatedBit:
+ 747 0000 00000000 		.zero	8
+ 747      00000000 
+ 748              		.section	.sbss.xNumberOfSuccessfulFrees,"aw",@nobits
+ 749              		.align	3
+ 752              	xNumberOfSuccessfulFrees:
+ 753 0000 00000000 		.zero	8
+ 753      00000000 
+ 754              		.section	.sbss.xNumberOfSuccessfulAllocations,"aw",@nobits
+ 755              		.align	3
+ 758              	xNumberOfSuccessfulAllocations:
+ 759 0000 00000000 		.zero	8
+ 759      00000000 
+ 760              		.section	.sbss.xMinimumEverFreeBytesRemaining,"aw",@nobits
+ 761              		.align	3
+ 764              	xMinimumEverFreeBytesRemaining:
+ 765 0000 00000000 		.zero	8
+ 765      00000000 
+ 766              		.section	.sbss.xFreeBytesRemaining,"aw",@nobits
+ 767              		.align	3
+ 770              	xFreeBytesRemaining:
+ 771 0000 00000000 		.zero	8
+ 771      00000000 
+ 772              		.section	.sbss.pxEnd,"aw",@nobits
+ 773              		.align	3
+ 776              	pxEnd:
+ 777 0000 00000000 		.zero	8
+ 777      00000000 
+ 778              		.section	.bss.xStart,"aw",@nobits
+ 779              		.align	3
+ 782              	xStart:
+ 783 0000 00000000 		.zero	16
+ 783      00000000 
+ 783      00000000 
+ 783      00000000 
+ 784              		.section	.bss.ucHeap,"aw",@nobits
+ 785              		.align	3
+ 788              	ucHeap:
+ 789 0000 00000000 		.zero	64500
+ 789      00000000 
+ 789      00000000 
+ 789      00000000 
+ 789      00000000 
+ 790              		.text
+ 791              	.Letext0:
+ 792              		.file 2 "/home/zz/riscv/riscv/lib/gcc/riscv64-unknown-elf/12.2.0/include/stddef.h"
+ 793              		.file 3 "/home/zz/riscv/riscv/riscv64-unknown-elf/include/machine/_default_types.h"
+ 794              		.file 4 "/home/zz/riscv/riscv/riscv64-unknown-elf/include/sys/_stdint.h"
+ 795              		.file 5 "/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/portable/GCC/RISC-V/portma
+GAS LISTING /tmp/cc3lBiZl.s 			page 27
+
+
+ 796              		.file 6 "/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/include/portable.h"
+ 797              		.file 7 "/home/zz/quard-start/Quard-Star/trusted_domain/FreeRTOS-Kernel/include/task.h"
+GAS LISTING /tmp/cc3lBiZl.s 			page 28
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 heap_4.c
+     /tmp/cc3lBiZl.s:13     .text.prvHeapInit:0000000000000000 prvHeapInit
+     /tmp/cc3lBiZl.s:16     .text.prvHeapInit:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:17     .text.prvHeapInit:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:18     .text.prvHeapInit:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:19     .text.prvHeapInit:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:20     .text.prvHeapInit:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:22     .text.prvHeapInit:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:23     .text.prvHeapInit:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:24     .text.prvHeapInit:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/cc3lBiZl.s:788    .bss.ucHeap:0000000000000000 ucHeap
+     /tmp/cc3lBiZl.s:24     .text.prvHeapInit:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:27     .text.prvHeapInit:0000000000000008 .L0 
+     /tmp/cc3lBiZl.s:28     .text.prvHeapInit:0000000000000008 .L0 
+     /tmp/cc3lBiZl.s:30     .text.prvHeapInit:000000000000000c .L0 
+     /tmp/cc3lBiZl.s:32     .text.prvHeapInit:0000000000000010 .L0 
+     /tmp/cc3lBiZl.s:33     .text.prvHeapInit:0000000000000010 .L0 
+     /tmp/cc3lBiZl.s:36     .text.prvHeapInit:0000000000000018 .L0 
+     /tmp/cc3lBiZl.s:37     .text.prvHeapInit:0000000000000018 .L0 
+     /tmp/cc3lBiZl.s:40     .text.prvHeapInit:000000000000001c .L0 
+     /tmp/cc3lBiZl.s:41     .text.prvHeapInit:000000000000001c .L0 
+     /tmp/cc3lBiZl.s:47     .text.prvHeapInit:000000000000002c .L0 
+     /tmp/cc3lBiZl.s:51     .text.prvHeapInit:0000000000000030 .L0 
+     /tmp/cc3lBiZl.s:52     .text.prvHeapInit:0000000000000030 .L0 
+     /tmp/cc3lBiZl.s:782    .bss.xStart:0000000000000000 xStart
+     /tmp/cc3lBiZl.s:53     .text.prvHeapInit:0000000000000030 .L0 
+     /tmp/cc3lBiZl.s:56     .text.prvHeapInit:000000000000003c .L0 
+     /tmp/cc3lBiZl.s:57     .text.prvHeapInit:000000000000003c .L0 
+     /tmp/cc3lBiZl.s:59     .text.prvHeapInit:0000000000000040 .L0 
+     /tmp/cc3lBiZl.s:60     .text.prvHeapInit:0000000000000040 .L0 
+     /tmp/cc3lBiZl.s:63     .text.prvHeapInit:0000000000000044 .L0 
+     /tmp/cc3lBiZl.s:64     .text.prvHeapInit:0000000000000044 .L0 
+     /tmp/cc3lBiZl.s:67     .text.prvHeapInit:0000000000000048 .L0 
+     /tmp/cc3lBiZl.s:68     .text.prvHeapInit:0000000000000048 .L0 
+     /tmp/cc3lBiZl.s:71     .text.prvHeapInit:000000000000004c .L0 
+     /tmp/cc3lBiZl.s:776    .sbss.pxEnd:0000000000000000 pxEnd
+     /tmp/cc3lBiZl.s:72     .text.prvHeapInit:000000000000004c .L0 
+     /tmp/cc3lBiZl.s:74     .text.prvHeapInit:0000000000000054 .L0 
+     /tmp/cc3lBiZl.s:75     .text.prvHeapInit:0000000000000054 .L0 
+     /tmp/cc3lBiZl.s:77     .text.prvHeapInit:0000000000000058 .L0 
+     /tmp/cc3lBiZl.s:78     .text.prvHeapInit:0000000000000058 .L0 
+     /tmp/cc3lBiZl.s:81     .text.prvHeapInit:000000000000005c .L0 
+     /tmp/cc3lBiZl.s:82     .text.prvHeapInit:000000000000005c .L0 
+     /tmp/cc3lBiZl.s:83     .text.prvHeapInit:000000000000005c .L0 
+     /tmp/cc3lBiZl.s:85     .text.prvHeapInit:0000000000000060 .L0 
+     /tmp/cc3lBiZl.s:87     .text.prvHeapInit:0000000000000064 .L0 
+     /tmp/cc3lBiZl.s:88     .text.prvHeapInit:0000000000000064 .L0 
+     /tmp/cc3lBiZl.s:90     .text.prvHeapInit:0000000000000068 .L0 
+     /tmp/cc3lBiZl.s:764    .sbss.xMinimumEverFreeBytesRemaining:0000000000000000 xMinimumEverFreeBytesRemaining
+     /tmp/cc3lBiZl.s:91     .text.prvHeapInit:0000000000000068 .L0 
+     /tmp/cc3lBiZl.s:94     .text.prvHeapInit:0000000000000070 .L0 
+     /tmp/cc3lBiZl.s:770    .sbss.xFreeBytesRemaining:0000000000000000 xFreeBytesRemaining
+     /tmp/cc3lBiZl.s:95     .text.prvHeapInit:0000000000000070 .L0 
+     /tmp/cc3lBiZl.s:97     .text.prvHeapInit:0000000000000078 .L0 
+     /tmp/cc3lBiZl.s:98     .text.prvHeapInit:0000000000000078 .L0 
+     /tmp/cc3lBiZl.s:746    .sbss.xBlockAllocatedBit:0000000000000000 xBlockAllocatedBit
+GAS LISTING /tmp/cc3lBiZl.s 			page 29
+
+
+     /tmp/cc3lBiZl.s:103    .text.prvHeapInit:0000000000000088 .L0 
+     /tmp/cc3lBiZl.s:107    .text.prvHeapInit:000000000000008c .L0 
+     /tmp/cc3lBiZl.s:110    .text.prvHeapInit:0000000000000098 .L0 
+     /tmp/cc3lBiZl.s:116    .text.prvInsertBlockIntoFreeList:0000000000000000 prvInsertBlockIntoFreeList
+     /tmp/cc3lBiZl.s:119    .text.prvInsertBlockIntoFreeList:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:121    .text.prvInsertBlockIntoFreeList:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:122    .text.prvInsertBlockIntoFreeList:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:123    .text.prvInsertBlockIntoFreeList:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:124    .text.prvInsertBlockIntoFreeList:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:125    .text.prvInsertBlockIntoFreeList:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/cc3lBiZl.s:125    .text.prvInsertBlockIntoFreeList:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:129    .text.prvInsertBlockIntoFreeList:0000000000000008 .L0 
+     /tmp/cc3lBiZl.s:131    .text.prvInsertBlockIntoFreeList:000000000000000c .L0 
+     /tmp/cc3lBiZl.s:134    .text.prvInsertBlockIntoFreeList:0000000000000010 .L0 
+     /tmp/cc3lBiZl.s:137    .text.prvInsertBlockIntoFreeList:0000000000000014 .L0 
+     /tmp/cc3lBiZl.s:138    .text.prvInsertBlockIntoFreeList:0000000000000014 .L0 
+     /tmp/cc3lBiZl.s:139    .text.prvInsertBlockIntoFreeList:0000000000000014 .L0 
+     /tmp/cc3lBiZl.s:141    .text.prvInsertBlockIntoFreeList:0000000000000018 .L0 
+     /tmp/cc3lBiZl.s:143    .text.prvInsertBlockIntoFreeList:000000000000001c .L0 
+     /tmp/cc3lBiZl.s:146    .text.prvInsertBlockIntoFreeList:0000000000000020 .L0 
+     /tmp/cc3lBiZl.s:148    .text.prvInsertBlockIntoFreeList:0000000000000020 .L0 
+     /tmp/cc3lBiZl.s:149    .text.prvInsertBlockIntoFreeList:0000000000000020 .L0 
+     /tmp/cc3lBiZl.s:150    .text.prvInsertBlockIntoFreeList:0000000000000020 .L0 
+     /tmp/cc3lBiZl.s:152    .text.prvInsertBlockIntoFreeList:0000000000000024 .L0 
+     /tmp/cc3lBiZl.s:154    .text.prvInsertBlockIntoFreeList:0000000000000028 .L0 
+     /tmp/cc3lBiZl.s:156    .text.prvInsertBlockIntoFreeList:000000000000002c .L0 
+     /tmp/cc3lBiZl.s:157    .text.prvInsertBlockIntoFreeList:000000000000002c .L0 
+     /tmp/cc3lBiZl.s:160    .text.prvInsertBlockIntoFreeList:0000000000000030 .L0 
+     /tmp/cc3lBiZl.s:161    .text.prvInsertBlockIntoFreeList:0000000000000030 .L0 
+     /tmp/cc3lBiZl.s:163    .text.prvInsertBlockIntoFreeList:0000000000000034 .L0 
+     /tmp/cc3lBiZl.s:164    .text.prvInsertBlockIntoFreeList:0000000000000034 .L0 
+     /tmp/cc3lBiZl.s:167    .text.prvInsertBlockIntoFreeList:0000000000000038 .L0 
+     /tmp/cc3lBiZl.s:168    .text.prvInsertBlockIntoFreeList:0000000000000038 .L0 
+     /tmp/cc3lBiZl.s:172    .text.prvInsertBlockIntoFreeList:000000000000003c .L0 
+     /tmp/cc3lBiZl.s:173    .text.prvInsertBlockIntoFreeList:000000000000003c .L0 
+     /tmp/cc3lBiZl.s:175    .text.prvInsertBlockIntoFreeList:0000000000000040 .L0 
+     /tmp/cc3lBiZl.s:179    .text.prvInsertBlockIntoFreeList:0000000000000048 .L0 
+     /tmp/cc3lBiZl.s:180    .text.prvInsertBlockIntoFreeList:0000000000000048 .L0 
+     /tmp/cc3lBiZl.s:185    .text.prvInsertBlockIntoFreeList:0000000000000050 .L0 
+     /tmp/cc3lBiZl.s:186    .text.prvInsertBlockIntoFreeList:0000000000000050 .L0 
+     /tmp/cc3lBiZl.s:188    .text.prvInsertBlockIntoFreeList:0000000000000058 .L0 
+     /tmp/cc3lBiZl.s:190    .text.prvInsertBlockIntoFreeList:000000000000005c .L0 
+     /tmp/cc3lBiZl.s:191    .text.prvInsertBlockIntoFreeList:000000000000005c .L0 
+     /tmp/cc3lBiZl.s:193    .text.prvInsertBlockIntoFreeList:0000000000000060 .L0 
+     /tmp/cc3lBiZl.s:196    .text.prvInsertBlockIntoFreeList:0000000000000068 .L0 
+     /tmp/cc3lBiZl.s:197    .text.prvInsertBlockIntoFreeList:0000000000000068 .L0 
+     /tmp/cc3lBiZl.s:199    .text.prvInsertBlockIntoFreeList:000000000000006c .L0 
+     /tmp/cc3lBiZl.s:201    .text.prvInsertBlockIntoFreeList:0000000000000070 .L0 
+     /tmp/cc3lBiZl.s:205    .text.prvInsertBlockIntoFreeList:0000000000000078 .L0 
+     /tmp/cc3lBiZl.s:206    .text.prvInsertBlockIntoFreeList:0000000000000078 .L0 
+     /tmp/cc3lBiZl.s:208    .text.prvInsertBlockIntoFreeList:0000000000000080 .L0 
+     /tmp/cc3lBiZl.s:215    .text.pvPortMalloc:0000000000000000 pvPortMalloc
+     /tmp/cc3lBiZl.s:218    .text.pvPortMalloc:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:220    .text.pvPortMalloc:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/cc3lBiZl.s:220    .text.pvPortMalloc:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:222    .text.pvPortMalloc:0000000000000004 .L0 
+     /tmp/cc3lBiZl.s:226    .text.pvPortMalloc:0000000000000010 .L0 
+GAS LISTING /tmp/cc3lBiZl.s 			page 30
+
+
+     /tmp/cc3lBiZl.s:227    .text.pvPortMalloc:0000000000000010 .L0 
+     /tmp/cc3lBiZl.s:228    .text.pvPortMalloc:0000000000000010 .L0 
+     /tmp/cc3lBiZl.s:231    .text.pvPortMalloc:0000000000000014 .L0 
+     /tmp/cc3lBiZl.s:233    .text.pvPortMalloc:0000000000000014 .L0 
+     /tmp/cc3lBiZl.s:234    .text.pvPortMalloc:0000000000000014 .L0 
+     /tmp/cc3lBiZl.s:237    .text.pvPortMalloc:000000000000001c .L0 
+     /tmp/cc3lBiZl.s:238    .text.pvPortMalloc:000000000000001c .L0 
+     /tmp/cc3lBiZl.s:240    .text.pvPortMalloc:0000000000000024 .L0 
+     /tmp/cc3lBiZl.s:243    .text.pvPortMalloc:0000000000000028 .L0 
+     /tmp/cc3lBiZl.s:244    .text.pvPortMalloc:0000000000000028 .L0 
+     /tmp/cc3lBiZl.s:245    .text.pvPortMalloc:0000000000000028 .L0 
+     /tmp/cc3lBiZl.s:248    .text.pvPortMalloc:0000000000000034 .L0 
+     /tmp/cc3lBiZl.s:250    .text.pvPortMalloc:0000000000000038 .L0 
+     /tmp/cc3lBiZl.s:251    .text.pvPortMalloc:0000000000000038 .L0 
+     /tmp/cc3lBiZl.s:253    .text.pvPortMalloc:000000000000003c .L0 
+     /tmp/cc3lBiZl.s:256    .text.pvPortMalloc:0000000000000044 .L0 
+     /tmp/cc3lBiZl.s:257    .text.pvPortMalloc:0000000000000044 .L0 
+     /tmp/cc3lBiZl.s:260    .text.pvPortMalloc:0000000000000048 .L0 
+     /tmp/cc3lBiZl.s:261    .text.pvPortMalloc:0000000000000048 .L0 
+     /tmp/cc3lBiZl.s:263    .text.pvPortMalloc:000000000000004c .L0 
+     /tmp/cc3lBiZl.s:265    .text.pvPortMalloc:0000000000000050 .L0 
+     /tmp/cc3lBiZl.s:266    .text.pvPortMalloc:0000000000000050 .L0 
+     /tmp/cc3lBiZl.s:269    .text.pvPortMalloc:0000000000000058 .L0 
+     /tmp/cc3lBiZl.s:271    .text.pvPortMalloc:000000000000005c .L0 
+     /tmp/cc3lBiZl.s:275    .text.pvPortMalloc:0000000000000060 .L0 
+     /tmp/cc3lBiZl.s:276    .text.pvPortMalloc:0000000000000060 .L0 
+     /tmp/cc3lBiZl.s:278    .text.pvPortMalloc:0000000000000064 .L0 
+     /tmp/cc3lBiZl.s:280    .text.pvPortMalloc:000000000000006c .L0 
+     /tmp/cc3lBiZl.s:283    .text.pvPortMalloc:0000000000000070 .L0 
+     /tmp/cc3lBiZl.s:284    .text.pvPortMalloc:0000000000000070 .L0 
+     /tmp/cc3lBiZl.s:285    .text.pvPortMalloc:0000000000000070 .L0 
+     /tmp/cc3lBiZl.s:289    .text.pvPortMalloc:000000000000007c .L0 
+     /tmp/cc3lBiZl.s:290    .text.pvPortMalloc:000000000000007c .L0 
+     /tmp/cc3lBiZl.s:294    .text.pvPortMalloc:0000000000000080 .L0 
+     /tmp/cc3lBiZl.s:300    .text.pvPortMalloc:000000000000008c .L0 
+     /tmp/cc3lBiZl.s:303    .text.pvPortMalloc:0000000000000090 .L0 
+     /tmp/cc3lBiZl.s:307    .text.pvPortMalloc:0000000000000094 .L0 
+     /tmp/cc3lBiZl.s:308    .text.pvPortMalloc:0000000000000094 .L0 
+     /tmp/cc3lBiZl.s:310    .text.pvPortMalloc:0000000000000098 .L0 
+     /tmp/cc3lBiZl.s:312    .text.pvPortMalloc:000000000000009c .L0 
+     /tmp/cc3lBiZl.s:314    .text.pvPortMalloc:00000000000000a0 .L0 
+     /tmp/cc3lBiZl.s:317    .text.pvPortMalloc:00000000000000a4 .L0 
+     /tmp/cc3lBiZl.s:318    .text.pvPortMalloc:00000000000000a4 .L0 
+     /tmp/cc3lBiZl.s:320    .text.pvPortMalloc:00000000000000ac .L0 
+     /tmp/cc3lBiZl.s:322    .text.pvPortMalloc:00000000000000b0 .L0 
+     /tmp/cc3lBiZl.s:323    .text.pvPortMalloc:00000000000000b0 .L0 
+     /tmp/cc3lBiZl.s:325    .text.pvPortMalloc:00000000000000b4 .L0 
+     /tmp/cc3lBiZl.s:328    .text.pvPortMalloc:00000000000000b8 .L0 
+     /tmp/cc3lBiZl.s:329    .text.pvPortMalloc:00000000000000b8 .L0 
+     /tmp/cc3lBiZl.s:331    .text.pvPortMalloc:00000000000000bc .L0 
+     /tmp/cc3lBiZl.s:333    .text.pvPortMalloc:00000000000000c0 .L0 
+     /tmp/cc3lBiZl.s:334    .text.pvPortMalloc:00000000000000c0 .L0 
+     /tmp/cc3lBiZl.s:336    .text.pvPortMalloc:00000000000000c4 .L0 
+     /tmp/cc3lBiZl.s:338    .text.pvPortMalloc:00000000000000c8 .L0 
+     /tmp/cc3lBiZl.s:344    .text.pvPortMalloc:00000000000000d0 .L0 
+     /tmp/cc3lBiZl.s:345    .text.pvPortMalloc:00000000000000d0 .L0 
+     /tmp/cc3lBiZl.s:346    .text.pvPortMalloc:00000000000000d0 .L0 
+GAS LISTING /tmp/cc3lBiZl.s 			page 31
+
+
+     /tmp/cc3lBiZl.s:348    .text.pvPortMalloc:00000000000000d4 .L0 
+     /tmp/cc3lBiZl.s:353    .text.pvPortMalloc:00000000000000e8 .L0 
+     /tmp/cc3lBiZl.s:354    .text.pvPortMalloc:00000000000000e8 .L0 
+     /tmp/cc3lBiZl.s:356    .text.pvPortMalloc:00000000000000f0 .L0 
+     /tmp/cc3lBiZl.s:358    .text.pvPortMalloc:00000000000000f4 .L0 
+     /tmp/cc3lBiZl.s:359    .text.pvPortMalloc:00000000000000f4 .L0 
+     /tmp/cc3lBiZl.s:362    .text.pvPortMalloc:00000000000000fc .L0 
+     /tmp/cc3lBiZl.s:363    .text.pvPortMalloc:00000000000000fc .L0 
+     /tmp/cc3lBiZl.s:364    .text.pvPortMalloc:00000000000000fc .L0 
+     /tmp/cc3lBiZl.s:368    .text.pvPortMalloc:000000000000010c .L0 
+     /tmp/cc3lBiZl.s:369    .text.pvPortMalloc:000000000000010c .L0 
+     /tmp/cc3lBiZl.s:371    .text.pvPortMalloc:0000000000000110 .L0 
+     /tmp/cc3lBiZl.s:758    .sbss.xNumberOfSuccessfulAllocations:0000000000000000 xNumberOfSuccessfulAllocations
+     /tmp/cc3lBiZl.s:372    .text.pvPortMalloc:0000000000000110 .L0 
+     /tmp/cc3lBiZl.s:380    .text.pvPortMalloc:0000000000000128 .L0 
+     /tmp/cc3lBiZl.s:381    .text.pvPortMalloc:0000000000000128 .L0 
+     /tmp/cc3lBiZl.s:384    .text.pvPortMalloc:000000000000012c .L0 
+     /tmp/cc3lBiZl.s:385    .text.pvPortMalloc:000000000000012c .L0 
+     /tmp/cc3lBiZl.s:386    .text.pvPortMalloc:000000000000012c .L0 
+     /tmp/cc3lBiZl.s:388    .text.pvPortMalloc:0000000000000130 .L0 
+     /tmp/cc3lBiZl.s:389    .text.pvPortMalloc:0000000000000130 .L0 
+     /tmp/cc3lBiZl.s:391    .text.pvPortMalloc:0000000000000134 .L0 
+     /tmp/cc3lBiZl.s:397    .text.pvPortMalloc:0000000000000140 .L0 
+     /tmp/cc3lBiZl.s:401    .text.pvPortMalloc:0000000000000144 .L0 
+     /tmp/cc3lBiZl.s:402    .text.pvPortMalloc:0000000000000144 .L0 
+     /tmp/cc3lBiZl.s:403    .text.pvPortMalloc:0000000000000144 .L0 
+     /tmp/cc3lBiZl.s:404    .text.pvPortMalloc:0000000000000144 .L0 
+     /tmp/cc3lBiZl.s:407    .text.pvPortMalloc:000000000000014c .L0 
+     /tmp/cc3lBiZl.s:408    .text.pvPortMalloc:000000000000014c .L0 
+     /tmp/cc3lBiZl.s:409    .text.pvPortMalloc:000000000000014c .L0 
+     /tmp/cc3lBiZl.s:411    .text.pvPortMalloc:0000000000000154 .L0 
+     /tmp/cc3lBiZl.s:412    .text.pvPortMalloc:0000000000000154 .L0 
+     /tmp/cc3lBiZl.s:414    .text.pvPortMalloc:0000000000000158 .L0 
+     /tmp/cc3lBiZl.s:416    .text.pvPortMalloc:000000000000015c .L0 
+     /tmp/cc3lBiZl.s:420    .text.pvPortMalloc:0000000000000160 .L0 
+     /tmp/cc3lBiZl.s:425    .text.pvPortMalloc:0000000000000164 .L0 
+     /tmp/cc3lBiZl.s:427    .text.pvPortMalloc:0000000000000164 .L0 
+     /tmp/cc3lBiZl.s:443    .text.pvPortMalloc:000000000000018c .L0 
+     /tmp/cc3lBiZl.s:450    .text.vPortFree:0000000000000000 vPortFree
+     /tmp/cc3lBiZl.s:453    .text.vPortFree:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:455    .text.vPortFree:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:456    .text.vPortFree:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:457    .text.vPortFree:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:458    .text.vPortFree:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:459    .text.vPortFree:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/cc3lBiZl.s:459    .text.vPortFree:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:461    .text.vPortFree:0000000000000004 .L0 
+     /tmp/cc3lBiZl.s:463    .text.vPortFree:0000000000000008 .L0 
+     /tmp/cc3lBiZl.s:467    .text.vPortFree:0000000000000014 .L0 
+     /tmp/cc3lBiZl.s:468    .text.vPortFree:0000000000000014 .L0 
+     /tmp/cc3lBiZl.s:469    .text.vPortFree:0000000000000014 .L0 
+     /tmp/cc3lBiZl.s:472    .text.vPortFree:0000000000000018 .L0 
+     /tmp/cc3lBiZl.s:473    .text.vPortFree:0000000000000018 .L0 
+     /tmp/cc3lBiZl.s:476    .text.vPortFree:000000000000001c .L0 
+     /tmp/cc3lBiZl.s:477    .text.vPortFree:000000000000001c .L0 
+     /tmp/cc3lBiZl.s:478    .text.vPortFree:000000000000001c .L0 
+     /tmp/cc3lBiZl.s:479    .text.vPortFree:000000000000001c .L0 
+GAS LISTING /tmp/cc3lBiZl.s 			page 32
+
+
+     /tmp/cc3lBiZl.s:480    .text.vPortFree:000000000000001c .L0 
+     /tmp/cc3lBiZl.s:482    .text.vPortFree:0000000000000020 .L0 
+     /tmp/cc3lBiZl.s:485    .text.vPortFree:000000000000002c .L0 
+     /tmp/cc3lBiZl.s:487    .text.vPortFree:0000000000000030 .L0 
+     /tmp/cc3lBiZl.s:488    .text.vPortFree:0000000000000030 .L0 
+     /tmp/cc3lBiZl.s:490    .text.vPortFree:0000000000000034 .L0 
+     /tmp/cc3lBiZl.s:494    .text.vPortFree:0000000000000038 .L0 
+     /tmp/cc3lBiZl.s:495    .text.vPortFree:000000000000003c .L0 
+     /tmp/cc3lBiZl.s:496    .text.vPortFree:000000000000003c .L0 
+     /tmp/cc3lBiZl.s:498    .text.vPortFree:0000000000000040 .L0 
+     /tmp/cc3lBiZl.s:501    .text.vPortFree:0000000000000044 .L0 
+     /tmp/cc3lBiZl.s:505    .text.vPortFree:0000000000000048 .L0 
+     /tmp/cc3lBiZl.s:510    .text.vPortFree:000000000000004c .L0 
+     /tmp/cc3lBiZl.s:512    .text.vPortFree:000000000000004c .L0 
+     /tmp/cc3lBiZl.s:513    .text.vPortFree:000000000000004c .L0 
+     /tmp/cc3lBiZl.s:515    .text.vPortFree:0000000000000050 .L0 
+     /tmp/cc3lBiZl.s:518    .text.vPortFree:0000000000000058 .L0 
+     /tmp/cc3lBiZl.s:521    .text.vPortFree:0000000000000060 .L0 
+     /tmp/cc3lBiZl.s:522    .text.vPortFree:0000000000000060 .L0 
+     /tmp/cc3lBiZl.s:524    .text.vPortFree:0000000000000064 .L0 
+     /tmp/cc3lBiZl.s:529    .text.vPortFree:0000000000000078 .L0 
+     /tmp/cc3lBiZl.s:530    .text.vPortFree:0000000000000078 .L0 
+     /tmp/cc3lBiZl.s:534    .text.vPortFree:0000000000000084 .L0 
+     /tmp/cc3lBiZl.s:752    .sbss.xNumberOfSuccessfulFrees:0000000000000000 xNumberOfSuccessfulFrees
+     /tmp/cc3lBiZl.s:535    .text.vPortFree:0000000000000084 .L0 
+     /tmp/cc3lBiZl.s:540    .text.vPortFree:0000000000000098 .L0 
+     /tmp/cc3lBiZl.s:541    .text.vPortFree:0000000000000098 .L0 
+     /tmp/cc3lBiZl.s:544    .text.vPortFree:00000000000000a0 .L0 
+     /tmp/cc3lBiZl.s:545    .text.vPortFree:00000000000000a0 .L0 
+     /tmp/cc3lBiZl.s:549    .text.vPortFree:00000000000000a4 .L0 
+     /tmp/cc3lBiZl.s:550    .text.vPortFree:00000000000000a4 .L0 
+     /tmp/cc3lBiZl.s:551    .text.vPortFree:00000000000000a4 .L0 
+     /tmp/cc3lBiZl.s:552    .text.vPortFree:00000000000000a4 .L0 
+     /tmp/cc3lBiZl.s:554    .text.vPortFree:00000000000000a8 .L0 
+     /tmp/cc3lBiZl.s:561    .text.xPortGetFreeHeapSize:0000000000000000 xPortGetFreeHeapSize
+     /tmp/cc3lBiZl.s:564    .text.xPortGetFreeHeapSize:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:565    .text.xPortGetFreeHeapSize:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:566    .text.xPortGetFreeHeapSize:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:567    .text.xPortGetFreeHeapSize:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/cc3lBiZl.s:567    .text.xPortGetFreeHeapSize:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:569    .text.xPortGetFreeHeapSize:000000000000000c .L0 
+     /tmp/cc3lBiZl.s:576    .text.xPortGetMinimumEverFreeHeapSize:0000000000000000 xPortGetMinimumEverFreeHeapSize
+     /tmp/cc3lBiZl.s:579    .text.xPortGetMinimumEverFreeHeapSize:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:580    .text.xPortGetMinimumEverFreeHeapSize:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:581    .text.xPortGetMinimumEverFreeHeapSize:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:582    .text.xPortGetMinimumEverFreeHeapSize:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/cc3lBiZl.s:582    .text.xPortGetMinimumEverFreeHeapSize:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:584    .text.xPortGetMinimumEverFreeHeapSize:000000000000000c .L0 
+     /tmp/cc3lBiZl.s:591    .text.vPortInitialiseBlocks:0000000000000000 vPortInitialiseBlocks
+     /tmp/cc3lBiZl.s:594    .text.vPortInitialiseBlocks:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:595    .text.vPortInitialiseBlocks:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:596    .text.vPortInitialiseBlocks:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/cc3lBiZl.s:596    .text.vPortInitialiseBlocks:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:597    .text.vPortInitialiseBlocks:0000000000000004 .L0 
+     /tmp/cc3lBiZl.s:604    .text.vPortGetHeapStats:0000000000000000 vPortGetHeapStats
+     /tmp/cc3lBiZl.s:607    .text.vPortGetHeapStats:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:609    .text.vPortGetHeapStats:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+GAS LISTING /tmp/cc3lBiZl.s 			page 33
+
+
+     /tmp/cc3lBiZl.s:609    .text.vPortGetHeapStats:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:611    .text.vPortGetHeapStats:0000000000000004 .L0 
+     /tmp/cc3lBiZl.s:617    .text.vPortGetHeapStats:0000000000000018 .L0 
+     /tmp/cc3lBiZl.s:618    .text.vPortGetHeapStats:0000000000000018 .L0 
+     /tmp/cc3lBiZl.s:619    .text.vPortGetHeapStats:0000000000000018 .L0 
+     /tmp/cc3lBiZl.s:620    .text.vPortGetHeapStats:0000000000000018 .L0 
+     /tmp/cc3lBiZl.s:621    .text.vPortGetHeapStats:0000000000000018 .L0 
+     /tmp/cc3lBiZl.s:624    .text.vPortGetHeapStats:000000000000001c .L0 
+     /tmp/cc3lBiZl.s:626    .text.vPortGetHeapStats:000000000000001c .L0 
+     /tmp/cc3lBiZl.s:627    .text.vPortGetHeapStats:000000000000001c .L0 
+     /tmp/cc3lBiZl.s:630    .text.vPortGetHeapStats:0000000000000024 .L0 
+     /tmp/cc3lBiZl.s:631    .text.vPortGetHeapStats:0000000000000024 .L0 
+     /tmp/cc3lBiZl.s:634    .text.vPortGetHeapStats:000000000000002c .L0 
+     /tmp/cc3lBiZl.s:635    .text.vPortGetHeapStats:000000000000002c .L0 
+     /tmp/cc3lBiZl.s:637    .text.vPortGetHeapStats:0000000000000030 .L0 
+     /tmp/cc3lBiZl.s:639    .text.vPortGetHeapStats:0000000000000034 .L0 
+     /tmp/cc3lBiZl.s:641    .text.vPortGetHeapStats:0000000000000038 .L0 
+     /tmp/cc3lBiZl.s:646    .text.vPortGetHeapStats:0000000000000040 .L0 
+     /tmp/cc3lBiZl.s:647    .text.vPortGetHeapStats:0000000000000040 .L0 
+     /tmp/cc3lBiZl.s:650    .text.vPortGetHeapStats:0000000000000044 .L0 
+     /tmp/cc3lBiZl.s:655    .text.vPortGetHeapStats:0000000000000050 .L0 
+     /tmp/cc3lBiZl.s:656    .text.vPortGetHeapStats:0000000000000050 .L0 
+     /tmp/cc3lBiZl.s:657    .text.vPortGetHeapStats:0000000000000050 .L0 
+     /tmp/cc3lBiZl.s:660    .text.vPortGetHeapStats:0000000000000054 .L0 
+     /tmp/cc3lBiZl.s:661    .text.vPortGetHeapStats:0000000000000054 .L0 
+     /tmp/cc3lBiZl.s:663    .text.vPortGetHeapStats:0000000000000058 .L0 
+     /tmp/cc3lBiZl.s:665    .text.vPortGetHeapStats:000000000000005c .L0 
+     /tmp/cc3lBiZl.s:669    .text.vPortGetHeapStats:0000000000000060 .L0 
+     /tmp/cc3lBiZl.s:670    .text.vPortGetHeapStats:0000000000000060 .L0 
+     /tmp/cc3lBiZl.s:672    .text.vPortGetHeapStats:0000000000000064 .L0 
+     /tmp/cc3lBiZl.s:678    .text.vPortGetHeapStats:000000000000006c .L0 
+     /tmp/cc3lBiZl.s:680    .text.vPortGetHeapStats:0000000000000070 .L0 
+     /tmp/cc3lBiZl.s:682    .text.vPortGetHeapStats:0000000000000074 .L0 
+     /tmp/cc3lBiZl.s:686    .text.vPortGetHeapStats:0000000000000078 .L0 
+     /tmp/cc3lBiZl.s:687    .text.vPortGetHeapStats:0000000000000078 .L0 
+     /tmp/cc3lBiZl.s:690    .text.vPortGetHeapStats:0000000000000080 .L0 
+     /tmp/cc3lBiZl.s:691    .text.vPortGetHeapStats:0000000000000080 .L0 
+     /tmp/cc3lBiZl.s:693    .text.vPortGetHeapStats:0000000000000084 .L0 
+     /tmp/cc3lBiZl.s:694    .text.vPortGetHeapStats:0000000000000084 .L0 
+     /tmp/cc3lBiZl.s:696    .text.vPortGetHeapStats:0000000000000088 .L0 
+     /tmp/cc3lBiZl.s:697    .text.vPortGetHeapStats:0000000000000088 .L0 
+     /tmp/cc3lBiZl.s:699    .text.vPortGetHeapStats:000000000000008c .L0 
+     /tmp/cc3lBiZl.s:702    .text.vPortGetHeapStats:0000000000000094 .L0 
+     /tmp/cc3lBiZl.s:703    .text.vPortGetHeapStats:0000000000000094 .L0 
+     /tmp/cc3lBiZl.s:706    .text.vPortGetHeapStats:00000000000000a0 .L0 
+     /tmp/cc3lBiZl.s:707    .text.vPortGetHeapStats:00000000000000a0 .L0 
+     /tmp/cc3lBiZl.s:710    .text.vPortGetHeapStats:00000000000000ac .L0 
+     /tmp/cc3lBiZl.s:711    .text.vPortGetHeapStats:00000000000000ac .L0 
+     /tmp/cc3lBiZl.s:714    .text.vPortGetHeapStats:00000000000000b8 .L0 
+     /tmp/cc3lBiZl.s:715    .text.vPortGetHeapStats:00000000000000b8 .L0 
+     /tmp/cc3lBiZl.s:718    .text.vPortGetHeapStats:00000000000000c4 .L0 
+     /tmp/cc3lBiZl.s:721    .text.vPortGetHeapStats:00000000000000cc .L0 
+     /tmp/cc3lBiZl.s:722    .text.vPortGetHeapStats:00000000000000d0 .L0 
+     /tmp/cc3lBiZl.s:724    .text.vPortGetHeapStats:00000000000000d4 .L0 
+     /tmp/cc3lBiZl.s:727    .text.vPortGetHeapStats:00000000000000d8 .L0 
+     /tmp/cc3lBiZl.s:730    .text.vPortGetHeapStats:00000000000000dc .L0 
+     /tmp/cc3lBiZl.s:733    .text.vPortGetHeapStats:00000000000000e0 .L0 
+GAS LISTING /tmp/cc3lBiZl.s 			page 34
+
+
+     /tmp/cc3lBiZl.s:737    .text.vPortGetHeapStats:00000000000000e4 .L0 
+     /tmp/cc3lBiZl.s:739    .text.vPortGetHeapStats:00000000000000e8 .L0 
+     /tmp/cc3lBiZl.s:113    .text.prvHeapInit:0000000000000098 .L0 
+     /tmp/cc3lBiZl.s:211    .text.prvInsertBlockIntoFreeList:0000000000000080 .L0 
+     /tmp/cc3lBiZl.s:446    .text.pvPortMalloc:000000000000018c .L0 
+     /tmp/cc3lBiZl.s:557    .text.vPortFree:00000000000000a8 .L0 
+     /tmp/cc3lBiZl.s:572    .text.xPortGetFreeHeapSize:000000000000000c .L0 
+     /tmp/cc3lBiZl.s:587    .text.xPortGetMinimumEverFreeHeapSize:000000000000000c .L0 
+     /tmp/cc3lBiZl.s:600    .text.vPortInitialiseBlocks:0000000000000004 .L0 
+     /tmp/cc3lBiZl.s:742    .text.vPortGetHeapStats:00000000000000e8 .L0 
+                     .debug_frame:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:24     .text.prvHeapInit:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:33     .text.prvHeapInit:0000000000000010 .L0 
+     /tmp/cc3lBiZl.s:53     .text.prvHeapInit:0000000000000030 .L0 
+     /tmp/cc3lBiZl.s:72     .text.prvHeapInit:000000000000004c .L0 
+     /tmp/cc3lBiZl.s:91     .text.prvHeapInit:0000000000000068 .L0 
+     /tmp/cc3lBiZl.s:95     .text.prvHeapInit:0000000000000070 .L0 
+     /tmp/cc3lBiZl.s:100    .text.prvHeapInit:0000000000000080 .L0 
+     /tmp/cc3lBiZl.s:105    .text.prvHeapInit:000000000000008c .L3
+     /tmp/cc3lBiZl.s:49     .text.prvHeapInit:0000000000000030 .L2
+     /tmp/cc3lBiZl.s:125    .text.prvInsertBlockIntoFreeList:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:186    .text.prvInsertBlockIntoFreeList:0000000000000050 .L0 
+     /tmp/cc3lBiZl.s:127    .text.prvInsertBlockIntoFreeList:0000000000000008 .L5
+     /tmp/cc3lBiZl.s:170    .text.prvInsertBlockIntoFreeList:000000000000003c .L11
+     /tmp/cc3lBiZl.s:183    .text.prvInsertBlockIntoFreeList:0000000000000050 .L12
+     /tmp/cc3lBiZl.s:166    .text.prvInsertBlockIntoFreeList:0000000000000038 .L4
+     /tmp/cc3lBiZl.s:144    .text.prvInsertBlockIntoFreeList:0000000000000020 .L6
+     /tmp/cc3lBiZl.s:203    .text.prvInsertBlockIntoFreeList:0000000000000078 .L8
+     /tmp/cc3lBiZl.s:158    .text.prvInsertBlockIntoFreeList:0000000000000030 .L9
+     /tmp/cc3lBiZl.s:238    .text.pvPortMalloc:000000000000001c .L0 
+     /tmp/cc3lBiZl.s:245    .text.pvPortMalloc:0000000000000028 .L0 
+     /tmp/cc3lBiZl.s:278    .text.pvPortMalloc:0000000000000064 .L0 
+     /tmp/cc3lBiZl.s:285    .text.pvPortMalloc:0000000000000070 .L0 
+     /tmp/cc3lBiZl.s:318    .text.pvPortMalloc:00000000000000a4 .L0 
+     /tmp/cc3lBiZl.s:348    .text.pvPortMalloc:00000000000000d4 .L0 
+     /tmp/cc3lBiZl.s:354    .text.pvPortMalloc:00000000000000e8 .L0 
+     /tmp/cc3lBiZl.s:359    .text.pvPortMalloc:00000000000000f4 .L0 
+     /tmp/cc3lBiZl.s:364    .text.pvPortMalloc:00000000000000fc .L0 
+     /tmp/cc3lBiZl.s:372    .text.pvPortMalloc:0000000000000110 .L0 
+     /tmp/cc3lBiZl.s:292    .text.pvPortMalloc:0000000000000080 .L29
+     /tmp/cc3lBiZl.s:395    .text.pvPortMalloc:0000000000000140 .L21
+     /tmp/cc3lBiZl.s:423    .text.pvPortMalloc:0000000000000164 .L22
+     /tmp/cc3lBiZl.s:273    .text.pvPortMalloc:0000000000000060 .L16
+     /tmp/cc3lBiZl.s:430    .text.pvPortMalloc:000000000000016c .L23
+     /tmp/cc3lBiZl.s:433    .text.pvPortMalloc:0000000000000174 .L24
+     /tmp/cc3lBiZl.s:436    .text.pvPortMalloc:000000000000017c .L25
+     /tmp/cc3lBiZl.s:305    .text.pvPortMalloc:0000000000000094 .L18
+     /tmp/cc3lBiZl.s:241    .text.pvPortMalloc:0000000000000028 .L14
+     /tmp/cc3lBiZl.s:315    .text.pvPortMalloc:00000000000000a4 .L17
+     /tmp/cc3lBiZl.s:298    .text.pvPortMalloc:000000000000008c .L26
+     /tmp/cc3lBiZl.s:440    .text.pvPortMalloc:0000000000000184 .L27
+     /tmp/cc3lBiZl.s:378    .text.pvPortMalloc:0000000000000128 .L30
+     /tmp/cc3lBiZl.s:360    .text.pvPortMalloc:00000000000000fc .L20
+     /tmp/cc3lBiZl.s:399    .text.pvPortMalloc:0000000000000144 .L15
+     /tmp/cc3lBiZl.s:342    .text.pvPortMalloc:00000000000000d0 .L19
+     /tmp/cc3lBiZl.s:482    .text.vPortFree:0000000000000020 .L0 
+     /tmp/cc3lBiZl.s:524    .text.vPortFree:0000000000000064 .L0 
+GAS LISTING /tmp/cc3lBiZl.s 			page 35
+
+
+     /tmp/cc3lBiZl.s:535    .text.vPortFree:0000000000000084 .L0 
+     /tmp/cc3lBiZl.s:547    .text.vPortFree:00000000000000a4 .L34
+     /tmp/cc3lBiZl.s:492    .text.vPortFree:0000000000000038 .L31
+     /tmp/cc3lBiZl.s:508    .text.vPortFree:000000000000004c .L37
+     /tmp/cc3lBiZl.s:567    .text.xPortGetFreeHeapSize:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:582    .text.xPortGetMinimumEverFreeHeapSize:0000000000000000 .L0 
+     /tmp/cc3lBiZl.s:631    .text.vPortGetHeapStats:0000000000000024 .L0 
+     /tmp/cc3lBiZl.s:650    .text.vPortGetHeapStats:0000000000000044 .L0 
+     /tmp/cc3lBiZl.s:703    .text.vPortGetHeapStats:0000000000000094 .L0 
+     /tmp/cc3lBiZl.s:707    .text.vPortGetHeapStats:00000000000000a0 .L0 
+     /tmp/cc3lBiZl.s:711    .text.vPortGetHeapStats:00000000000000ac .L0 
+     /tmp/cc3lBiZl.s:715    .text.vPortGetHeapStats:00000000000000b8 .L0 
+     /tmp/cc3lBiZl.s:676    .text.vPortGetHeapStats:000000000000006c .L46
+     /tmp/cc3lBiZl.s:653    .text.vPortGetHeapStats:0000000000000050 .L45
+     /tmp/cc3lBiZl.s:684    .text.vPortGetHeapStats:0000000000000078 .L42
+     /tmp/cc3lBiZl.s:667    .text.vPortGetHeapStats:0000000000000060 .L43
+     /tmp/cc3lBiZl.s:644    .text.vPortGetHeapStats:0000000000000040 .L44
+     /tmp/cc3lBiZl.s:1450   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+     /tmp/cc3lBiZl.s:2497   .debug_str:0000000000000128 .LASF65
+     /tmp/cc3lBiZl.s:2467   .debug_str:000000000000001f .LASF66
+     /tmp/cc3lBiZl.s:2501   .debug_str:000000000000020b .LASF67
+     /tmp/cc3lBiZl.s:2441   .debug_ranges:0000000000000000 .Ldebug_ranges0
+     /tmp/cc3lBiZl.s:2461   .debug_line:0000000000000000 .Ldebug_line0
+     /tmp/cc3lBiZl.s:2483   .debug_str:00000000000000e3 .LASF6
+     /tmp/cc3lBiZl.s:2571   .debug_str:0000000000000452 .LASF0
+     /tmp/cc3lBiZl.s:2509   .debug_str:0000000000000273 .LASF1
+     /tmp/cc3lBiZl.s:2505   .debug_str:000000000000025a .LASF2
+     /tmp/cc3lBiZl.s:2531   .debug_str:0000000000000316 .LASF3
+     /tmp/cc3lBiZl.s:2547   .debug_str:00000000000003a4 .LASF4
+     /tmp/cc3lBiZl.s:2541   .debug_str:000000000000037a .LASF5
+     /tmp/cc3lBiZl.s:2517   .debug_str:00000000000002aa .LASF7
+     /tmp/cc3lBiZl.s:2535   .debug_str:0000000000000341 .LASF8
+     /tmp/cc3lBiZl.s:2489   .debug_str:0000000000000104 .LASF9
+     /tmp/cc3lBiZl.s:2557   .debug_str:00000000000003fe .LASF10
+     /tmp/cc3lBiZl.s:2511   .debug_str:000000000000027c .LASF11
+     /tmp/cc3lBiZl.s:2567   .debug_str:0000000000000437 .LASF12
+     /tmp/cc3lBiZl.s:2563   .debug_str:0000000000000426 .LASF13
+     /tmp/cc3lBiZl.s:2545   .debug_str:000000000000038d .LASF14
+     /tmp/cc3lBiZl.s:2495   .debug_str:0000000000000120 .LASF15
+     /tmp/cc3lBiZl.s:2491   .debug_str:000000000000010e .LASF16
+     /tmp/cc3lBiZl.s:2477   .debug_str:00000000000000c2 .LASF17
+     /tmp/cc3lBiZl.s:2549   .debug_str:00000000000003b1 .LASF18
+     /tmp/cc3lBiZl.s:2507   .debug_str:0000000000000268 .LASF19
+     /tmp/cc3lBiZl.s:2593   .debug_str:00000000000004f8 .LASF28
+     /tmp/cc3lBiZl.s:2537   .debug_str:000000000000034f .LASF20
+     /tmp/cc3lBiZl.s:2553   .debug_str:00000000000003d0 .LASF21
+     /tmp/cc3lBiZl.s:2503   .debug_str:000000000000023a .LASF22
+     /tmp/cc3lBiZl.s:2485   .debug_str:00000000000000ea .LASF23
+     /tmp/cc3lBiZl.s:2471   .debug_str:0000000000000084 .LASF24
+     /tmp/cc3lBiZl.s:2533   .debug_str:0000000000000322 .LASF25
+     /tmp/cc3lBiZl.s:2575   .debug_str:0000000000000473 .LASF26
+     /tmp/cc3lBiZl.s:2475   .debug_str:00000000000000b6 .LASF27
+     /tmp/cc3lBiZl.s:2543   .debug_str:0000000000000386 .LASF33
+     /tmp/cc3lBiZl.s:2581   .debug_str:000000000000049e .LASF29
+     /tmp/cc3lBiZl.s:2479   .debug_str:00000000000000cb .LASF30
+     /tmp/cc3lBiZl.s:2577   .debug_str:000000000000048c .LASF31
+     /tmp/cc3lBiZl.s:2529   .debug_str:000000000000030a .LASF32
+GAS LISTING /tmp/cc3lBiZl.s 			page 36
+
+
+     /tmp/cc3lBiZl.s:2539   .debug_str:000000000000036a .LASF34
+     /tmp/cc3lBiZl.s:2579   .debug_str:0000000000000497 .LASF35
+     /tmp/cc3lBiZl.s:2487   .debug_str:00000000000000fe .LASF36
+     /tmp/cc3lBiZl.s:2551   .debug_str:00000000000003bc .LASF37
+     /tmp/cc3lBiZl.s:2473   .debug_str:00000000000000a3 .LASF38
+     /tmp/cc3lBiZl.s:2585   .debug_str:00000000000004b3 .LASF39
+     /tmp/cc3lBiZl.s:2499   .debug_str:00000000000001f8 .LASF40
+     /tmp/cc3lBiZl.s:2555   .debug_str:00000000000003ef .LASF68
+     /tmp/cc3lBiZl.s:2597   .debug_str:0000000000000510 .LASF41
+     /tmp/cc3lBiZl.s:2599   .debug_str:0000000000000520 .LASF57
+     /tmp/cc3lBiZl.s:605    .text.vPortGetHeapStats:0000000000000000 .LFB8
+     /tmp/cc3lBiZl.s:740    .text.vPortGetHeapStats:00000000000000e8 .LFE8
+     /tmp/cc3lBiZl.s:1942   .debug_loc:0000000000000000 .LLST17
+     /tmp/cc3lBiZl.s:2469   .debug_str:0000000000000078 .LASF46
+     /tmp/cc3lBiZl.s:1960   .debug_loc:000000000000004c .LLST18
+     /tmp/cc3lBiZl.s:2481   .debug_str:00000000000000db .LASF42
+     /tmp/cc3lBiZl.s:1978   .debug_loc:0000000000000098 .LLST19
+     /tmp/cc3lBiZl.s:2583   .debug_str:00000000000004ab .LASF43
+     /tmp/cc3lBiZl.s:1985   .debug_loc:00000000000000bb .LLST20
+     /tmp/cc3lBiZl.s:2525   .debug_str:00000000000002e1 .LASF44
+     /tmp/cc3lBiZl.s:2006   .debug_loc:0000000000000119 .LLST21
+     /tmp/cc3lBiZl.s:2515   .debug_str:00000000000002a1 .LASF45
+     /tmp/cc3lBiZl.s:2027   .debug_loc:0000000000000177 .LLST22
+     /tmp/cc3lBiZl.s:628    .text.vPortGetHeapStats:0000000000000024 .LVL58
+     /tmp/cc3lBiZl.s:688    .text.vPortGetHeapStats:0000000000000080 .LVL68
+     /tmp/cc3lBiZl.s:700    .text.vPortGetHeapStats:0000000000000094 .LVL69
+     /tmp/cc3lBiZl.s:719    .text.vPortGetHeapStats:00000000000000cc .LVL70
+     /tmp/cc3lBiZl.s:2513   .debug_str:0000000000000286 .LASF49
+     /tmp/cc3lBiZl.s:117    .text.prvInsertBlockIntoFreeList:0000000000000000 .LFB7
+     /tmp/cc3lBiZl.s:209    .text.prvInsertBlockIntoFreeList:0000000000000080 .LFE7
+     /tmp/cc3lBiZl.s:2569   .debug_str:0000000000000442 .LASF47
+     /tmp/cc3lBiZl.s:2050   .debug_loc:00000000000001d7 .LLST4
+     /tmp/cc3lBiZl.s:2561   .debug_str:000000000000041b .LASF48
+     /tmp/cc3lBiZl.s:2065   .debug_loc:0000000000000220 .LLST5
+     /tmp/cc3lBiZl.s:2082   .debug_loc:0000000000000272 .LLST6
+     /tmp/cc3lBiZl.s:2565   .debug_str:000000000000042b .LASF50
+     /tmp/cc3lBiZl.s:14     .text.prvHeapInit:0000000000000000 .LFB6
+     /tmp/cc3lBiZl.s:111    .text.prvHeapInit:0000000000000098 .LFE6
+     /tmp/cc3lBiZl.s:2587   .debug_str:00000000000004c5 .LASF51
+     /tmp/cc3lBiZl.s:2101   .debug_loc:00000000000002ce .LLST0
+     /tmp/cc3lBiZl.s:2465   .debug_str:0000000000000010 .LASF52
+     /tmp/cc3lBiZl.s:2108   .debug_loc:00000000000002f1 .LLST1
+     /tmp/cc3lBiZl.s:2493   .debug_str:0000000000000116 .LASF53
+     /tmp/cc3lBiZl.s:2115   .debug_loc:0000000000000314 .LLST2
+     /tmp/cc3lBiZl.s:2573   .debug_str:0000000000000464 .LASF54
+     /tmp/cc3lBiZl.s:2152   .debug_loc:00000000000003c4 .LLST3
+     /tmp/cc3lBiZl.s:2591   .debug_str:00000000000004e2 .LASF69
+     /tmp/cc3lBiZl.s:592    .text.vPortInitialiseBlocks:0000000000000000 .LFB5
+     /tmp/cc3lBiZl.s:598    .text.vPortInitialiseBlocks:0000000000000004 .LFE5
+     /tmp/cc3lBiZl.s:2527   .debug_str:00000000000002ea .LASF55
+     /tmp/cc3lBiZl.s:577    .text.xPortGetMinimumEverFreeHeapSize:0000000000000000 .LFB4
+     /tmp/cc3lBiZl.s:585    .text.xPortGetMinimumEverFreeHeapSize:000000000000000c .LFE4
+     /tmp/cc3lBiZl.s:2521   .debug_str:00000000000002c3 .LASF56
+     /tmp/cc3lBiZl.s:562    .text.xPortGetFreeHeapSize:0000000000000000 .LFB3
+     /tmp/cc3lBiZl.s:570    .text.xPortGetFreeHeapSize:000000000000000c .LFE3
+     /tmp/cc3lBiZl.s:2559   .debug_str:0000000000000411 .LASF58
+     /tmp/cc3lBiZl.s:451    .text.vPortFree:0000000000000000 .LFB2
+GAS LISTING /tmp/cc3lBiZl.s 			page 37
+
+
+     /tmp/cc3lBiZl.s:555    .text.vPortFree:00000000000000a8 .LFE2
+     /tmp/cc3lBiZl.s:2171   .debug_loc:0000000000000413 .LLST13
+     /tmp/cc3lBiZl.s:2199   .debug_loc:0000000000000487 .LLST14
+     /tmp/cc3lBiZl.s:2231   .debug_loc:000000000000050e .LLST15
+     /tmp/cc3lBiZl.s:2601   .debug_str:0000000000000532 .LASF59
+     /tmp/cc3lBiZl.s:2259   .debug_loc:0000000000000582 .LLST16
+     /tmp/cc3lBiZl.s:519    .text.vPortFree:0000000000000060 .LVL52
+     /tmp/cc3lBiZl.s:532    .text.vPortFree:0000000000000084 .LVL53
+     /tmp/cc3lBiZl.s:542    .text.vPortFree:00000000000000a0 .LVL54
+     /tmp/cc3lBiZl.s:2595   .debug_str:0000000000000503 .LASF60
+     /tmp/cc3lBiZl.s:216    .text.pvPortMalloc:0000000000000000 .LFB1
+     /tmp/cc3lBiZl.s:444    .text.pvPortMalloc:000000000000018c .LFE1
+     /tmp/cc3lBiZl.s:2279   .debug_loc:00000000000005d0 .LLST7
+     /tmp/cc3lBiZl.s:2589   .debug_str:00000000000004d6 .LASF61
+     /tmp/cc3lBiZl.s:2302   .debug_loc:0000000000000630 .LLST8
+     /tmp/cc3lBiZl.s:2341   .debug_loc:00000000000006eb .LLST9
+     /tmp/cc3lBiZl.s:2463   .debug_str:0000000000000000 .LASF62
+     /tmp/cc3lBiZl.s:2356   .debug_loc:0000000000000734 .LLST10
+     /tmp/cc3lBiZl.s:2519   .debug_str:00000000000002b4 .LASF63
+     /tmp/cc3lBiZl.s:2377   .debug_loc:0000000000000799 .LLST11
+     /tmp/cc3lBiZl.s:2523   .debug_str:00000000000002d8 .LASF64
+     /tmp/cc3lBiZl.s:2384   .debug_loc:00000000000007bc .LLST12
+     /tmp/cc3lBiZl.s:235    .text.pvPortMalloc:000000000000001c .LVL23
+     /tmp/cc3lBiZl.s:295    .text.pvPortMalloc:0000000000000088 .LVL29
+     /tmp/cc3lBiZl.s:392    .text.pvPortMalloc:000000000000013c .LVL38
+     /tmp/cc3lBiZl.s:405    .text.pvPortMalloc:000000000000014c .LVL41
+     /tmp/cc3lBiZl.s:610    .text.vPortGetHeapStats:0000000000000004 .LCFI7
+     /tmp/cc3lBiZl.s:736    .text.vPortGetHeapStats:00000000000000e4 .LCFI8
+     /tmp/cc3lBiZl.s:608    .text.vPortGetHeapStats:0000000000000000 .LVL56
+     /tmp/cc3lBiZl.s:734    .text.vPortGetHeapStats:00000000000000e0 .LVL74
+     /tmp/cc3lBiZl.s:632    .text.vPortGetHeapStats:000000000000002c .LVL59
+     /tmp/cc3lBiZl.s:625    .text.vPortGetHeapStats:000000000000001c .LVL57
+     /tmp/cc3lBiZl.s:643    .text.vPortGetHeapStats:0000000000000040 .LVL60
+     /tmp/cc3lBiZl.s:675    .text.vPortGetHeapStats:000000000000006c .LVL66
+     /tmp/cc3lBiZl.s:683    .text.vPortGetHeapStats:0000000000000078 .LVL67
+     /tmp/cc3lBiZl.s:725    .text.vPortGetHeapStats:00000000000000d4 .LVL71
+     /tmp/cc3lBiZl.s:731    .text.vPortGetHeapStats:00000000000000dc .LVL73
+     /tmp/cc3lBiZl.s:673    .text.vPortGetHeapStats:0000000000000068 .LVL65
+     /tmp/cc3lBiZl.s:728    .text.vPortGetHeapStats:00000000000000d8 .LVL72
+     /tmp/cc3lBiZl.s:120    .text.prvInsertBlockIntoFreeList:0000000000000000 .LVL13
+     /tmp/cc3lBiZl.s:178    .text.prvInsertBlockIntoFreeList:0000000000000048 .LVL19
+     /tmp/cc3lBiZl.s:182    .text.prvInsertBlockIntoFreeList:0000000000000050 .LVL20
+     /tmp/cc3lBiZl.s:126    .text.prvInsertBlockIntoFreeList:0000000000000008 .LVL14
+     /tmp/cc3lBiZl.s:132    .text.prvInsertBlockIntoFreeList:0000000000000010 .LVL15
+     /tmp/cc3lBiZl.s:136    .text.prvInsertBlockIntoFreeList:0000000000000014 .LVL16
+     /tmp/cc3lBiZl.s:147    .text.prvInsertBlockIntoFreeList:0000000000000020 .LVL17
+     /tmp/cc3lBiZl.s:169    .text.prvInsertBlockIntoFreeList:000000000000003c .LVL18
+     /tmp/cc3lBiZl.s:80     .text.prvHeapInit:000000000000005c .LVL9
+     /tmp/cc3lBiZl.s:101    .text.prvHeapInit:0000000000000088 .LVL11
+     /tmp/cc3lBiZl.s:48     .text.prvHeapInit:0000000000000030 .LVL5
+     /tmp/cc3lBiZl.s:25     .text.prvHeapInit:0000000000000008 .LVL1
+     /tmp/cc3lBiZl.s:34     .text.prvHeapInit:0000000000000018 .LVL2
+     /tmp/cc3lBiZl.s:61     .text.prvHeapInit:0000000000000044 .LVL6
+     /tmp/cc3lBiZl.s:92     .text.prvHeapInit:0000000000000070 .LVL10
+     /tmp/cc3lBiZl.s:104    .text.prvHeapInit:000000000000008c .LVL12
+     /tmp/cc3lBiZl.s:21     .text.prvHeapInit:0000000000000000 .LVL0
+     /tmp/cc3lBiZl.s:45     .text.prvHeapInit:000000000000002c .LVL4
+GAS LISTING /tmp/cc3lBiZl.s 			page 38
+
+
+     /tmp/cc3lBiZl.s:462    .text.vPortFree:0000000000000008 .LCFI3
+     /tmp/cc3lBiZl.s:504    .text.vPortFree:0000000000000048 .LCFI4
+     /tmp/cc3lBiZl.s:509    .text.vPortFree:000000000000004c .LCFI5
+     /tmp/cc3lBiZl.s:548    .text.vPortFree:00000000000000a4 .LCFI6
+     /tmp/cc3lBiZl.s:454    .text.vPortFree:0000000000000000 .LVL46
+     /tmp/cc3lBiZl.s:491    .text.vPortFree:0000000000000038 .LVL48
+     /tmp/cc3lBiZl.s:499    .text.vPortFree:0000000000000040 .LVL49
+     /tmp/cc3lBiZl.s:502    .text.vPortFree:0000000000000044 .LVL50
+     /tmp/cc3lBiZl.s:507    .text.vPortFree:000000000000004c .LVL51
+     /tmp/cc3lBiZl.s:546    .text.vPortFree:00000000000000a4 .LVL55
+     /tmp/cc3lBiZl.s:474    .text.vPortFree:000000000000001c .LVL47
+     /tmp/cc3lBiZl.s:221    .text.pvPortMalloc:0000000000000004 .LCFI0
+     /tmp/cc3lBiZl.s:419    .text.pvPortMalloc:0000000000000160 .LCFI1
+     /tmp/cc3lBiZl.s:424    .text.pvPortMalloc:0000000000000164 .LCFI2
+     /tmp/cc3lBiZl.s:219    .text.pvPortMalloc:0000000000000000 .LVL21
+     /tmp/cc3lBiZl.s:258    .text.pvPortMalloc:0000000000000048 .LVL24
+     /tmp/cc3lBiZl.s:291    .text.pvPortMalloc:0000000000000080 .LVL28
+     /tmp/cc3lBiZl.s:297    .text.pvPortMalloc:000000000000008c .LVL30
+     /tmp/cc3lBiZl.s:341    .text.pvPortMalloc:00000000000000d0 .LVL35
+     /tmp/cc3lBiZl.s:377    .text.pvPortMalloc:0000000000000128 .LVL36
+     /tmp/cc3lBiZl.s:394    .text.pvPortMalloc:0000000000000140 .LVL39
+     /tmp/cc3lBiZl.s:398    .text.pvPortMalloc:0000000000000144 .LVL40
+     /tmp/cc3lBiZl.s:422    .text.pvPortMalloc:0000000000000164 .LVL43
+     /tmp/cc3lBiZl.s:429    .text.pvPortMalloc:000000000000016c .LVL44
+     /tmp/cc3lBiZl.s:287    .text.pvPortMalloc:000000000000007c .LVL27
+     /tmp/cc3lBiZl.s:439    .text.pvPortMalloc:0000000000000184 .LVL45
+     /tmp/cc3lBiZl.s:282    .text.pvPortMalloc:0000000000000070 .LVL26
+     /tmp/cc3lBiZl.s:301    .text.pvPortMalloc:0000000000000090 .LVL31
+     /tmp/cc3lBiZl.s:304    .text.pvPortMalloc:0000000000000094 .LVL32
+     /tmp/cc3lBiZl.s:339    .text.pvPortMalloc:00000000000000cc .LVL34
+     /tmp/cc3lBiZl.s:382    .text.pvPortMalloc:000000000000012c .LVL37
+     /tmp/cc3lBiZl.s:232    .text.pvPortMalloc:0000000000000014 .LVL22
+     /tmp/cc3lBiZl.s:326    .text.pvPortMalloc:00000000000000b8 .LVL33
+     /tmp/cc3lBiZl.s:417    .text.pvPortMalloc:000000000000015c .LVL42
+     /tmp/cc3lBiZl.s:799    .debug_info:0000000000000000 .Ldebug_info0
+
+UNDEFINED SYMBOLS
+vTaskSuspendAll
+xTaskResumeAll
+vTaskEnterCritical
+vTaskExitCritical

@@ -38,8 +38,8 @@
                 regions = <&tmem 0x7>, <&tuart 0x7>, <&allmem 0x7>; /* 各个内存/mmio区域的权限，3bit读写运行权限 0x7拥有全部权限 */
                 boot-hart = <&cpu7>;
                 next-arg1 = <0x0 0x00000000>;
-		        next-addr = <0x0 0xB0000000>;
-		        next-mode = <0x0>; /* 下级程序的允许模式 0为U模式，1为S模式 */
+		        next-addr = <0x0 0xBF800000>;
+		        next-mode = <0x1>; /* 下级程序的允许模式 0为U模式，1为S模式 */
                 system-reset-allowed;
 			};
 

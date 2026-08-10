@@ -1,0 +1,241 @@
+GAS LISTING /tmp/ccoe9G1M.s 			page 1
+
+
+   1              		.file	"debug_log.c"
+   2              		.option nopic
+   3              		.attribute arch, "rv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0"
+   4              		.attribute unaligned_access, 0
+   5              		.attribute stack_align, 16
+   6              		.text
+   7              	.Ltext0:
+   8              		.cfi_sections	.debug_frame
+   9              		.file 1 "/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c"
+  10              		.section	.text._puts,"ax",@progbits
+  11              		.align	2
+  12              		.globl	_puts
+  14              	_puts:
+  15              	.LFB5:
+   1:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c **** #include <FreeRTOS.h>
+   2:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c **** #include <string.h>
+   3:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c **** #include <stdio.h>
+   4:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c **** #include <stdarg.h>
+   5:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c **** #include "quard_star.h"
+   6:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c **** #include "ns16550.h"
+   7:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c **** #include "debug_log.h"
+   8:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c **** 
+   9:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c **** #define UART_LOG_BUFF_SIZE 1024
+  10:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c **** 
+  11:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c **** 
+  12:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c **** 
+  13:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c **** int _puts(char *str)
+  14:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c **** {
+  16              		.loc 1 14 1
+  17              		.cfi_startproc
+  18              	.LVL0:
+  19 0000 130101FE 		addi	sp,sp,-32
+  20              	.LCFI0:
+  21              		.cfi_def_cfa_offset 32
+  22 0004 233C1100 		sd	ra,24(sp)
+  23 0008 23388100 		sd	s0,16(sp)
+  24 000c 23349100 		sd	s1,8(sp)
+  25 0010 23302101 		sd	s2,0(sp)
+  26              		.cfi_offset 1, -8
+  27              		.cfi_offset 8, -16
+  28              		.cfi_offset 9, -24
+  29              		.cfi_offset 18, -32
+  15:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c ****     int counter = 0;
+  30              		.loc 1 15 5
+  31              	.LVL1:
+  16:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c ****     if (!str)
+  32              		.loc 1 16 5
+  33              		.loc 1 16 8 is_stmt 0
+  34 0014 630C0504 		beq	a0,zero,.L6
+  35 0018 13040500 		mv	s0,a0
+  15:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c ****     int counter = 0;
+  36              		.loc 1 15 9
+  37 001c 93040000 		li	s1,0
+  38 0020 6F000002 		j	.L3
+  39              	.LVL2:
+  40              	.L4:
+  17:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c ****     {
+GAS LISTING /tmp/ccoe9G1M.s 			page 2
+
+
+  18:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c ****         return 0;
+  19:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c ****     }
+  20:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c ****     while (*str && (counter < UART_LOG_BUFF_SIZE))
+  21:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c ****     {
+  22:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c ****         if(*str == '\n')
+  23:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c **** 	        ns16550_tx( NS16550_ADDR, '\r' );
+  24:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c **** 	    ns16550_tx( NS16550_ADDR, *str++ );
+  41              		.loc 1 24 6 is_stmt 1
+  42              		.loc 1 24 36 is_stmt 0
+  43 0024 13091400 		addi	s2,s0,1
+  44              	.LVL3:
+  45              		.loc 1 24 6
+  46 0028 83450400 		lbu	a1,0(s0)
+  47 002c 37250010 		li	a0,268443648
+  48 0030 97000000 		call	ns16550_tx
+  48      E7800000 
+  49              	.LVL4:
+  25:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c ****         counter++;
+  50              		.loc 1 25 9 is_stmt 1
+  51              		.loc 1 25 16 is_stmt 0
+  52 0038 9B841400 		addiw	s1,s1,1
+  53              	.LVL5:
+  24:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c ****         counter++;
+  54              		.loc 1 24 36
+  55 003c 13040900 		mv	s0,s2
+  56              	.LVL6:
+  57              	.L3:
+  20:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c ****     {
+  58              		.loc 1 20 17 is_stmt 1
+  20:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c ****     {
+  59              		.loc 1 20 12 is_stmt 0
+  60 0040 83070400 		lb	a5,0(s0)
+  20:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c ****     {
+  61              		.loc 1 20 17
+  62 0044 63860702 		beq	a5,zero,.L2
+  20:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c ****     {
+  63              		.loc 1 20 17 discriminator 1
+  64 0048 1307F03F 		li	a4,1023
+  65 004c 63429702 		bgt	s1,a4,.L2
+  22:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c **** 	        ns16550_tx( NS16550_ADDR, '\r' );
+  66              		.loc 1 22 9 is_stmt 1
+  22:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c **** 	        ns16550_tx( NS16550_ADDR, '\r' );
+  67              		.loc 1 22 11 is_stmt 0
+  68 0050 1307A000 		li	a4,10
+  69 0054 E398E7FC 		bne	a5,a4,.L4
+  23:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c **** 	    ns16550_tx( NS16550_ADDR, *str++ );
+  70              		.loc 1 23 10 is_stmt 1
+  71 0058 9305D000 		li	a1,13
+  72 005c 37250010 		li	a0,268443648
+  73 0060 97000000 		call	ns16550_tx
+  73      E7800000 
+  74              	.LVL7:
+  75 0068 6FF0DFFB 		j	.L4
+  76              	.LVL8:
+  77              	.L6:
+  18:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c ****     }
+  78              		.loc 1 18 16 is_stmt 0
+GAS LISTING /tmp/ccoe9G1M.s 			page 3
+
+
+  79 006c 93040000 		li	s1,0
+  80              	.LVL9:
+  81              	.L2:
+  26:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c ****     }
+  27:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c ****     return counter;
+  28:/home/zz/quard-start/Quard-Star/trusted_domain/driver/debug_log.c **** }
+  82              		.loc 1 28 1
+  83 0070 13850400 		mv	a0,s1
+  84 0074 83308101 		ld	ra,24(sp)
+  85              		.cfi_restore 1
+  86 0078 03340101 		ld	s0,16(sp)
+  87              		.cfi_restore 8
+  88 007c 83348100 		ld	s1,8(sp)
+  89              		.cfi_restore 9
+  90 0080 03390100 		ld	s2,0(sp)
+  91              		.cfi_restore 18
+  92 0084 13010102 		addi	sp,sp,32
+  93              	.LCFI1:
+  94              		.cfi_def_cfa_offset 0
+  95 0088 67800000 		jr	ra
+  96              		.cfi_endproc
+  97              	.LFE5:
+  99              		.text
+ 100              	.Letext0:
+ 101              		.file 2 "/home/zz/riscv/riscv/riscv64-unknown-elf/include/machine/_default_types.h"
+ 102              		.file 3 "/home/zz/riscv/riscv/riscv64-unknown-elf/include/sys/_stdint.h"
+ 103              		.file 4 "/home/zz/quard-start/Quard-Star/trusted_domain/driver/ns16550.h"
+GAS LISTING /tmp/ccoe9G1M.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 debug_log.c
+     /tmp/ccoe9G1M.s:14     .text._puts:0000000000000000 _puts
+     /tmp/ccoe9G1M.s:17     .text._puts:0000000000000000 .L0 
+     /tmp/ccoe9G1M.s:19     .text._puts:0000000000000000 $xrv64i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zmmul1p0
+     /tmp/ccoe9G1M.s:19     .text._puts:0000000000000000 .L0 
+     /tmp/ccoe9G1M.s:21     .text._puts:0000000000000004 .L0 
+     /tmp/ccoe9G1M.s:26     .text._puts:0000000000000014 .L0 
+     /tmp/ccoe9G1M.s:27     .text._puts:0000000000000014 .L0 
+     /tmp/ccoe9G1M.s:28     .text._puts:0000000000000014 .L0 
+     /tmp/ccoe9G1M.s:29     .text._puts:0000000000000014 .L0 
+     /tmp/ccoe9G1M.s:32     .text._puts:0000000000000014 .L0 
+     /tmp/ccoe9G1M.s:33     .text._puts:0000000000000014 .L0 
+     /tmp/ccoe9G1M.s:34     .text._puts:0000000000000014 .L0 
+     /tmp/ccoe9G1M.s:37     .text._puts:000000000000001c .L0 
+     /tmp/ccoe9G1M.s:42     .text._puts:0000000000000024 .L0 
+     /tmp/ccoe9G1M.s:43     .text._puts:0000000000000024 .L0 
+     /tmp/ccoe9G1M.s:46     .text._puts:0000000000000028 .L0 
+     /tmp/ccoe9G1M.s:51     .text._puts:0000000000000038 .L0 
+     /tmp/ccoe9G1M.s:52     .text._puts:0000000000000038 .L0 
+     /tmp/ccoe9G1M.s:55     .text._puts:000000000000003c .L0 
+     /tmp/ccoe9G1M.s:59     .text._puts:0000000000000040 .L0 
+     /tmp/ccoe9G1M.s:60     .text._puts:0000000000000040 .L0 
+     /tmp/ccoe9G1M.s:62     .text._puts:0000000000000044 .L0 
+     /tmp/ccoe9G1M.s:64     .text._puts:0000000000000048 .L0 
+     /tmp/ccoe9G1M.s:67     .text._puts:0000000000000050 .L0 
+     /tmp/ccoe9G1M.s:68     .text._puts:0000000000000050 .L0 
+     /tmp/ccoe9G1M.s:71     .text._puts:0000000000000058 .L0 
+     /tmp/ccoe9G1M.s:79     .text._puts:000000000000006c .L0 
+     /tmp/ccoe9G1M.s:83     .text._puts:0000000000000070 .L0 
+     /tmp/ccoe9G1M.s:85     .text._puts:0000000000000078 .L0 
+     /tmp/ccoe9G1M.s:87     .text._puts:000000000000007c .L0 
+     /tmp/ccoe9G1M.s:89     .text._puts:0000000000000080 .L0 
+     /tmp/ccoe9G1M.s:91     .text._puts:0000000000000084 .L0 
+     /tmp/ccoe9G1M.s:94     .text._puts:0000000000000088 .L0 
+     /tmp/ccoe9G1M.s:96     .text._puts:000000000000008c .L0 
+     /tmp/ccoe9G1M.s:99     .text._puts:000000000000008c .L0 
+                     .debug_frame:0000000000000000 .L0 
+     /tmp/ccoe9G1M.s:77     .text._puts:000000000000006c .L6
+     /tmp/ccoe9G1M.s:57     .text._puts:0000000000000040 .L3
+     /tmp/ccoe9G1M.s:81     .text._puts:0000000000000070 .L2
+     /tmp/ccoe9G1M.s:40     .text._puts:0000000000000024 .L4
+     /tmp/ccoe9G1M.s:251    .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+     /tmp/ccoe9G1M.s:553    .debug_str:000000000000011a .LASF13
+     /tmp/ccoe9G1M.s:535    .debug_str:0000000000000059 .LASF14
+     /tmp/ccoe9G1M.s:541    .debug_str:00000000000000b5 .LASF15
+     /tmp/ccoe9G1M.s:515    .debug_ranges:0000000000000000 .Ldebug_ranges0
+     /tmp/ccoe9G1M.s:521    .debug_line:0000000000000000 .Ldebug_line0
+     /tmp/ccoe9G1M.s:543    .debug_str:00000000000000e4 .LASF0
+     /tmp/ccoe9G1M.s:531    .debug_str:0000000000000030 .LASF1
+     /tmp/ccoe9G1M.s:523    .debug_str:0000000000000000 .LASF2
+     /tmp/ccoe9G1M.s:555    .debug_str:00000000000001ea .LASF3
+     /tmp/ccoe9G1M.s:551    .debug_str:000000000000010e .LASF4
+     /tmp/ccoe9G1M.s:539    .debug_str:00000000000000a7 .LASF5
+     /tmp/ccoe9G1M.s:557    .debug_str:00000000000001f6 .LASF6
+     /tmp/ccoe9G1M.s:549    .debug_str:00000000000000fb .LASF7
+     /tmp/ccoe9G1M.s:525    .debug_str:000000000000000e .LASF8
+GAS LISTING /tmp/ccoe9G1M.s 			page 5
+
+
+     /tmp/ccoe9G1M.s:537    .debug_str:000000000000009b .LASF9
+     /tmp/ccoe9G1M.s:529    .debug_str:0000000000000026 .LASF10
+     /tmp/ccoe9G1M.s:559    .debug_str:0000000000000200 .LASF11
+     /tmp/ccoe9G1M.s:533    .debug_str:0000000000000042 .LASF12
+     /tmp/ccoe9G1M.s:527    .debug_str:000000000000001b .LASF16
+     /tmp/ccoe9G1M.s:545    .debug_str:00000000000000ed .LASF17
+     /tmp/ccoe9G1M.s:15     .text._puts:0000000000000000 .LFB5
+     /tmp/ccoe9G1M.s:97     .text._puts:000000000000008c .LFE5
+     /tmp/ccoe9G1M.s:440    .debug_loc:0000000000000000 .LLST0
+     /tmp/ccoe9G1M.s:458    .debug_loc:000000000000004c .LLST1
+     /tmp/ccoe9G1M.s:547    .debug_str:00000000000000f3 .LASF18
+     /tmp/ccoe9G1M.s:481    .debug_loc:00000000000000bb .LLST2
+     /tmp/ccoe9G1M.s:49     .text._puts:0000000000000038 .LVL4
+     /tmp/ccoe9G1M.s:74     .text._puts:0000000000000068 .LVL7
+     /tmp/ccoe9G1M.s:20     .text._puts:0000000000000004 .LCFI0
+     /tmp/ccoe9G1M.s:93     .text._puts:0000000000000088 .LCFI1
+     /tmp/ccoe9G1M.s:18     .text._puts:0000000000000000 .LVL0
+     /tmp/ccoe9G1M.s:39     .text._puts:0000000000000024 .LVL2
+     /tmp/ccoe9G1M.s:44     .text._puts:0000000000000028 .LVL3
+     /tmp/ccoe9G1M.s:56     .text._puts:0000000000000040 .LVL6
+     /tmp/ccoe9G1M.s:76     .text._puts:000000000000006c .LVL8
+     /tmp/ccoe9G1M.s:80     .text._puts:0000000000000070 .LVL9
+     /tmp/ccoe9G1M.s:31     .text._puts:0000000000000014 .LVL1
+     /tmp/ccoe9G1M.s:53     .text._puts:000000000000003c .LVL5
+     /tmp/ccoe9G1M.s:105    .debug_info:0000000000000000 .Ldebug_info0
+
+UNDEFINED SYMBOLS
+ns16550_tx
